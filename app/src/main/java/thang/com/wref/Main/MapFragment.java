@@ -159,10 +159,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onPause() {
         super.onPause();
+        mapView.onPause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mapView.onResume();
     }
 }
