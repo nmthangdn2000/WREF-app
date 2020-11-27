@@ -12,4 +12,5 @@
     <color name="blue">#0E469A</color>
     <color name="blue_light">#9EB5D6</color>
     <color name="red">#F30B0B</color>
+    <color name="time">#606060</color>
 </resources>

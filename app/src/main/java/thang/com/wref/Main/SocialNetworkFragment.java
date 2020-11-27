@@ -2,65 +2,100 @@ package thang.com.wref.Main;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
+import thang.com.wref.Adapter.NewsAdapter;
+import thang.com.wref.Adapter.StoriesAdapter;
+import thang.com.wref.Models.NewsModels;
+import thang.com.wref.Models.StoriesModels;
 import thang.com.wref.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SocialNetworkFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SocialNetworkFragment extends Fragment {
+    private View view;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RecyclerView rcvStories, rcvNews;
+    private ArrayList<NewsModels> newsArr;
+    private ArrayList<StoriesModels> storiesArr;
+    private NewsAdapter newsAdapter;
+    private StoriesAdapter storiesAdapter;
 
     public SocialNetworkFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SocialNetworkFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SocialNetworkFragment newInstance(String param1, String param2) {
-        SocialNetworkFragment fragment = new SocialNetworkFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
+//    public static SocialNetworkFragment newInstance(String param1, String param2) {
+//        SocialNetworkFragment fragment = new SocialNetworkFragment();
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_social_network, container, false);
+
+        view = inflater.inflate(R.layout.fragment_social_network, container, false);
+        mapingView();
+        setupRecyclerView();
+        return view;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        storiesArr = new ArrayList<>();
+        newsArr = new ArrayList<>();
+        addStoriesAdapter();
+        addNewsAdapter();
+    }
+
+    private void mapingView(){
+        rcvStories = (RecyclerView) view.findViewById(R.id.rcvStories);
+        rcvNews = (RecyclerView) view.findViewById(R.id.rcvNews);
+    }
+    private void setupRecyclerView(){
+        rcvStories.setHasFixedSize(true);
+        rcvNews.setHasFixedSize(true);
+
+        LinearLayoutManager linearLayoutManagerS = new LinearLayoutManager(
+                getContext(), LinearLayoutManager.HORIZONTAL, false
+                );
+        LinearLayoutManager linearLayoutManagerN = new LinearLayoutManager(
+                getContext(), LinearLayoutManager.VERTICAL, false
+        );
+
+        rcvNews.setLayoutManager(linearLayoutManagerN);
+        rcvStories.setLayoutManager(linearLayoutManagerS);
+        rcvStories.setNestedScrollingEnabled(false);
+        rcvNews.setNestedScrollingEnabled(false);
+    }
+    private void addStoriesAdapter(){
+        storiesArr.clear();
+//        storiesAdapter.notifyDataSetChanged();
+        storiesAdapter = new StoriesAdapter(storiesArr, getContext().getApplicationContext());
+        rcvStories.setAdapter(storiesAdapter);
+    }
+    private void addNewsAdapter(){
+        newsArr.clear();
+//        newsAdapter.notifyDataSetChanged();
+        newsAdapter = new NewsAdapter(newsArr, getContext().getApplicationContext());
+        rcvNews.setAdapter(newsAdapter);
     }
 }
