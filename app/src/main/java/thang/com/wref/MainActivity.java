@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                         viewPager2.setCurrentItem(2);
                         break;
                     case 4:
-                        Log.d(TAG, " a3 "+ item.getId());
+                        Log.d(TAG, " a4 "+ item.getId());
                         viewPager2.setCurrentItem(3);
                         break;
                     default:

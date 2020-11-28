@@ -156,8 +156,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 ArrayList o = (ArrayList) feature.getGeometry().getGeometryObject();
                 ArrayList<LatLng> b = (ArrayList<LatLng>) o.get(0);
                 PolylineMap(b);
-//                Log.d(TAG, "onFeatureClickaa: "+feature.);
-//                Log.d(TAG, "onFeatureClickaa: "+feature.getGe);
             }
         });
     }
@@ -168,7 +166,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
         if(polygon != null)
             polygon.remove();
-        Log.d(TAG, "PolylineMap: "+latLngs);
         polygon = map.addPolygon(new PolygonOptions()
                 .clickable(true)
                 .addAll(latLngs));
