@@ -1,16 +1,24 @@
 package thang.com.wref.Main;
 
+import android.animation.ObjectAnimator;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Path;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationSet;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.Description;
@@ -24,10 +32,7 @@ import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.DefaultAxisValueFormatter;
-import com.github.mikephil.charting.formatter.DefaultValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 
 import java.util.ArrayList;
@@ -41,9 +46,13 @@ public class DetailWeatherFragment extends Fragment{
     private CombinedChart chart ;
 
     private View view;
-    private ImageView img;
+    private ImageView imgSunWeather;
     private AnimatedVectorDrawable animation;
-    private RelativeLayout dasdasd;
+    private RelativeLayout rltSunWeather, rltDuBao5Ngay;
+    private TextView txtNhietdo;
+    private FrameLayout fragmentWeather;
+
+    private Path path, path2;
 
     public DetailWeatherFragment() {
         // Required empty public constructor
@@ -64,11 +73,31 @@ public class DetailWeatherFragment extends Fragment{
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_detail_weather, container, false);
         mapingView();
+
         return view;
     }
     private void mapingView(){
-        dasdasd = (RelativeLayout) view.findViewById(R.id.dasdasd);
+        rltSunWeather = (RelativeLayout) view.findViewById(R.id.rltSunWeather);
+        rltDuBao5Ngay = (RelativeLayout) view.findViewById(R.id.rltDuBao5Ngay);
         chart  = (CombinedChart) view.findViewById(R.id.combinedChart);
+        imgSunWeather = (ImageView) view.findViewById(R.id.imgSunWeather);
+        txtNhietdo = (TextView) view.findViewById(R.id.txtNhietdo);
+        fragmentWeather = (FrameLayout) view.findViewById(R.id.fragmentWeather);
+
+        rltDuBao5Ngay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                animationSunrise();
+            }
+        });
+        txtNhietdo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "animationWeather: "+ imgSunWeather.getX() +" "+imgSunWeather.getY());
+                animationSundown();
+            }
+        });
+
         ArrayList<String> tack = new ArrayList<>();
         tack.add("Hôm nay");
         tack.add("Ngày mai");
@@ -167,5 +196,28 @@ public class DetailWeatherFragment extends Fragment{
     }
     private float getRandom(float range, float start){
         return (float) (Math.random() * range) + start;
+    }
+    private void animationSunrise(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Log.d(TAG, "animationWeather: "+ imgSunWeather.getX() +" "+imgSunWeather.getY());
+            path = new Path();
+            path.arcTo(0f-dpToPx(150), 0f, rltSunWeather.getRight(), rltSunWeather.getBottom()+dpToPx(300), 180f, 110f, true);
+            ObjectAnimator animator = ObjectAnimator.ofFloat(imgSunWeather, View.X, View.Y, path);
+            animator.setDuration(2000);
+            animator.start();
+        } else {
+            // Create animator without using curved path
+        }
+    }
+    private void animationSundown(){
+        path2 = new Path();
+        path2.arcTo(0f+imgSunWeather.getLeft()+dpToPx(168), 0f+dpToPx(30), 1000f+dpToPx(50), 1000f, 270f, 90f, true);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(imgSunWeather, View.X, View.Y, path2);
+        animator.setDuration(1500);
+        animator.start();
+    }
+    // chuyển đỗi dp sang px
+    private int dpToPx(int dp) {
+        return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 }
