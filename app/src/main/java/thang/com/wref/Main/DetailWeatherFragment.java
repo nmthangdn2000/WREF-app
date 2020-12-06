@@ -1,20 +1,28 @@
 package thang.com.wref.Main;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -48,11 +56,12 @@ public class DetailWeatherFragment extends Fragment{
     private View view;
     private ImageView imgSunWeather;
     private AnimatedVectorDrawable animation;
-    private RelativeLayout rltSunWeather, rltDuBao5Ngay;
+    private RelativeLayout rltSunWeather, rltDuBao5Ngay, bacgroundImgWeather, bacgroundColorWeather;
     private TextView txtNhietdo;
-    private FrameLayout fragmentWeather;
 
     private Path path, path2;
+    private int night = 0;
+    private int morning = 0;
 
     public DetailWeatherFragment() {
         // Required empty public constructor
@@ -72,8 +81,9 @@ public class DetailWeatherFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_detail_weather, container, false);
+        night = ContextCompat.getColor(getContext(), R.color.nig_color);
+        morning = ContextCompat.getColor(getContext(), R.color.mor_color);
         mapingView();
-
         return view;
     }
     private void mapingView(){
@@ -82,7 +92,8 @@ public class DetailWeatherFragment extends Fragment{
         chart  = (CombinedChart) view.findViewById(R.id.combinedChart);
         imgSunWeather = (ImageView) view.findViewById(R.id.imgSunWeather);
         txtNhietdo = (TextView) view.findViewById(R.id.txtNhietdo);
-        fragmentWeather = (FrameLayout) view.findViewById(R.id.fragmentWeather);
+        bacgroundImgWeather = (RelativeLayout) view.findViewById(R.id.bacgroundImgWeather);
+        bacgroundColorWeather = (RelativeLayout) view.findViewById(R.id.bacgroundColorWeather);
 
         rltDuBao5Ngay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,20 +212,80 @@ public class DetailWeatherFragment extends Fragment{
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Log.d(TAG, "animationWeather: "+ imgSunWeather.getX() +" "+imgSunWeather.getY());
             path = new Path();
-            path.arcTo(0f-dpToPx(150), 0f, rltSunWeather.getRight(), rltSunWeather.getBottom()+dpToPx(300), 180f, 110f, true);
-            ObjectAnimator animator = ObjectAnimator.ofFloat(imgSunWeather, View.X, View.Y, path);
-            animator.setDuration(2000);
-            animator.start();
+            path.arcTo(0f-dpToPx(170), 0f, rltSunWeather.getRight(), rltSunWeather.getBottom()+dpToPx(300), 180f, 110f, true);
+
+            startAnimationWeather(path, night, morning);
+            if(!bacgroundImgWeather.getTag().equals("morning")){
+                changeBackgroundImg(R.drawable.background_morning);
+                bacgroundImgWeather.setTag("night");
+            }else{
+                return;
+            }
         } else {
             // Create animator without using curved path
         }
     }
     private void animationSundown(){
-        path2 = new Path();
-        path2.arcTo(0f+imgSunWeather.getLeft()+dpToPx(168), 0f+dpToPx(30), 1000f+dpToPx(50), 1000f, 270f, 90f, true);
-        ObjectAnimator animator = ObjectAnimator.ofFloat(imgSunWeather, View.X, View.Y, path2);
-        animator.setDuration(1500);
-        animator.start();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            path2 = new Path();
+            path2.arcTo(0f + imgSunWeather.getLeft() + dpToPx(168), 0f + dpToPx(30), 1000f + dpToPx(50), 1000f, 270f, 90f, true);
+
+            startAnimationWeather(path2, morning, night);
+            if(!bacgroundImgWeather.getTag().equals("night")){
+                changeBackgroundImg(R.drawable.background_night);
+            }else{
+                return;
+            }
+           
+        }else{
+
+        }
+    }
+    // bắt đầu animation
+    private void startAnimationWeather(Path path, int fromColor, int toColor){
+        ObjectAnimator animator = ObjectAnimator.ofFloat(imgSunWeather, View.X, View.Y, path);
+        animator.setDuration(2000);
+
+
+
+
+        ValueAnimator valueAnimator = new ValueAnimator();
+
+        valueAnimator.setIntValues(fromColor, toColor);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                bacgroundColorWeather.setBackgroundColor((int) valueAnimator.getAnimatedValue());
+            }
+        });
+        valueAnimator.setDuration(2000);
+        valueAnimator.setEvaluator(new ArgbEvaluator());
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(animator, valueAnimator);
+        animatorSet.start();
+    }
+    private void changeBackgroundImg(int background){
+        Animation fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
+        bacgroundImgWeather.startAnimation(fadeOut);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                bacgroundImgWeather.setBackgroundResource(background);
+                Animation fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+                bacgroundImgWeather.startAnimation(fadeOut);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
     // chuyển đỗi dp sang px
     private int dpToPx(int dp) {

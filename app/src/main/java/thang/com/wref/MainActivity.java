@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.BottomNavigation);
         viewPager2 = findViewById(R.id.ViewPager2);
         viewPager2.setUserInputEnabled(false);
-        viewPagerAdapter = new ViewPagerAdapter(this);
+        viewPagerAdapter = new ViewPagerAdapter(this, bottomNavigation);
         viewPager2.setAdapter(viewPagerAdapter);
     }
     private void setBottomNavigation(){
@@ -74,6 +74,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onShowItem(MeowBottomNavigation.Model item) {
                 // your codes
+            }
+        });
+        bottomNavigation.setOnReselectListener(new MeowBottomNavigation.ReselectListener() {
+            @Override
+            public void onReselectItem(MeowBottomNavigation.Model item) {
+
             }
         });
         bottomNavigation.show(1, true);

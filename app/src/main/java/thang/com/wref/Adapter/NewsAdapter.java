@@ -1,6 +1,7 @@
 package thang.com.wref.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,15 @@ import thang.com.wref.Models.NewsModels;
 import thang.com.wref.R;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
+    private static final String TAG = "NewsAdapter";
     private ArrayList<NewsModels> arrayList;
     private Context context;
+    private onClickRecyclerNews mListner;
 
-    public NewsAdapter(ArrayList<NewsModels> arrayList, Context context) {
+    public NewsAdapter(ArrayList<NewsModels> arrayList, Context context, onClickRecyclerNews mListner) {
         this.arrayList = arrayList;
         this.context = context;
+        this.mListner = mListner;
     }
     @NonNull
     @Override
@@ -35,7 +39,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHodler holder, int position) {
-
+        
     }
 
     @Override
@@ -43,7 +47,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
         return 6;
     }
 
-    public class ViewHodler extends RecyclerView.ViewHolder{
+    public class ViewHodler extends RecyclerView.ViewHolder implements View.OnClickListener{
         private CircleImageView imgUserNewsssss;
         private TextView txtUserName, txtTimePost, txtLocation;
         private ImageView iconMore;
@@ -58,6 +62,23 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
             btnLike = (LinearLayout) itemView.findViewById(R.id.btnLike);
             btnComment = (LinearLayout) itemView.findViewById(R.id.btnComment);
             btnShare = (LinearLayout) itemView.findViewById(R.id.btnShare);
+
+            btnComment.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.btnComment:
+                    Log.d(TAG, "onClick: "+getAdapterPosition());
+                    mListner.onClickComment(getAdapterPosition(), btnComment);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    public interface onClickRecyclerNews{
+        void onClickComment(int position, LinearLayout btnComment);
     }
 }

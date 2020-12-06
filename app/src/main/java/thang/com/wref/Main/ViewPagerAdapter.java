@@ -5,14 +5,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+
 import thang.com.wref.Main.AboutFragment;
 import thang.com.wref.Main.DetailWeatherFragment;
 import thang.com.wref.Main.MapFragment;
 import thang.com.wref.Main.SocialNetworkFragment;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
-    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+    private MeowBottomNavigation meowBottomNavigation;
+    public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, MeowBottomNavigation meowBottomNavigation) {
         super(fragmentActivity);
+        this.meowBottomNavigation = meowBottomNavigation;
     }
 
     @NonNull
@@ -22,7 +26,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 0:
                 return new MapFragment();
             case 1:
-                return new SocialNetworkFragment();
+                return new SocialNetworkFragment(meowBottomNavigation);
             case 2:
                 return new DetailWeatherFragment();
             case 3:

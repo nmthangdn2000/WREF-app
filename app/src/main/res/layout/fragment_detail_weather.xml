@@ -5,9 +5,22 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Main.DetailWeatherFragment"
-    android:background="@drawable/background_night"
     android:id="@+id/fragmentWeather">
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:tag="morning"
+            android:id="@+id/bacgroundImgWeather"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_morning"/>
+        <RelativeLayout
+            android:id="@+id/bacgroundColorWeather"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/mor_color"/>
+    </RelativeLayout>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,7 +40,7 @@
                 android:paddingTop="20dp">
                 <ImageView
                     android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="-150dp"
+                    android:layout_marginLeft="-170dp"
                     android:id="@+id/imgSunWeather"
                     android:layout_marginTop="30dp"
                     android:layout_width="wrap_content"
