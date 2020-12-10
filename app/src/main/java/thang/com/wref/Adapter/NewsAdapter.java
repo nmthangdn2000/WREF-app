@@ -12,11 +12,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.makeramen.roundedimageview.RoundedImageView;
+
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import thang.com.wref.Models.NewsModels;
 import thang.com.wref.R;
+
+import static thang.com.wref.util.Constants.BASE_URL;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
     private static final String TAG = "NewsAdapter";
@@ -39,12 +44,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHodler holder, int position) {
-        
+        Log.d(TAG, "onBindViewHolder: "+arrayList.get(position).getMedia()[0]);
+        Glide.with(context).load(BASE_URL+"uploads/"+arrayList.get(position).getMedia()[0]).fitCenter().centerCrop().into(holder.imgNews);
+        Glide.with(context).load(BASE_URL+"uploads/"+arrayList.get(position).getIdUser().getAvata()).centerCrop().fitCenter().into(holder.imgUserNewsssss);
+        holder.txtUserName.setText(arrayList.get(position).getIdUser().getUsername());
+        holder.txtLocation.setText(arrayList.get(position).getIdLocation().getName());
     }
 
     @Override
     public int getItemCount() {
-        return 6;
+        return arrayList.size();
     }
 
     public class ViewHodler extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -52,6 +61,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
         private TextView txtUserName, txtTimePost, txtLocation;
         private ImageView iconMore;
         private LinearLayout btnLike, btnComment, btnShare;
+        private RoundedImageView imgNews;
         public ViewHodler(@NonNull View itemView) {
             super(itemView);
             imgUserNewsssss = (CircleImageView) itemView.findViewById(R.id.imgUserNewsssss);
@@ -62,6 +72,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
             btnLike = (LinearLayout) itemView.findViewById(R.id.btnLike);
             btnComment = (LinearLayout) itemView.findViewById(R.id.btnComment);
             btnShare = (LinearLayout) itemView.findViewById(R.id.btnShare);
+            imgNews = (RoundedImageView) itemView.findViewById(R.id.imgNews);
 
             btnComment.setOnClickListener(this);
         }

@@ -73,15 +73,15 @@
 Tuần lễ Black Friday đang đến gần, đây là cơ hội cực kỳ lớn để các shop Quảng cáo thêm đơn, đẩy hàng về số cùng GrabExpress."/>
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/imgNews"
+            android:id="@+id/rltImgNews"
             android:layout_marginTop="5dp"
             android:layout_below="@+id/postNews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imgNews"
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
-                android:scaleType="centerCrop"
                 android:src="@drawable/anh4"
                 app:riv_corner_radius_bottom_left="10dp"
                 app:riv_corner_radius_bottom_right="10dp"
@@ -89,7 +89,7 @@ Tuần lễ Black Friday đang đến gần, đây là cơ hội cực kỳ lớ
                 app:riv_corner_radius_top_right="10dp"/>
         </RelativeLayout>
         <RelativeLayout
-            android:layout_below="@+id/imgNews"
+            android:layout_below="@+id/rltImgNews"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="5dp">

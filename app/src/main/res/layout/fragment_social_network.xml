@@ -18,7 +18,59 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/rltToolBar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="#189CFA">
+                <ImageView
+                    android:id="@+id/iconSearchBar"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_baseline_search_24"
+                    app:tint="@color/white" />
+                <SearchView
+                    android:id="@+id/searchView"
+                    android:layout_toRightOf="@+id/iconSearchBar"
+                    android:layout_toLeftOf="@+id/btnNotification"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:queryHint="@string/search_hint"
+                    android:iconifiedByDefault="false"
+                    android:theme="@style/text"
+                    android:queryBackground="@null"
+                    android:closeIcon="@null"
+                    android:searchIcon="@null"/>
+                <RelativeLayout
+                    android:id="@+id/btnNotification"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp">
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_baseline_notifications_none_24"
+                        app:tint="@color/white"/>
+                    <TextView
+                        android:layout_alignParentRight="true"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:gravity="center"
+                        android:text="12"
+                        android:textSize="10sp"
+                        android:textColor="@color/white"
+                        android:background="@drawable/circle"
+                        android:backgroundTint="@color/red"/>
+                </RelativeLayout>
+            </RelativeLayout>
             <androidx.core.widget.NestedScrollView
+                android:layout_below="@+id/rltToolBar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fillViewport="true"
@@ -27,6 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:descendantFocusability="blocksDescendants">
+
                     <!--     Stories   -->
                     <RelativeLayout
                         android:id="@+id/RelaStories"
@@ -61,40 +114,33 @@
                                             android:elevation="5dp"
                                             android:layout_height="170dp"
                                             android:background="@drawable/shadow_linearlayout">
-                                            <com.makeramen.roundedimageview.RoundedImageView
-                                                android:id="@+id/imgStories"
+                                            <LinearLayout
                                                 android:layout_width="match_parent"
                                                 android:layout_height="match_parent"
-                                                android:src="@drawable/anh1"
-                                                app:riv_border_width="0.1dip"
-                                                app:riv_border_color="#333333"
-                                                android:scaleType="centerCrop"
-                                                app:riv_corner_radius="30dip"
-                                                app:riv_mutate_background="true"
-                                                app:riv_tile_mode="clamp"
-                                                app:riv_corner_radius_bottom_left="10dp"
-                                                app:riv_corner_radius_bottom_right="10dp"
-                                                app:riv_corner_radius_top_left="10dp"
-                                                app:riv_corner_radius_top_right="10dp"/>
+                                                android:background="@drawable/shadow_linearlayout"
+                                                android:orientation="vertical">
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_weight="1"
+                                                    android:background="@drawable/shadow_linearlayout"
+                                                    android:backgroundTint="@color/blue"/>
+
+                                                <LinearLayout
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="match_parent"
+                                                    android:layout_weight="2" />
+                                            </LinearLayout>
                                             <de.hdodenhof.circleimageview.CircleImageView
                                                 android:id="@+id/imgUserStories"
-                                                android:layout_margin="7dp"
+                                                android:layout_marginTop="80dp"
+                                                android:layout_centerHorizontal="true"
                                                 android:layout_width="45dp"
                                                 android:layout_height="45dp"
                                                 app:civ_border_width="3dp"
+                                                app:civ_circle_background_color="@color/white"
                                                 app:civ_border_color="@color/blue"
-                                                android:src="@drawable/anh2"/>
-                                            <TextView
-                                                android:layout_alignParentBottom="true"
-                                                android:layout_marginBottom="10dp"
-                                                android:layout_marginStart="5dp"
-                                                android:layout_width="90dp"
-                                                android:layout_height="wrap_content"
-                                                android:textSize="13sp"
-                                                android:textColor="@color/white"
-                                                android:fontFamily="sans-serif-medium"
-                                                android:text="Nguyễn Minh Thắng"
-                                                />
+                                                android:src="@drawable/ic_baseline_control_point_24"/>
                                         </RelativeLayout>
                                     </LinearLayout>
                                     <RelativeLayout
@@ -131,7 +177,8 @@
                             <RelativeLayout
                                 android:id="@+id/topPostNewNews"
                                 android:layout_width="match_parent"
-                                android:layout_height="50dp">
+                                android:layout_height="50dp"
+                                android:layout_marginBottom="10dp">
                                 <de.hdodenhof.circleimageview.CircleImageView
                                     android:layout_centerVertical="true"
                                     android:id="@+id/avataUserPostNew"
@@ -162,6 +209,8 @@
                                 android:layout_height="0.1dp"
                                 android:background="@color/colorCircle"/>
                             <RelativeLayout
+                                android:paddingTop="5dp"
+                                android:paddingBottom="10dp"
                                 android:layout_below="@+id/hrBelowTopPostNewNews"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">

@@ -13,6 +13,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -29,6 +30,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -42,6 +44,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
 
@@ -49,9 +52,10 @@ import thang.com.wref.R;
 
 public class DetailWeatherFragment extends Fragment{
     private static final String TAG = "DetailWeatherFragment";
-    private final int count = 5;
 
-    private CombinedChart chart ;
+    private LineChart chart ;
+    private ArrayList<Entry> entries;
+    private ArrayList<String> sDay;
 
     private View view;
     private ImageView imgSunWeather;
@@ -89,7 +93,7 @@ public class DetailWeatherFragment extends Fragment{
     private void mapingView(){
         rltSunWeather = (RelativeLayout) view.findViewById(R.id.rltSunWeather);
         rltDuBao5Ngay = (RelativeLayout) view.findViewById(R.id.rltDuBao5Ngay);
-        chart  = (CombinedChart) view.findViewById(R.id.combinedChart);
+        chart  = (LineChart) view.findViewById(R.id.combinedChart);
         imgSunWeather = (ImageView) view.findViewById(R.id.imgSunWeather);
         txtNhietdo = (TextView) view.findViewById(R.id.txtNhietdo);
         bacgroundImgWeather = (RelativeLayout) view.findViewById(R.id.bacgroundImgWeather);
@@ -108,105 +112,97 @@ public class DetailWeatherFragment extends Fragment{
                 animationSundown();
             }
         });
+    }
 
-        ArrayList<String> tack = new ArrayList<>();
-        tack.add("Hôm nay");
-        tack.add("Ngày mai");
-        tack.add("Thứ 2");
-        tack.add("Thứ 3");
-        tack.add("Thứ 4");
-        CombinedData data = new CombinedData();
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        entries = new ArrayList<>();
+        sDay = new ArrayList<>();
+        setUpData();
+        setupChar();
+    }
+    private void setupChar(){
+        Legend legend = chart.getLegend();
+        legend.setEnabled(false);
 
-        Description description = new Description();
-        description.setText("Thứ");
-        chart.setDescription(description);
+        YAxis yAxisLeft = chart.getAxisLeft();
+        yAxisLeft.setEnabled(false);
 
-
-        Legend l = chart.getLegend();
-        l.setWordWrapEnabled(true);
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setDrawInside(false);
-
-        YAxis rightAxis = chart.getAxisRight();
-        rightAxis.setDrawGridLines(false);
-        rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
-
-        YAxis leftAxis = chart.getAxisLeft();
-        leftAxis.setDrawGridLines(false);
-        leftAxis.setAxisMinimum(1f); // this replaces setStartAtZero(true)
-
+        YAxis yAxisRight = chart.getAxisRight();
+        yAxisRight.setEnabled(false);
 
         XAxis xAxis = chart.getXAxis();
-        xAxis.setPosition(XAxis.XAxisPosition.BOTH_SIDED);
-        xAxis.setAxisMinimum(0f);
+        xAxis.setAxisMinimum(-0.5f);
         xAxis.setGranularity(1f);
-        xAxis.setCenterAxisLabels(true);
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(tack));
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(sDay));
+        xAxis.setTextSize(14f);
+        xAxis.setTextColor(Color.WHITE);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-        data.setData(generateLineData());
-        leftAxis.setAxisMaximum(data.getYMax()+10f);
-        data.setData(generateBarData());
-        rightAxis.setAxisMaximum(data.getYMax()+100f);
+        chart.getDescription().setEnabled(false);
+        chart.setScaleEnabled(false);
+        chart.setExtraOffsets(5f,5f,5f,5f);
 
+        LineDataSet lineDataSet = new LineDataSet(entries, "Data set 1");
+        lineDataSet.setFillAlpha(35);
+        lineDataSet.setValueTextSize(12f);
+        lineDataSet.setValueTextColor(Color.WHITE);
+        lineDataSet.setLineWidth(2f);
+        lineDataSet.setColor(Color.WHITE);
+        lineDataSet.setHighlightEnabled(false);
 
-        xAxis.setAxisMaximum(data.getXMax() + 0.5f);
-//        rightAxis.setMaxWidth(data.get);
+        ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
+        iLineDataSets.add(lineDataSet);
 
-        chart.setData(data);
-        chart.invalidate();
-
+        LineData lineData = new LineData(iLineDataSets);
+        yAxisLeft.setAxisMaximum(lineData.getYMax()+0.5f);
+        yAxisLeft.setAxisMinimum(lineData.getYMin()-5f);
+        xAxis.setAxisMaximum(lineData.getXMax()+0.5f);
+        chart.setVisibleXRangeMaximum(5);
+        chart.setData(lineData);
     }
-    private LineData generateLineData() {
+    private void setUpData(){
+        entries.clear();
+        entries.add(new Entry(0, 22f, "°C"));
+        entries.add(new Entry(1, 20f, "°C"));
+        entries.add(new Entry(2, 20f, "°C"));
+        entries.add(new Entry(3, 20f, "°C"));
+        entries.add(new Entry(4, 20f, "°C"));
+        entries.add(new Entry(5, 18f, "°C"));
+        entries.add(new Entry(6, 18f, "°C"));
+        entries.add(new Entry(7, 17f, "°C"));
+        entries.add(new Entry(8, 17f, "°C"));
+        entries.add(new Entry(9, 20f, "°C"));
+        entries.add(new Entry(10, 23f, "°C"));
+        entries.add(new Entry(11, 23f, "°C"));
+        entries.add(new Entry(12, 23f, "°C"));
+        entries.add(new Entry(13, 24f, "°C"));
+        entries.add(new Entry(14, 24f, "°C"));
+        entries.add(new Entry(15, 24f, "°C"));
+        entries.add(new Entry(16, 20f, "°C"));
+        entries.add(new Entry(17, 20f, "°C"));
 
-        LineData d = new LineData();
-
-        ArrayList<Entry> entries = new ArrayList<>();
-
-        for (int index = 0; index < count; index++)
-            entries.add(new Entry(index + 0.5f, getRandom(15, 5)));
-
-        LineDataSet set = new LineDataSet(entries, "Nhiệt độ");
-        set.setColor(Color.rgb(255, 0, 0));
-        set.setLineWidth(2.5f);
-        set.setCircleColor(Color.rgb(240, 238, 70));
-        set.setCircleRadius(5f);
-        set.setFillColor(Color.rgb(255, 0, 0));
-        set.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        set.setDrawValues(true);
-        set.setValueTextSize(16f);
-        set.setValueTextColor(Color.rgb(240, 238, 70));
-
-        set.setAxisDependency(YAxis.AxisDependency.LEFT);
-        d.addDataSet(set);
-
-        return d;
-    }
-    private BarData generateBarData() {
-        ArrayList<BarEntry> entries1 = new ArrayList<>();
-
-        for (int index = 0; index < count; index++) {
-            entries1.add(new BarEntry(index+0.5f, getRandom(50, 50)));
-        }
-
-        BarDataSet set1 = new BarDataSet(entries1, "Lượng mưa");
-        set1.setColor(Color.rgb(60, 220, 78));
-        set1.setValueTextColor(Color.rgb(60, 220, 78));
-        set1.setValueTextSize(16f);
-        set1.setAxisDependency(YAxis.AxisDependency.RIGHT);
-
-        ArrayList<IBarDataSet> iBarDataSets = new ArrayList<>();
-        iBarDataSets.add(set1);
-        float barWidth = 0.8f;
-
-        BarData d = new BarData(set1);
-        d.setBarWidth(barWidth);
-
-        return d;
-    }
-    private float getRandom(float range, float start){
-        return (float) (Math.random() * range) + start;
+        sDay.clear();
+        sDay.add("Bây giờ");
+        sDay.add("01:00");
+        sDay.add("02:00");
+        sDay.add("03:00");
+        sDay.add("04:00");
+        sDay.add("05:00");
+        sDay.add("06:00");
+        sDay.add("07:00");
+        sDay.add("08:00");
+        sDay.add("09:00");
+        sDay.add("10:00");
+        sDay.add("11:00");
+        sDay.add("12:00");
+        sDay.add("13:00");
+        sDay.add("14:00");
+        sDay.add("15:00");
+        sDay.add("16:00");
+        sDay.add("17:00");
+        sDay.add("18:00");
     }
     private void animationSunrise(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

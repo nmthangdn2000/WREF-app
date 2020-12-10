@@ -5,11 +5,11 @@ import com.google.gson.annotations.SerializedName;
 public class UsersModel {
     @SerializedName("_id")
     private String id;
-    @SerializedName("username")
+    @SerializedName("userName")
     private String username;
     @SerializedName("email")
     private String email;
-    @SerializedName("password")
+    @SerializedName("passWord")
     private String password;
     @SerializedName("avata")
     private String avata;

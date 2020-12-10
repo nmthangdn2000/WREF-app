@@ -17,6 +17,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -25,6 +27,10 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 import thang.com.wref.Adapter.NewsAdapter;
 import thang.com.wref.Adapter.StoriesAdapter;
 import thang.com.wref.Main.Stories.CubeTransformerViewpager;
@@ -32,7 +38,9 @@ import thang.com.wref.Main.Stories.StoriesFragment;
 import thang.com.wref.Main.Stories.StoriesViewpaerAdapter;
 import thang.com.wref.Models.NewsModels;
 import thang.com.wref.Models.StoriesModels;
+import thang.com.wref.NetworkUtil;
 import thang.com.wref.R;
+import thang.com.wref.Retrofits.NewsRetrofit;
 import thang.com.wref.fragment.CommentFragment;
 
 public class SocialNetworkFragment extends Fragment implements View.OnClickListener, View.OnTouchListener{
@@ -45,13 +53,18 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     private ArrayList<StoriesModels> storiesArr;
     private NewsAdapter newsAdapter;
     private StoriesAdapter storiesAdapter;
-    private RoundedImageView imgStories;
+    private LinearLayout btnPostNewNews;
+    private SearchView searchView;
 
     private ViewPager2 viewPager2story;
     private StoriesViewpaerAdapter storiesViewpaerAdapter;
     private SlidingUpPanelLayout slidingUpPanelLayout;
     private NewsAdapter.onClickRecyclerNews mListenerNews;
     private FrameLayout fragmentCommnet;
+
+    private Retrofit retrofit;
+    private NetworkUtil networkUtil;
+    private NewsRetrofit newsRetrofit;
 
     public SocialNetworkFragment(MeowBottomNavigation meowBottomNavigation) {
         this.meowBottomNavigation = meowBottomNavigation;
@@ -61,6 +74,8 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        networkUtil = new NetworkUtil();
+        retrofit = networkUtil.getRetrofit();
     }
 
     @Override
@@ -105,6 +120,9 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
             case R.id.SlidingUpPanelLayout:
 
                 break;
+            case R.id.btnPostNewNews:
+                clickPostNews();
+                break;
             default:
                 break;
         }
@@ -115,10 +133,25 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         rcvNews = (RecyclerView) view.findViewById(R.id.rcvNews);
         viewPager2story = (ViewPager2) view.findViewById(R.id.storiesViewpager);
         slidingUpPanelLayout = (SlidingUpPanelLayout) view.findViewById(R.id.SlidingUpPanelLayout);
-        imgStories = (RoundedImageView) view.findViewById(R.id.imgStories);
         fragmentCommnet = (FrameLayout) view.findViewById(R.id.fragmentCommnet);
+        btnPostNewNews = (LinearLayout) view.findViewById(R.id.btnPostNewNews);
+        searchView = (SearchView) view.findViewById(R.id.searchView);
 
-        imgStories.setOnClickListener(this);
+        btnPostNewNews.setOnClickListener(this);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
+    private void clickPostNews(){
+
     }
     private void setupRecyclerView(){
         rcvStories.setHasFixedSize(true);
@@ -144,7 +177,31 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     }
     private void addNewsAdapter(){
         newsArr.clear();
-//        newsAdapter.notifyDataSetChanged();
+        newsRetrofit = retrofit.create(NewsRetrofit.class);
+        Call<List<NewsModels>> listCall = newsRetrofit.getNews();
+        listCall.enqueue(new Callback<List<NewsModels>>() {
+            @Override
+            public void onResponse(Call<List<NewsModels>> call, Response<List<NewsModels>> response) {
+                if(!response.isSuccessful()){
+                    Toast.makeText(getContext(), "Không có mạng", Toast.LENGTH_SHORT).show();
+                }else{
+                    Log.d(TAG, "onResponse: "+response.body());
+                    List<NewsModels> news = response.body();
+                    for(NewsModels post : news){
+                        newsArr.add(post);
+                    }
+//                    Collections.reverse(arrayPosts);
+                    newsAdapter.notifyDataSetChanged();
+                }
+                call.cancel();
+            }
+
+            @Override
+            public void onFailure(Call<List<NewsModels>> call, Throwable t) {
+                Log.d(TAG, "onFailure: "+t.getMessage());
+                call.cancel();
+            }
+        });
         newsAdapter = new NewsAdapter(newsArr, getContext().getApplicationContext(), mListenerNews);
         rcvNews.setAdapter(newsAdapter);
     }
@@ -156,7 +213,6 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-
             }
         });
         ArrayList<StoriesModels> stories = new ArrayList<>();
@@ -184,7 +240,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                     animation.setDuration(500);
                     meowBottomNavigation.setVisibility(View.VISIBLE);
                     meowBottomNavigation.startAnimation(animation);
-
+                    clearFragment();
                 }
             }
         });
@@ -193,6 +249,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         mListenerNews = new NewsAdapter.onClickRecyclerNews() {
             @Override
             public void onClickComment(int position, LinearLayout btnComment) {
+                Log.d(TAG, "onClickComment: aaaaaaaaaaaaa"+ getFragmentManager().getFragments().size());
                 viewPager2story.setVisibility(View.INVISIBLE);
                 fragmentCommnet.setVisibility(View.VISIBLE);
                 Log.d(TAG, "onClickComment: "+position);
@@ -200,9 +257,19 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 meowBottomNavigation.startAnimation(animation);
                 meowBottomNavigation.setVisibility(View.GONE);
                 CommentFragment commentFragment = new CommentFragment();
-                getFragmentManager().beginTransaction().add(R.id.fragmentCommnet, commentFragment).commit();
+                getFragmentManager().beginTransaction().add(R.id.fragmentCommnet, commentFragment, "commentFragment").commit();
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
             }
         };
+    }
+    private void clearFragment(){
+        for (Fragment fragment : getFragmentManager().getFragments()) {
+            if (fragment.getTag().equals("commentFragment")) {
+                getFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+            else if (fragment.getTag().equals("postNewsFragment")) {
+                getFragmentManager().beginTransaction().remove(fragment).commit();
+            }
+        }
     }
 }

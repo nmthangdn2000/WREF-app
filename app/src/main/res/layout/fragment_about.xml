@@ -4,11 +4,240 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Main.AboutFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        android:clipToPadding="false">
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_text"
+                android:text="Menu"
+                android:textStyle="bold"
+                android:textSize="26sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:paddingTop="10dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:clipToPadding="false">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:elevation="15dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/anh4"
+                android:background="@drawable/shadow_cirle_img"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_text"
+                    android:text="Nguyễn Minh Thắng"
+                    android:textStyle="bold"
+                    android:textSize="18sp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+                    <LinearLayout
+                        android:layout_gravity="center"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:backgroundTint="@color/time"
+                        android:background="@drawable/ic_baseline_location_on_24"/>
+                    <TextView
+                        android:layout_gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/time"
+                        android:text="Hòa Nhơn, Hòa Vang"
+                        android:textSize="14sp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="0.1sp"
+            android:background="@color/time"/>
+        <LinearLayout
+            android:paddingTop="10dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:clipToPadding="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_marginBottom="15dp"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:elevation="15dp"
+                android:background="@drawable/shadow_linearlayout">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Thông tin tài khoảng"
+                    android:textSize="16sp"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/color_text"
+                    android:drawableTint="@color/color_text"
+                    android:drawableLeft="@drawable/ic_baseline_account_circle_24"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="15dp"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:elevation="15dp"
+                android:background="@drawable/shadow_linearlayout">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bản đồ"
+                    android:textSize="16sp"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/color_text"
+                    android:drawableLeft="@drawable/ic_baseline_map_24"
+                    android:drawableTint="@color/color_text"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="15dp"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:elevation="15dp"
+                android:background="@drawable/shadow_linearlayout">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Đập thủy điện"
+                    android:textSize="16sp"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/color_text"
+                    android:drawableLeft="@drawable/ic_power_plant"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="15dp"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:elevation="15dp"
+                android:background="@drawable/shadow_linearlayout">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Thời tiết"
+                    android:textSize="16sp"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/color_text"
+                    android:drawableTint="@color/color_text"
+                    android:drawableLeft="@drawable/ic_baseline_cloud_circle_24"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="15dp"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:elevation="15dp"
+                android:background="@drawable/shadow_linearlayout">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tôi cần giúp đỡ"
+                    android:textSize="16sp"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/color_text"
+                    android:drawableLeft="@drawable/ic_sos"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="15dp"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:elevation="15dp"
+                android:background="@drawable/shadow_linearlayout">
+                <TextView
+                    android:gravity="center_vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Trợ giúp &amp; Hổ trợ"
+                    android:textSize="16sp"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/color_text"
+                    android:drawableTint="@color/color_text"
+                    android:drawableLeft="@drawable/ic_baseline_support_agent_24"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="15dp"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:elevation="15dp"
+                android:background="@drawable/shadow_linearlayout">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_baseline_settings_applications_24"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/color_text"
+                    android:gravity="center_vertical"
+                    android:text="Cài đặt"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginBottom="15dp"
+                android:paddingLeft="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:gravity="center_vertical"
+                android:elevation="15dp"
+                android:background="@drawable/shadow_linearlayout">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_logout"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/color_text"
+                    android:gravity="center_vertical"
+                    android:text="Đăng xuất"
+                    android:textColor="@color/color_text"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
 </FrameLayout>

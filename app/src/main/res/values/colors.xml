@@ -18,4 +18,5 @@
     <color name="nig_color">#99000000</color>
     <color name="icon_video">#f43b47</color>
     <color name="icon_color_lens">#f9d423</color>
+    <color name="color_text">#050505</color>
 </resources>
