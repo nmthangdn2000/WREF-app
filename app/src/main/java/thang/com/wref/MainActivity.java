@@ -3,8 +3,10 @@ package thang.com.wref;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.WindowManager;
 
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;

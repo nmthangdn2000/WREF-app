@@ -3,38 +3,58 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:padding="20dp"
         android:orientation="vertical">
         <LinearLayout
+            android:id="@+id/linerRclImg"
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <androidx.recyclerview.widget.RecyclerView
+                android:visibility="gone"
                 android:id="@+id/rcvInfTouchLocation"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="UBNN Xã Hòa Nhơn"
-                android:textSize="22sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/time"
-                android:text="Văn phòng chính quyền địa phương v.v.v"
-                android:textSize="18sp"/>
-        </LinearLayout>
-    </LinearLayout>
+       <RelativeLayout
+           android:layout_below="@+id/linerRclImg"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+           <LinearLayout
+               android:layout_marginTop="10dp"
+               android:layout_centerHorizontal="true"
+               android:layout_width="30dp"
+               android:layout_height="5dp"
+               android:background="@color/colorCircle"/>
+           <RelativeLayout
+               android:layout_marginTop="20dp"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+               <TextView
+                   android:id="@+id/txtNameLocation"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textColor="@color/black"
+                   android:text="Xã Hòa Nhơn"
+                   android:textSize="20sp"/>
+               <TextView
+                   android:layout_below="@+id/txtNameLocation"
+                   android:id="@+id/txtDesLocation"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:textColor="@color/time"
+                   android:text="Trời nắng - 27/25°C"
+                   android:textSize="14sp"/>
+           </RelativeLayout>
+           <ImageView
+               android:layout_margin="10dp"
+               android:layout_width="70dp"
+               android:layout_height="70dp"
+               android:layout_alignParentRight="true"
+               android:src="@drawable/ic_sun_small"/>
+       </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>

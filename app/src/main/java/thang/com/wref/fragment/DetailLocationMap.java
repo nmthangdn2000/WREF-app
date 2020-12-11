@@ -62,5 +62,7 @@ public class DetailLocationMap extends Fragment {
                 context, RecyclerView.HORIZONTAL, false
         );
         rcvInfTouchLocation.setLayoutManager(linearLayoutManager);
+        detailLocationMapAdapter = new DetailLocationMapAdapter(context, arrImg);
+        rcvInfTouchLocation.setAdapter(detailLocationMapAdapter);
     }
 }

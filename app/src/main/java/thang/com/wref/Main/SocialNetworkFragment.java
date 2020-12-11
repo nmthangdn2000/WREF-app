@@ -1,5 +1,6 @@
 package thang.com.wref.Main;
 
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -13,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -61,6 +64,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     private SlidingUpPanelLayout slidingUpPanelLayout;
     private NewsAdapter.onClickRecyclerNews mListenerNews;
     private FrameLayout fragmentCommnet;
+    private boolean check = false;
 
     private Retrofit retrofit;
     private NetworkUtil networkUtil;
@@ -74,6 +78,10 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(Build.VERSION.SDK_INT >= 21){
+            Window window = getActivity().getWindow();
+            window.setStatusBarColor(getContext().getResources().getColor(R.color.colorStatusBar_Weather));
+        }
         networkUtil = new NetworkUtil();
         retrofit = networkUtil.getRetrofit();
     }

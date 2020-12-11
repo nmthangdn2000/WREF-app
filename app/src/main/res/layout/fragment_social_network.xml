@@ -26,7 +26,6 @@
                 <ImageView
                     android:id="@+id/iconSearchBar"
                     android:layout_marginStart="20dp"
-                    android:layout_marginEnd="10dp"
                     android:layout_centerVertical="true"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
@@ -297,7 +296,8 @@
                     <LinearLayout
                         android:layout_below="@+id/PostNewNews"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:paddingBottom="40dp">
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rcvNews"
                             android:layout_width="match_parent"

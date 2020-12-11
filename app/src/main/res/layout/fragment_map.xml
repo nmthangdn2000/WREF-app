@@ -117,7 +117,7 @@
                        <com.makeramen.roundedimageview.RoundedImageView
                            android:layout_width="80dp"
                            android:layout_height="80dp"
-                           android:src="@drawable/anh4"
+                           android:src="@drawable/google_map"
                            android:scaleType="centerCrop"
                            app:riv_corner_radius_bottom_left="5dp"
                            app:riv_corner_radius_top_left="5dp"
@@ -148,7 +148,7 @@
                        <com.makeramen.roundedimageview.RoundedImageView
                            android:layout_width="80dp"
                            android:layout_height="80dp"
-                           android:src="@drawable/anh4"
+                           android:src="@drawable/gis_map"
                            android:scaleType="centerCrop"
                            app:riv_corner_radius_bottom_left="5dp"
                            app:riv_corner_radius_top_left="5dp"
@@ -178,7 +178,7 @@
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/anh4"
+                        android:src="@drawable/temperature_new"
                         android:scaleType="centerCrop"
                         app:riv_corner_radius_bottom_left="5dp"
                         app:riv_corner_radius_top_left="5dp"
@@ -203,7 +203,7 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/anh4"
+                        android:src="@drawable/clouds_new"
                         app:riv_corner_radius_bottom_left="5dp"
                         app:riv_corner_radius_bottom_right="5dp"
                         app:riv_corner_radius_top_left="5dp"
@@ -226,7 +226,7 @@
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/anh4"
+                        android:src="@drawable/precipitation_new"
                         android:scaleType="centerCrop"
                         app:riv_corner_radius_bottom_left="5dp"
                         app:riv_corner_radius_top_left="5dp"

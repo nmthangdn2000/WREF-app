@@ -21,7 +21,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginRight="15dp"
-                android:src="@drawable/anh1"/>
+                android:src="@drawable/anh5"/>
             <TextView
                 android:id="@+id/txtUserName"
                 android:layout_width="match_parent"
@@ -38,9 +38,9 @@
                 android:layout_toRightOf="@+id/imgUserNewsssss"
                 android:layout_below="@+id/txtUserName"
                 android:layout_height="wrap_content"
-                android:text="1 d"
+                android:text="1 ngày"
                 android:textColor="@color/time"
-                android:textSize="16sp" />
+                android:textSize="14sp" />
             <ImageView
                 android:layout_marginLeft="10dp"
                 android:id="@+id/iconMore"

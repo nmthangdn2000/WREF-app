@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,6 +20,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -128,6 +131,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         latLngs = new Vector<>();
+        if(Build.VERSION.SDK_INT >= 21){
+            Window window = getActivity().getWindow();
+            window.setStatusBarColor(getContext().getResources().getColor(R.color.purple_700));
+        }
     }
 
     @Override

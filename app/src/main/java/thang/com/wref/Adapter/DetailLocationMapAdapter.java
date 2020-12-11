@@ -34,12 +34,29 @@ public class DetailLocationMapAdapter extends RecyclerView.Adapter<DetailLocatio
 
     @Override
     public void onBindViewHolder(@NonNull DetailLocationMapAdapter.ViewHodler holder, int position) {
-        Glide.with(context).load(""+imgURl.get(position)).fitCenter().centerCrop().into(holder.img);
+//        Glide.with(context).load(""+imgURl.get(position)).fitCenter().centerCrop().into(holder.img);
+        if(position == 0)
+            Glide.with(context).load(getImage("anh1")).fitCenter().centerCrop().into(holder.img);
+        if(position == 1)
+            Glide.with(context).load(getImage("anh2")).fitCenter().centerCrop().into(holder.img);
+        if(position == 2)
+            Glide.with(context).load(getImage("anh3")).fitCenter().centerCrop().into(holder.img);
+        if(position == 3)
+            Glide.with(context).load(getImage("anh4")).fitCenter().centerCrop().into(holder.img);
+        if(position == 4)
+            Glide.with(context).load(getImage("anh5")).fitCenter().centerCrop().into(holder.img);
+        if(position == 5)
+            Glide.with(context).load(getImage("anh6")).fitCenter().centerCrop().into(holder.img);
     }
+    public int getImage(String imageName) {
 
+        int drawableResourceId = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+
+        return drawableResourceId;
+    }
     @Override
     public int getItemCount() {
-        return imgURl.size();
+        return 6;
     }
 
     public class ViewHodler extends RecyclerView.ViewHolder {

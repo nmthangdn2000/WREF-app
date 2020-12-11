@@ -46,7 +46,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
     public void onBindViewHolder(@NonNull ViewHodler holder, int position) {
         Log.d(TAG, "onBindViewHolder: "+arrayList.get(position).getMedia()[0]);
         Glide.with(context).load(BASE_URL+"uploads/"+arrayList.get(position).getMedia()[0]).fitCenter().centerCrop().into(holder.imgNews);
-        Glide.with(context).load(BASE_URL+"uploads/"+arrayList.get(position).getIdUser().getAvata()).centerCrop().fitCenter().into(holder.imgUserNewsssss);
+//        Glide.with(context).load(BASE_URL+"uploads/"+arrayList.get(position).getIdUser().getAvata()).centerCrop().fitCenter().into(holder.imgUserNewsssss);
         holder.txtUserName.setText(arrayList.get(position).getIdUser().getUsername());
         holder.txtLocation.setText(arrayList.get(position).getIdLocation().getName());
     }

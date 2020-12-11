@@ -17,10 +17,14 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
@@ -43,6 +47,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
@@ -76,8 +81,10 @@ public class DetailWeatherFragment extends Fragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
+        if(Build.VERSION.SDK_INT >= 21){
+            Window window = getActivity().getWindow();
+            window.setStatusBarColor(getContext().getResources().getColor(R.color.purple_700));
+        }
     }
 
     @Override
@@ -138,7 +145,7 @@ public class DetailWeatherFragment extends Fragment{
         xAxis.setValueFormatter(new IndexAxisValueFormatter(sDay));
         xAxis.setTextSize(14f);
         xAxis.setTextColor(Color.WHITE);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
 
         chart.getDescription().setEnabled(false);
         chart.setScaleEnabled(false);
@@ -151,6 +158,13 @@ public class DetailWeatherFragment extends Fragment{
         lineDataSet.setLineWidth(2f);
         lineDataSet.setColor(Color.WHITE);
         lineDataSet.setHighlightEnabled(false);
+        lineDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) Math.floor(value)) + "°C";
+            }
+        });
+        lineDataSet.notifyDataSetChanged();
 
         ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
         iLineDataSets.add(lineDataSet);
