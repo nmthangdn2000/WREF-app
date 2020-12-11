@@ -3,6 +3,8 @@ const fs = require('fs');
 
 const getPosts = async (req, res) => {
     await Posts.find()
+        .populate('idUser','userName avata')
+        .populate('idLocation')
         .then(data => res.send(data))
         .catch(err => console.log(""+ err))
     

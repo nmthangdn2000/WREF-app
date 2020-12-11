@@ -25,7 +25,8 @@ async function potsWeather(arr, id){
 }
 
 module.exports.restApi = function restApi(latiude, longitude, id){
-    rp('https://api.openweathermap.org/data/2.5/onecall?lat=16.007667&lon=108.126810&exclude=hourly&appid=33e61186254ecc50e7d4298f5fb97f4d')
+    const URL = 'https://api.openweathermap.org/data/2.5/onecall?lat='+latiude+'&lon='+longitude+'&exclude=hourly&appid='+process.env.KEY_API
+    rp(URL)
         .then(async (data) =>{
             const api = JSON.parse(data)
             const array = []
