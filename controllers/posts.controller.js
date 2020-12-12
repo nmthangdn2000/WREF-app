@@ -1,12 +1,15 @@
 const Posts = require('../models/posts.model')
-const fs = require('fs');
+const fs = require('fs')
 
 const getPosts = async (req, res) => {
     await Posts.find()
         .populate('idUser','userName avata')
         .populate('idLocation')
         .then(data => res.send(data))
-        .catch(err => console.log(""+ err))
+        .catch(err =>  res.json({
+            success: false,
+            msg: "get Posts failed"
+        }))
     
 }
 const addNewPosts = async (req, res) => {
@@ -24,7 +27,17 @@ const addNewPosts = async (req, res) => {
         create_at:new Date,
         update_at: new Date
     })
-    await newPost.save().then(data => console.log(data)).catch(err => console.log(" " + err))
+    await newPost.save().then(data => {
+        res.json({
+            success: true,
+            msg: "Posts new success"
+        })
+    }).catch(err => 
+        res.json({
+            success: false,
+            msg: "Posts new failed"
+        })
+    )
 }
 const editPost= async (req, res) => {
     await Posts.updateOne({_id: req.params.id}, {$set:{

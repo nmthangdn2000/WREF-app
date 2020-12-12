@@ -14,7 +14,17 @@ const postSignUp = async (req, res) => {
         create_at: new Date,
         update_at: new Date
     })
-    await newUser.save().then(data => res.send(data)).catch(err => console.log(err))
+    await newUser.save().then(data => {
+        res.json({
+            success: true,
+            msg: "SignUp success"
+        })
+    }).catch(err => 
+        res.json({
+            success: false,
+            msg: "SignUp failed"
+        })
+    )
 }
 // đăng nhập
 const postSignIn = async (req, res) => {
