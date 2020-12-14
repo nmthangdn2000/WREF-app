@@ -3,7 +3,7 @@ const CronJob  = require('cron').CronJob
 const getData = require('./getDataWeather');
 
 const job = new CronJob(
-    '*/1 * * * *', function (){
+    '0 */3 * * *', function (){
         const d = new Date()
         console.log("cc me m ày   "+ d.getMinutes())
         loadLocation()

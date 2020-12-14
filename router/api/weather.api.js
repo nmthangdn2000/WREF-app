@@ -4,4 +4,8 @@ const controller = require('../../controllers/weather.controller')
 
 router.get('/weather', controller.getWeather)
 
+router.post('/detailweather', controller.getDetailWeather)
+
+router.post('/getweather24h', controller.getWeatehr24h)
+
 module.exports = router

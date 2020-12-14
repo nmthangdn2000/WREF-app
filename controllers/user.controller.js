@@ -1,6 +1,7 @@
 const User = require('../models/user.model')
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = require('../config/appconfig')
+const { find } = require('../models/user.model')
 
 const endCodeToken = (inforUser) => {
     return jwt.sign(inforUser, JWT_SECRET, {expiresIn: '30d'})
@@ -35,9 +36,25 @@ const postSignIn = async (req, res) => {
     }
     const token = endCodeToken(inforUser)
     res.json({
-        data,
+        _id: data._id,
+        userName: data.userName,
+        email: data.email,
+        avata: data.avata,
         token: token
     })
+}
+// check login
+const checkLogin = async (req, res) => {
+    await User.findById(req.user._id)
+        .then(data =>
+            res.send(data)
+        )
+        .catch(err =>
+            res.json({
+                success: false,
+                msg: "Failed"
+              })
+        )
 }
 function getInfUser(req, res){
     
@@ -60,4 +77,6 @@ module.exports = {
     editUser: editUser,
     // delete user
     deleteUser: deleteUser,
+    //check login
+    checkLogin: checkLogin
 }

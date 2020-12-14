@@ -1,4 +1,5 @@
 const Weather = require('../models/weather.model')
+const GetData = require('../service/getDataWeather')
 
 const getWeather = async (req, res) => {
     await Weather.findOne({idLocation: req.res})
@@ -12,6 +13,17 @@ const getWeather = async (req, res) => {
             })
         )
 }
+
+const getDetailWeather = async (req, res) =>{
+    console.log(req.body);
+    const data = GetData.getWeatehrWithLocation(req.body.lat, req.body.long, res)
+}
+const getWeatehr24h = async (req, res) => {
+    console.log(req.body);
+    const data = GetData.getWeatehr24h(req.body.lat, req.body.long, res)
+}
 module.exports = {
-    getWeather
+    getWeather,
+    getDetailWeather,
+    getWeatehr24h
 }

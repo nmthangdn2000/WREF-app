@@ -2,53 +2,37 @@ const Location = require('../models/location.model')
 const Posts = require('../models/posts.model')
 const Weather = require('../models/weather.model')
 const getDataWeather = require('../service/getDataWeather')
+const GetData = require('../service/getDataWeather')
 
+const getAllDatalocation = async (req, res) => {
+    await Location.find()
+    .then(data => {
+        res.send(data)
+    }).catch(err => {
+        console.log("",err);
+        logErr(res, "get all data Location failed")
+    })
+}
+//
 const getDataLocation = async (req, res) => {
+    console.log(req.body);
+    const img = []
     const dataL = await Location.findOne({name: req.body.name})
     if(dataL){
-        const dataP = await Posts.find({idLocation: dataL._id})
-        if(dataP){
-            const img = []
-            const data_img = dataP.map((element) => {
-                element.media.forEach(value => {
-                    img.push(value)
-                })
-                return element.media
-            })
-            const dataW = await Weather.findOne({idLocation: dataL._id})
-            if(!dataW){
-                await getDataWeather.restApi(dataL.latiude, dataL.longitude, dataL._id)
-                    .then(data => {
-                        res.json({
-                            location: dataL,
-                            media: img,
-                            weather: dataW
-                        })
-                        return
-                    }).catch(err => {
-                        console.log("",err);
-                        logErr(res, "get data Location failed")
+        await Posts.find({idLocation: dataL._id})
+            .then(dataP => {
+                const data_img = dataP.map((element) => {
+                    element.media.forEach(value => {
+                        img.push(value)
                     })
-            }
-            else if(dataL && dataP && dataW){
-                res.json({
-                    location: dataL,
-                    media: img,
-                    weather: dataW
+                    return element.media
                 })
-                return
-            }else{
-                logErr(res, "get data Location failed")
-                return
-            }
-        }else{
-            logErr(res, "get data Location failed")
-            return
+            })
         }
-    }else{
-        logErr(res, "get data Location failed")
-        return
-    }
+    if(img.length > 0)
+        GetData.getWeatehrLocation(dataL.latiude, dataL.longitude, res, img);
+    else   
+        GetData.getWeatehrLocation(req.body.lati, req.body.longitude, res, img);
 }
 //
 const postLocation = async (req, res) =>{
@@ -76,6 +60,7 @@ function logErr(res, msg){
     })
 }
 module.exports = {
+    getAllDatalocation,
     getDataLocation,
     postLocation
 }

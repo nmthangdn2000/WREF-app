@@ -39,3 +39,36 @@ module.exports.restApi = function restApi(latiude, longitude, id){
         })
         .catch(err => console.log("", err))
 }
+
+module.exports.getWeatehrWithLocation = function getWeatehrWithLocation(latiude, longitude, res){
+    const URL = 'https://api.openweathermap.org/data/2.5/onecall?lat='+latiude+'&lon='+longitude+'&exclude=hourly&appid='+process.env.KEY_API
+    rp(URL)
+        .then(async (data) =>{
+            const api = JSON.parse(data)
+            res.send(api)
+        })
+        .catch(err => console.log("lỗi"))
+}
+
+module.exports.getWeatehr24h = function getWeatehr24h(latiude, longitude, res){
+    const URL = 'https://api.openweathermap.org/data/2.5/onecall?lat='+latiude+'&lon='+longitude+'&exclude=minutely,daily&appid='+process.env.KEY_API
+    rp(URL)
+        .then(async (data) =>{
+            const api = JSON.parse(data)
+            res.send(api)
+        })
+        .catch(err => console.log("lỗi"))
+}
+
+module.exports.getWeatehrLocation = function getWeatehrLocation(latiude, longitude, res, media){
+    const URL = 'https://api.openweathermap.org/data/2.5/onecall?lat='+latiude+'&lon='+longitude+'&exclude=hourly&appid='+process.env.KEY_API
+    rp(URL)
+        .then(async (data) =>{
+            const weather = JSON.parse(data)
+            res.json({
+                weather,
+                media
+            })
+        })
+        .catch(err => console.log("lỗi"))
+}

@@ -2,7 +2,9 @@ const Stories = require('../models/stories.model')
 const fs = require('fs');
 
 const getStories = async (req, res) => {
-    await Stories.find().then(data => {
+    await Stories.find().
+    populate('idUser','userName avata')
+    .then(data => {
         res.send(data)
     }).catch(err => {
         console.log("", err)

@@ -8,4 +8,6 @@ router.put('/put-infor', controller.editUser)
 
 router.delete('/delete-user', controller.deleteUser)
 
+router.get('/checklogin', controller.checkLogin)
+
 module.exports = router
