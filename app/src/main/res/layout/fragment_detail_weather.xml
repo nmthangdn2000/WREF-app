@@ -65,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:text="Hòa Nhơn - Đà Nẵng"
                         android:textColor="@color/colorWeather"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:layout_centerHorizontal="true"/>
                     <TextView
                         android:layout_marginTop="20dp"
@@ -77,6 +77,7 @@
                         android:textColor="@color/colorWeather"
                         android:textSize="65sp"/>
                     <TextView
+                        android:id="@+id/txtDesWeather"
                         android:layout_below="@+id/txtNhietdo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -114,6 +115,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="60dp">
                             <TextView
+                                android:id="@+id/txtWeatherCurrent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Hôm nay-Trời nắng"
@@ -121,6 +123,7 @@
                                 android:textColor="@color/colorWeather"
                                 android:layout_centerVertical="true"/>
                             <ImageView
+                                android:id="@+id/imhWeather1"
                                 android:layout_centerInParent="true"
                                 android:layout_toLeftOf="@+id/txtDataNhietdo1"
                                 android:layout_width="60dp"
@@ -144,6 +147,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="60dp">
                             <TextView
+                                android:id="@+id/txtWeatherNextOne"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Ngày mai-Mưa nhỏ"
@@ -151,6 +155,7 @@
                                 android:textColor="@color/colorWeather"
                                 android:layout_centerVertical="true"/>
                             <ImageView
+                                android:id="@+id/imhWeather2"
                                 android:layout_centerInParent="true"
                                 android:layout_toLeftOf="@+id/txtDataNhietdo2"
                                 android:layout_width="60dp"
@@ -174,6 +179,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="60dp">
                             <TextView
+                                android:id="@+id/txtWeatherNextTwo"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Thứ 7-Nhiều mây"
@@ -181,6 +187,7 @@
                                 android:textColor="@color/colorWeather"
                                 android:layout_centerVertical="true"/>
                             <ImageView
+                                android:id="@+id/imhWeather3"
                                 android:layout_centerInParent="true"
                                 android:layout_toLeftOf="@+id/txtDataNhietdo3"
                                 android:layout_width="60dp"

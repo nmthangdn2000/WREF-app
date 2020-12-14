@@ -21,6 +21,17 @@ public class MainActivity extends AppCompatActivity {
     private MeowBottomNavigation bottomNavigation;
     private ViewPager2 viewPager2;
     private ViewPagerAdapter viewPagerAdapter;
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,9 +43,11 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation = findViewById(R.id.BottomNavigation);
         viewPager2 = findViewById(R.id.ViewPager2);
         viewPager2.setUserInputEnabled(false);
+        viewPager2.setOffscreenPageLimit(1);
         viewPagerAdapter = new ViewPagerAdapter(this, bottomNavigation);
         viewPager2.setAdapter(viewPagerAdapter);
     }
+
     private void setBottomNavigation(){
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_baseline_map_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_newspaper_folded));

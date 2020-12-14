@@ -12,10 +12,13 @@ public class DetailWeatherModel {
     private currentWeather current;
     @SerializedName("daily")
     private dailyWeather[] daily;
+    @SerializedName("hourly")
+    private currentWeather[] hourly;
 
-    public DetailWeatherModel(currentWeather current, dailyWeather[] daily) {
+    public DetailWeatherModel(currentWeather current, dailyWeather[] daily, currentWeather[] hourly) {
         this.current = current;
         this.daily = daily;
+        this.hourly = hourly;
     }
 
     @Override
@@ -23,6 +26,7 @@ public class DetailWeatherModel {
         return "DetailWeatherModel{" +
                 "current=" + current +
                 ", daily=" + Arrays.toString(daily) +
+                ", hourly=" + Arrays.toString(hourly) +
                 '}';
     }
 
@@ -40,5 +44,13 @@ public class DetailWeatherModel {
 
     public void setDaily(dailyWeather[] daily) {
         this.daily = daily;
+    }
+
+    public currentWeather[] getHourly() {
+        return hourly;
+    }
+
+    public void setHourly(currentWeather[] hourly) {
+        this.hourly = hourly;
     }
 }

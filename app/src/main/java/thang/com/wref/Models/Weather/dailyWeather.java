@@ -18,7 +18,7 @@ public class dailyWeather {
     @SerializedName("humidity")
     private int humidity;
     @SerializedName("uvi")
-    private int uvi;
+    private float uvi;
     @SerializedName("clouds")
     private int clouds;
     @SerializedName("wind_speed")
@@ -26,11 +26,11 @@ public class dailyWeather {
     @SerializedName("wind_deg")
     private int wind_deg;
     @SerializedName("weather")
-    private weather weather;
+    private weather[] weather;
     @SerializedName("rain")
     private float rain;
 
-    public dailyWeather(int dt, int sunrise, int sunset, thang.com.wref.Models.Weather.temp temp, thang.com.wref.Models.Weather.temp feels_like, int pressure, int humidity, int uvi, int clouds, float wind_speed, int wind_deg, thang.com.wref.Models.Weather.weather weather, float rain) {
+    public dailyWeather(int dt, int sunrise, int sunset, temp temp, temp feels_like, int pressure, int humidity, float uvi, int clouds, float wind_speed, int wind_deg, weather[] weather, float rain) {
         this.dt = dt;
         this.sunrise = sunrise;
         this.sunset = sunset;
@@ -89,19 +89,19 @@ public class dailyWeather {
         this.sunset = sunset;
     }
 
-    public thang.com.wref.Models.Weather.temp getTemp() {
+    public temp getTemp() {
         return temp;
     }
 
-    public void setTemp(thang.com.wref.Models.Weather.temp temp) {
+    public void setTemp(temp temp) {
         this.temp = temp;
     }
 
-    public thang.com.wref.Models.Weather.temp getFeels_like() {
+    public temp getFeels_like() {
         return feels_like;
     }
 
-    public void setFeels_like(thang.com.wref.Models.Weather.temp feels_like) {
+    public void setFeels_like(temp feels_like) {
         this.feels_like = feels_like;
     }
 
@@ -121,11 +121,11 @@ public class dailyWeather {
         this.humidity = humidity;
     }
 
-    public int getUvi() {
+    public float getUvi() {
         return uvi;
     }
 
-    public void setUvi(int uvi) {
+    public void setUvi(float uvi) {
         this.uvi = uvi;
     }
 
@@ -153,11 +153,11 @@ public class dailyWeather {
         this.wind_deg = wind_deg;
     }
 
-    public thang.com.wref.Models.Weather.weather getWeather() {
+    public weather[] getWeather() {
         return weather;
     }
 
-    public void setWeather(thang.com.wref.Models.Weather.weather weather) {
+    public void setWeather(weather[] weather) {
         this.weather = weather;
     }
 

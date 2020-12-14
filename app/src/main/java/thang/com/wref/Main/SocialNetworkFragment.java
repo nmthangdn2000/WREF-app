@@ -1,5 +1,6 @@
 package thang.com.wref.Main;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -36,6 +37,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import thang.com.wref.Adapter.NewsAdapter;
 import thang.com.wref.Adapter.StoriesAdapter;
+import thang.com.wref.Login.SharedPreferencesManagement;
 import thang.com.wref.Main.Stories.CubeTransformerViewpager;
 import thang.com.wref.Main.Stories.StoriesFragment;
 import thang.com.wref.Main.Stories.StoriesViewpaerAdapter;
@@ -70,14 +72,26 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     private NetworkUtil networkUtil;
     private NewsRetrofit newsRetrofit;
 
+    private SharedPreferencesManagement sharedPreferencesManagement;
+
     public SocialNetworkFragment(MeowBottomNavigation meowBottomNavigation) {
         this.meowBottomNavigation = meowBottomNavigation;
     }
+    public SocialNetworkFragment() {
 
+    }
+
+    public static SocialNetworkFragment newInstance() {
+        Bundle args = new Bundle();
+        SocialNetworkFragment fragment = new SocialNetworkFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferencesManagement = new SharedPreferencesManagement(getContext());
         if(Build.VERSION.SDK_INT >= 21){
             Window window = getActivity().getWindow();
             window.setStatusBarColor(getContext().getResources().getColor(R.color.colorStatusBar_Weather));
@@ -117,6 +131,9 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                 setUpStories();
                 break;
+            case R.id.btnPostNewNews:
+                clickPostNews();
+                break;
             default:
                 break;
         }
@@ -127,9 +144,6 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         switch (v.getId()){
             case R.id.SlidingUpPanelLayout:
 
-                break;
-            case R.id.btnPostNewNews:
-                clickPostNews();
                 break;
             default:
                 break;
@@ -159,7 +173,8 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         });
     }
     private void clickPostNews(){
-
+        Intent intent = new Intent(getContext().getApplicationContext(), PostNewsActivity.class);
+        startActivity(intent);
     }
     private void setupRecyclerView(){
         rcvStories.setHasFixedSize(true);
@@ -186,7 +201,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     private void addNewsAdapter(){
         newsArr.clear();
         newsRetrofit = retrofit.create(NewsRetrofit.class);
-        Call<List<NewsModels>> listCall = newsRetrofit.getNews();
+        Call<List<NewsModels>> listCall = newsRetrofit.getNews(sharedPreferencesManagement.getTOKEN());
         listCall.enqueue(new Callback<List<NewsModels>>() {
             @Override
             public void onResponse(Call<List<NewsModels>> call, Response<List<NewsModels>> response) {

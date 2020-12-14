@@ -13,18 +13,15 @@ public class UsersModel {
     private String password;
     @SerializedName("avata")
     private String avata;
-    @SerializedName("coverimage")
-    private String coverimage;
     @SerializedName("token")
     private String token;
 
-    public UsersModel(String id, String username, String email, String password, String avata, String coverimage, String token) {
+    public UsersModel(String id, String username, String email, String password, String avata, String token) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
         this.avata = avata;
-        this.coverimage = coverimage;
         this.token = token;
     }
 
@@ -36,7 +33,6 @@ public class UsersModel {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", avata='" + avata + '\'' +
-                ", coverimage='" + coverimage + '\'' +
                 ", token='" + token + '\'' +
                 '}';
     }
@@ -79,14 +75,6 @@ public class UsersModel {
 
     public void setAvata(String avata) {
         this.avata = avata;
-    }
-
-    public String getCoverimage() {
-        return coverimage;
-    }
-
-    public void setCoverimage(String coverimage) {
-        this.coverimage = coverimage;
     }
 
     public String getToken() {

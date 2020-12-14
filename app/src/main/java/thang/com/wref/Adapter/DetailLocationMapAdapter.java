@@ -1,6 +1,7 @@
 package thang.com.wref.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,11 @@ import java.util.ArrayList;
 
 import thang.com.wref.R;
 
+import static thang.com.wref.util.Constants.BASE_URL;
+
 public class DetailLocationMapAdapter extends RecyclerView.Adapter<DetailLocationMapAdapter.ViewHodler>{
+    private static final String TAG = "DetailLocationMapAdapter";
+
     private Context context;
     private ArrayList<String> imgURl;
 
@@ -34,19 +39,8 @@ public class DetailLocationMapAdapter extends RecyclerView.Adapter<DetailLocatio
 
     @Override
     public void onBindViewHolder(@NonNull DetailLocationMapAdapter.ViewHodler holder, int position) {
-//        Glide.with(context).load(""+imgURl.get(position)).fitCenter().centerCrop().into(holder.img);
-        if(position == 0)
-            Glide.with(context).load(getImage("anh1")).fitCenter().centerCrop().into(holder.img);
-        if(position == 1)
-            Glide.with(context).load(getImage("anh2")).fitCenter().centerCrop().into(holder.img);
-        if(position == 2)
-            Glide.with(context).load(getImage("anh3")).fitCenter().centerCrop().into(holder.img);
-        if(position == 3)
-            Glide.with(context).load(getImage("anh4")).fitCenter().centerCrop().into(holder.img);
-        if(position == 4)
-            Glide.with(context).load(getImage("anh5")).fitCenter().centerCrop().into(holder.img);
-        if(position == 5)
-            Glide.with(context).load(getImage("anh6")).fitCenter().centerCrop().into(holder.img);
+        Log.d(TAG, "onBindViewHolder: "+imgURl.get(position));
+        Glide.with(context).load(BASE_URL+"uploads/"+imgURl.get(position)).centerCrop().fitCenter().into(holder.img);
     }
     public int getImage(String imageName) {
 
@@ -56,7 +50,7 @@ public class DetailLocationMapAdapter extends RecyclerView.Adapter<DetailLocatio
     }
     @Override
     public int getItemCount() {
-        return 6;
+        return imgURl.size();
     }
 
     public class ViewHodler extends RecyclerView.ViewHolder {

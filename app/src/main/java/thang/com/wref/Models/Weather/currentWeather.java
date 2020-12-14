@@ -18,7 +18,7 @@ public class currentWeather {
     @SerializedName("humidity")
     private int humidity;
     @SerializedName("uvi")
-    private int uvi;
+    private float uvi;
     @SerializedName("clouds")
     private int clouds;
     @SerializedName("wind_speed")
@@ -26,9 +26,9 @@ public class currentWeather {
     @SerializedName("wind_deg")
     private int wind_deg;
     @SerializedName("weather")
-    private weather weather;
+    private weather[] weather;
 
-    public currentWeather(int dt, int sunrise, int sunset, float temp, float feels_like, int pressure, int humidity, int uvi, int clouds, float wind_speed, int wind_deg, thang.com.wref.Models.Weather.weather weather) {
+    public currentWeather(int dt, int sunrise, int sunset, float temp, float feels_like, int pressure, int humidity, float uvi, int clouds, float wind_speed, int wind_deg, weather[] weather) {
         this.dt = dt;
         this.sunrise = sunrise;
         this.sunset = sunset;
@@ -117,11 +117,11 @@ public class currentWeather {
         this.humidity = humidity;
     }
 
-    public int getUvi() {
+    public float getUvi() {
         return uvi;
     }
 
-    public void setUvi(int uvi) {
+    public void setUvi(float uvi) {
         this.uvi = uvi;
     }
 
@@ -149,11 +149,11 @@ public class currentWeather {
         this.wind_deg = wind_deg;
     }
 
-    public thang.com.wref.Models.Weather.weather getWeather() {
+    public weather[] getWeather() {
         return weather;
     }
 
-    public void setWeather(thang.com.wref.Models.Weather.weather weather) {
+    public void setWeather(weather[] weather) {
         this.weather = weather;
     }
 }

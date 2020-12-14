@@ -1,60 +1,55 @@
 package thang.com.wref.Date;
 
-import android.text.format.DateFormat;
-import android.util.Log;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class TimeCaculater {
-    public String time(String dtStart){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        Date date = new Date();
-        long t = 0;
-        try {
-            date = format.parse(dtStart);
-            long old = date.getTime();
-            long now = System.currentTimeMillis();
-            t = now - old;
-        } catch (ParseException e) {
-            e.printStackTrace();
+    private static final int MINS_PER_DAY = 60 * 24;
+    private static final long MS_PER_DAY = 1000 * 60 * MINS_PER_DAY;
+
+    private static final int SEC = 1000;
+    private static final int MIN = SEC * 60;
+    private static final int HOUR = MIN * 60;
+    private static final int DAY = HOUR * 24;
+    private static final long WEEK = DAY * 7;
+    private static final long YEAR = WEEK * 52;
+
+    private static final long[] buckets = { YEAR, WEEK, DAY, HOUR, MIN, SEC };
+    private static final String[] bucketNames = { "year", "week", "day",
+            "hour", "minute", "second" };
+
+    private static GregorianCalendar statFmtCal = new GregorianCalendar();
+
+    private static final String ts24Pat = "H:mm:ss yy-MM-dd";
+
+
+    // convert milliseconds into the day of the week string
+    public static String dayStringFormat(long msecs) {
+        GregorianCalendar cal = new GregorianCalendar();
+
+        cal.setTime(new Date(msecs));
+
+        int dow = cal.get(Calendar.DAY_OF_WEEK);
+
+        switch (dow) {
+            case Calendar.MONDAY:
+                return "Monday";
+            case Calendar.TUESDAY:
+                return "Tuesday";
+            case Calendar.WEDNESDAY:
+                return "Wednesday";
+            case Calendar.THURSDAY:
+                return "Thursday";
+            case Calendar.FRIDAY:
+                return "Friday";
+            case Calendar.SATURDAY:
+                return "Saturday";
+            case Calendar.SUNDAY:
+                return "Sunday";
         }
-        Date currentTime = Calendar.getInstance().getTime();
-        int ycurrentTime = Integer.parseInt((String) DateFormat.format("yyyy", currentTime));
-        int y = Integer.parseInt((String) DateFormat.format("yyyy", date));
-        Log.d("123aweqwe", " "+y);
-        int d = (int) Math.floor(t / (1000 * 60 * 60 * 24));
-        int h = (int) Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        int m = (int) Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
-        int s = (int) Math.floor((t % (1000 * 60)) / 1000);
-        // lấy ngày - tháng - 5
-        String day          = (String) DateFormat.format("dd",   date); // 20
-        String monthNumber  = (String) DateFormat.format("MM",   date); // 06
-        String year         = (String) DateFormat.format("yyyy", date); // 2013
-        if(d>7){
-            if(y<ycurrentTime)return day + " thg "+monthNumber+", "+year;// 26 tháng 7,1999
-            else return day + " thg "+monthNumber ;// 26 thang 7
-        }
-        else if(d>0) return d + " ngày";
-        else if(h>0) return h + " h";
-        else if(m>0) return m + " m";
-        else if(s>=0 || s < 0) return "vừa xong";
-        else return null;
+
+        return "Unknown";
     }
-    public long NumberTime(String dtStart){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        Date date = new Date();
-        long t = 0;
-        try {
-            date = format.parse(dtStart);
-            long old = date.getTime();
-            long now = System.currentTimeMillis();
-            t = now - old;
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return t;
-    }
+
 }

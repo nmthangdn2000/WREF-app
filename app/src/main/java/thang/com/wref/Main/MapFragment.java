@@ -59,6 +59,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.maps.android.data.Feature;
 import com.google.maps.android.data.Layer;
 import com.google.maps.android.data.kml.KmlLayer;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -71,6 +72,7 @@ import java.util.List;
 import java.util.Vector;
 
 
+import thang.com.wref.Login.SharedPreferencesManagement;
 import thang.com.wref.R;
 import thang.com.wref.fragment.DetailLocationMap;
 
@@ -101,6 +103,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private FragmentTransaction fragmentTransaction;
     private SupportMapFragment mapFragment;
     private TileOverlay tileOverlay;
+    private SharedPreferencesManagement sharedPreferencesManagement;
+    private SlidingUpPanelLayout slidingUpPanelLayout;
 
     private static final int COLOR_WHITE_ARGB = 0xffffffff;
     private static final int COLOR_GREEN_ARGB = 0xff388E3C;
@@ -135,6 +139,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             Window window = getActivity().getWindow();
             window.setStatusBarColor(getContext().getResources().getColor(R.color.purple_700));
         }
+        sharedPreferencesManagement = new SharedPreferencesManagement(getContext());
     }
 
     @Override
@@ -158,6 +163,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         super.onActivityCreated(savedInstanceState);
         openGooogleMap();
         searchLocation();
+        clospaneSlidingUpPanel();
     }
 
     private void mappingView() {
@@ -174,6 +180,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         btnMapTemp = (LinearLayout) view.findViewById(R.id.btnMapTemp);
         btnMapCloud = (LinearLayout) view.findViewById(R.id.btnMapCloud);
         btnMapRain = (LinearLayout) view.findViewById(R.id.btnMapRain);
+        slidingUpPanelLayout = (SlidingUpPanelLayout) view.findViewById(R.id.slidingUpPanelLayout);
 
         btnMapTemp.setOnClickListener(this);
         btnMapCloud.setOnClickListener(this);
@@ -207,6 +214,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         LatLng latLng = new LatLng(16.051841, 108.168782);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 8));
         setupGoogleMap();
+        getLocationPermission();
     }
 
     private void changeTypeMap(String mapName) {
@@ -286,9 +294,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 marker = map.addMarker(new MarkerOptions()
                         .position(latLng)
                         .title(query)
-                        .snippet("Đẹp trai"));
+                        .snippet(address.getAddressLine(0)));
                 map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
-                showDetailLocationMap(query);
+                showDetailLocationMap(query, address.getAddressLine(0), (float) address.getLatitude(), (float) address.getLongitude());
             }
         }
     }
@@ -311,6 +319,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             @Override
             public void onSuccess(Location location) {
                 if (location != null){
+                    float lati = (float) location.getLatitude();
+                    float longti = (float) location.getLongitude();
+                    List<Address> addressesList = null;
+                    Geocoder geocoder = new Geocoder(getContext());
+                    try {
+                        addressesList = geocoder.getFromLocation(lati, longti, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    String addressLine = addressesList.get(0).getAddressLine(0);
+
+                    sharedPreferencesManagement.setLocation(lati, longti, addressLine);
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                 }
@@ -340,20 +360,40 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         }
         return str;
     }
-    private void showDetailLocationMap(String query) {
+    private void showDetailLocationMap(String query, String address, float lati, float longti) {
         if(getFragmentManager().findFragmentByTag("detailLocationMap") != null)
             getFragmentManager().beginTransaction().remove(detailLocationMap).commit();
-        detailLocationMap = new DetailLocationMap(getContext().getApplicationContext(), query);
+        detailLocationMap = new DetailLocationMap(getContext().getApplicationContext(), query, address, lati, longti);
         getFragmentManager().beginTransaction().add(R.id.frameInforTouchLocation, detailLocationMap, "detailLocationMap").commit();
         if(iconsearch.getTag().equals("location")){
             iconsearch.setTag("backMap");
             iconsearch.setImageResource(R.drawable.ic_baseline_arrow_back_24);
-            Animation animationUp = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_up);
-            frameInforTouchLocation.startAnimation(animationUp);
+            slidingUpPanelLayout.setAnchorPoint(0.35f);
+            slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
             Animation animationDown = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_down);
             meowBottomNavigation.startAnimation(animationDown);
             meowBottomNavigation.setVisibility(View.GONE);
         }
+    }
+    private void clospaneSlidingUpPanel(){
+        slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+                Log.d(TAG, "onPanelSlide: mở");
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                if(newState == SlidingUpPanelLayout.PanelState.COLLAPSED){
+                    iconsearch.setTag("location");
+                    iconsearch.setImageResource(R.drawable.ic_baseline_location_on_24);
+                    Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_up);
+                    animation.setDuration(500);
+                    meowBottomNavigation.setVisibility(View.VISIBLE);
+                    meowBottomNavigation.startAnimation(animation);
+                }
+            }
+        });
     }
     @Override
     public void onClick(View v) {

@@ -15,8 +15,13 @@
         <!-- Customize your theme here. -->
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="android:editTextStyle">@style/RobotoTextViewStyle</item>
     </style>
     <style name="text">
         <item name="android:textColorHint">@color/white</item>
+    </style>
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 </resources>
