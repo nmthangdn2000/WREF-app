@@ -23,7 +23,6 @@
         <SearchView
             android:id="@+id/searchView"
             android:layout_toRightOf="@+id/iconSearchBar"
-            android:layout_toLeftOf="@+id/btnNotification"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:queryHint="Nhập tên vị trí ..."

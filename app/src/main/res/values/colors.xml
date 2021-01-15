@@ -23,4 +23,6 @@
     <color name="colorStatusBar">#80000000</color>
     <color name="colorStatusBar_Social">#33649E</color>
     <color name="colorStatusBar_Weather">#4A90E2</color>
+    <color name="background_weather_location_map_1">#307FE7E7</color>
+    <color name="background_weather_location_map_2">#30CCF5F5</color>
 </resources>

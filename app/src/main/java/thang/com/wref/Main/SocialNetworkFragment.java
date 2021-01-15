@@ -46,6 +46,7 @@ import thang.com.wref.Models.StoriesModels;
 import thang.com.wref.NetworkUtil;
 import thang.com.wref.R;
 import thang.com.wref.Retrofits.NewsRetrofit;
+import thang.com.wref.Retrofits.StoriesRetrofit;
 import thang.com.wref.fragment.CommentFragment;
 
 public class SocialNetworkFragment extends Fragment implements View.OnClickListener, View.OnTouchListener{
@@ -71,6 +72,9 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     private Retrofit retrofit;
     private NetworkUtil networkUtil;
     private NewsRetrofit newsRetrofit;
+    private StoriesRetrofit storiesRetrofit;
+    private ArrayList<StoriesModels> stories;
+    private StoriesAdapter.onCLickStories mListener;
 
     private SharedPreferencesManagement sharedPreferencesManagement;
 
@@ -98,6 +102,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         }
         networkUtil = new NetworkUtil();
         retrofit = networkUtil.getRetrofit();
+        stories = new ArrayList<>();
     }
 
     @Override
@@ -116,8 +121,10 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         storiesArr = new ArrayList<>();
         newsArr = new ArrayList<>();
         setOnClickRecyclerNews();
+        onClickStories();
         addStoriesAdapter();
         addNewsAdapter();
+        setUpStories();
         clospaneSlidingUpPanel();
 
     }
@@ -125,11 +132,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.imgStories:
-                Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_down);
-                meowBottomNavigation.startAnimation(animation);
-                meowBottomNavigation.setVisibility(View.GONE);
-                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-                setUpStories();
+
                 break;
             case R.id.btnPostNewNews:
                 clickPostNews();
@@ -138,7 +141,19 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 break;
         }
     }
+    private void onClickStories(){
+        mListener = new StoriesAdapter.onCLickStories() {
+            @Override
+            public void onClick(int position) {
+                Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_down);
+                meowBottomNavigation.startAnimation(animation);
+                meowBottomNavigation.setVisibility(View.GONE);
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
 
+            }
+        };
+
+    }
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         switch (v.getId()){
@@ -194,8 +209,40 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     }
     private void addStoriesAdapter(){
         storiesArr.clear();
-//        storiesAdapter.notifyDataSetChanged();
-        storiesAdapter = new StoriesAdapter(storiesArr, getContext().getApplicationContext());
+        storiesRetrofit = retrofit.create(StoriesRetrofit.class);
+        Call<List<StoriesModels>> listCall = storiesRetrofit.getStories(sharedPreferencesManagement.getTOKEN());
+        listCall.enqueue(new Callback<List<StoriesModels>>() {
+            @Override
+            public void onResponse(Call<List<StoriesModels>> call, Response<List<StoriesModels>> response) {
+                if (!response.isSuccessful()){
+                    Toast.makeText(getContext(), "lỗi mạng", Toast.LENGTH_SHORT).show();
+                    return;
+                }else{
+                    List<StoriesModels> storiesModels = response.body();
+                    Log.d(TAG, "onResponse: "+storiesModels);
+                    for(StoriesModels story : storiesModels){
+                        if(story.getUsers().getId().equals(sharedPreferencesManagement.getID())) { // lấy story userLogin để đầu mảng
+                            storiesArr.add(story);
+                            break;
+                        }
+                    }
+                    for(StoriesModels story : storiesModels){
+                        if(!story.getUsers().getId().equals(sharedPreferencesManagement.getID())){ // lấy story userLogin để đầu mảng
+                            storiesArr.add(story);
+                        }
+                    }
+                    storiesAdapter.notifyDataSetChanged();
+                }
+                call.cancel();
+            }
+
+            @Override
+            public void onFailure(Call<List<StoriesModels>> call, Throwable t) {
+                call.cancel();
+                Log.d(TAG, "onFailure: "+t.getMessage());
+            }
+        });
+        storiesAdapter = new StoriesAdapter(storiesArr, getContext().getApplicationContext(), mListener);
         rcvStories.setAdapter(storiesAdapter);
     }
     private void addNewsAdapter(){
@@ -238,16 +285,40 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 super.onPageSelected(position);
             }
         });
-        ArrayList<StoriesModels> stories = new ArrayList<>();
-        stories.add(new StoriesModels("aa",null, "ádsad", "ádsda", "ádasd"));
-        stories.add(new StoriesModels("aa",null, "ádsad", "ádsda", "ádasd"));
-        stories.add(new StoriesModels("aa",null, "ádsad", "ádsda", "ádasd"));
+//        viewPager2story.setCurrentItem(0,false);
+        getStories();
+    }
+    private void getStories(){
+        Log.d(TAG, "getStories: aaaaaaaaaaa");
+        stories.clear();
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new StoriesFragment(stories, getContext(), viewPager2story));
-        fragments.add(new StoriesFragment(stories, getContext(), viewPager2story));
+        storiesRetrofit = retrofit.create(StoriesRetrofit.class);
+        Call<List<StoriesModels>> listCall = storiesRetrofit.getStories(sharedPreferencesManagement.getTOKEN());
+        listCall.enqueue(new Callback<List<StoriesModels>>() {
+            @Override
+            public void onResponse(Call<List<StoriesModels>> call, Response<List<StoriesModels>> response) {
+                if (!response.isSuccessful()){
+                    Toast.makeText(getContext(), "lỗi mạng", Toast.LENGTH_SHORT).show();
+                    return;
+                }else{
+                    List<StoriesModels> storiesModels = response.body();
+                    for (StoriesModels models : storiesModels){
+                        stories.add(models);
+                        fragments.add(new StoriesFragment(stories, getContext(), viewPager2story));
+                    }
+                    storiesViewpaerAdapter.notifyDataSetChanged();
+                }
+                call.cancel();
+            }
+
+            @Override
+            public void onFailure(Call<List<StoriesModels>> call, Throwable t) {
+                call.cancel();
+                Log.d(TAG, "onFailure: "+t.getMessage());
+            }
+        });
         storiesViewpaerAdapter = new StoriesViewpaerAdapter(getFragmentManager(),getLifecycle(),fragments);
         viewPager2story.setAdapter(storiesViewpaerAdapter);
-        viewPager2story.setCurrentItem(0,false);
     }
     private void clospaneSlidingUpPanel(){
         slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {

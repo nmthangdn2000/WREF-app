@@ -65,6 +65,7 @@
                 android:text=" Ngũ Hành Sơn"
                 android:gravity="center" />
             <TextView
+                android:id="@+id/txtContent"
                 android:layout_below="@+id/txtLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -81,7 +82,10 @@ Tuần lễ Black Friday đang đến gần, đây là cơ hội cực kỳ lớ
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imgNews"
                 android:layout_width="match_parent"
-                android:layout_height="280dp"
+                android:adjustViewBounds="true"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:maxHeight="280dp"
                 android:src="@drawable/anh4"
                 app:riv_corner_radius_bottom_left="10dp"
                 app:riv_corner_radius_bottom_right="10dp"

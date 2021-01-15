@@ -28,25 +28,25 @@ public class TimeCaculater {
     public static String dayStringFormat(long msecs) {
         GregorianCalendar cal = new GregorianCalendar();
 
-        cal.setTime(new Date(msecs));
+        cal.setTime(new Date(msecs*1000));
 
         int dow = cal.get(Calendar.DAY_OF_WEEK);
 
         switch (dow) {
             case Calendar.MONDAY:
-                return "Monday";
+                return "Thứ 2";
             case Calendar.TUESDAY:
-                return "Tuesday";
+                return "Thứ 3";
             case Calendar.WEDNESDAY:
-                return "Wednesday";
+                return "Thứ 4";
             case Calendar.THURSDAY:
-                return "Thursday";
+                return "Thứ 5";
             case Calendar.FRIDAY:
-                return "Friday";
+                return "Thứ 6";
             case Calendar.SATURDAY:
-                return "Saturday";
+                return "Thứ 7";
             case Calendar.SUNDAY:
-                return "Sunday";
+                return "CN";
         }
 
         return "Unknown";

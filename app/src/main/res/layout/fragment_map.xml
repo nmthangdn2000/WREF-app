@@ -12,14 +12,16 @@
         android:layout_height="match_parent"
         android:gravity="bottom"
         app:umanoPanelHeight="0dp"
-        app:umanoDragView="@id/viewInforTouchLocation">
+        app:umanoDragView="@id/viewInforTouchLocation"
+        app:umanoScrollableView="@id/scrollviewSliding">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <com.esri.arcgisruntime.mapping.view.MapView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/map" />
+                android:id="@+id/map"
+                />
 
             <LinearLayout
                 android:id="@+id/editSearch"
@@ -30,7 +32,8 @@
                 android:layout_margin="10dp"
                 android:background="@drawable/edittext_search"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:elevation="10dp">
                 <ImageView
                     android:tag="location"
                     android:id="@+id/iconsearch"
@@ -68,8 +71,8 @@
                     android:gravity="center"
                     android:backgroundTint="#07810C">
                     <TextView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:text="T"
                         android:textSize="22sp"
                         android:gravity="center"
@@ -273,42 +276,41 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/frame_inf_location"/>
         </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/viewInforTouchLocation"
-            android:clickable="true"
-            android:focusable="false"
+        <ScrollView
+            android:id="@+id/scrollviewSliding"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <FrameLayout
-                android:id="@+id/frameInforTouchLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <View
-                android:id="@+id/viewHr"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/black"/>
             <RelativeLayout
-                android:layout_below="@+id/viewHr"
+                android:id="@+id/viewInforTouchLocation"
+                android:clickable="true"
+                android:focusable="false"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/lottieLoading"
-                    app:lottie_loop="true"
-                    app:lottie_autoPlay="true"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:lottie_rawRes="@raw/loading_animation"/>
+                <FrameLayout
+                    android:id="@+id/frameInforTouchLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
                 <RelativeLayout
+
+                    android:id="@+id/rltDataCharBottm"
+                    android:visibility="gone"
+                    android:layout_below="@+id/frameInforTouchLocation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/lottieLoading"
+                        app:lottie_loop="true"
+                        app:lottie_autoPlay="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:lottie_rawRes="@raw/loading_animation"/>
+                    <include
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        layout="@layout/detail_weather_5_day_location" />
                 </RelativeLayout>
-            </RelativeLayout>
 
-        </RelativeLayout>
+            </RelativeLayout>
+        </ScrollView>
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 </FrameLayout>

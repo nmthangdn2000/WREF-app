@@ -44,11 +44,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHodler holder, int position) {
-        Log.d(TAG, "onBindViewHolder: "+arrayList.get(position).getMedia()[0]);
-        Glide.with(context).load(BASE_URL+"uploads/"+arrayList.get(position).getMedia()[0]).fitCenter().centerCrop().into(holder.imgNews);
+        if(arrayList.get(position).getMedia().length > 0)
+            Glide.with(context).load(BASE_URL+"uploads/"+arrayList.get(position).getMedia()[0]).fitCenter().centerCrop().into(holder.imgNews);
 //        Glide.with(context).load(BASE_URL+"uploads/"+arrayList.get(position).getIdUser().getAvata()).centerCrop().fitCenter().into(holder.imgUserNewsssss);
         holder.txtUserName.setText(arrayList.get(position).getIdUser().getUsername());
         holder.txtLocation.setText(arrayList.get(position).getIdLocation().getName());
+        holder.txtContent.setText(arrayList.get(position).getContent());
     }
 
     @Override
@@ -58,7 +59,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
 
     public class ViewHodler extends RecyclerView.ViewHolder implements View.OnClickListener{
         private CircleImageView imgUserNewsssss;
-        private TextView txtUserName, txtTimePost, txtLocation;
+        private TextView txtUserName, txtTimePost, txtLocation, txtContent;
         private ImageView iconMore;
         private LinearLayout btnLike, btnComment, btnShare;
         private RoundedImageView imgNews;
@@ -73,6 +74,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
             btnComment = (LinearLayout) itemView.findViewById(R.id.btnComment);
             btnShare = (LinearLayout) itemView.findViewById(R.id.btnShare);
             imgNews = (RoundedImageView) itemView.findViewById(R.id.imgNews);
+            txtContent = (TextView) itemView.findViewById(R.id.txtContent);
 
             btnComment.setOnClickListener(this);
         }

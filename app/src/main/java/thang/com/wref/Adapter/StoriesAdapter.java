@@ -1,6 +1,7 @@
 package thang.com.wref.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +16,23 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import thang.com.wref.Login.SharedPreferencesManagement;
+import thang.com.wref.Main.Stories.ViewpagerStoriesActivity;
 import thang.com.wref.Models.StoriesModels;
 import thang.com.wref.R;
+
+import static thang.com.wref.util.Constants.BASE_URL;
 
 public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.ViewHolder>{
     private ArrayList<StoriesModels> arrayList;
     private Context context;
+    private SharedPreferencesManagement sharedPreferencesManagement;
+    private onCLickStories mListener;
 
-    public StoriesAdapter(ArrayList<StoriesModels> arrayList, Context context) {
+    public StoriesAdapter(ArrayList<StoriesModels> arrayList, Context context, onCLickStories mListener) {
         this.arrayList = arrayList;
         this.context = context;
+        this.mListener= mListener;
     }
 
     @NonNull
@@ -37,19 +45,13 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if(position == 0)
-            Glide.with(context).load(getImage("anh1")).fitCenter().centerCrop().into(holder.imgStories);
-        if(position == 1)
-            Glide.with(context).load(getImage("anh2")).fitCenter().centerCrop().into(holder.imgStories);
-        if(position == 2)
-            Glide.with(context).load(getImage("anh3")).fitCenter().centerCrop().into(holder.imgStories);
-        if(position == 3)
-            Glide.with(context).load(getImage("anh4")).fitCenter().centerCrop().into(holder.imgStories);
-        if(position == 4)
-            Glide.with(context).load(getImage("anh5")).fitCenter().centerCrop().into(holder.imgStories);
-        if(position == 5)
-            Glide.with(context).load(getImage("anh6")).fitCenter().centerCrop().into(holder.imgStories);
-        holder.txtUserName.setText("Anh Huy");
+        sharedPreferencesManagement = new SharedPreferencesManagement(context);
+        if(arrayList.get(position).getUsers().getId().equals(sharedPreferencesManagement.getID())){
+            holder.txtUserName.setText("Tin của bạn");
+        }else{
+            holder.txtUserName.setText(arrayList.get(position).getUsers().getUsername());
+        }
+        Glide.with(context).load(BASE_URL+"uploads/"+arrayList.get(position).getMedia()[0]).fitCenter().centerCrop().into(holder.imgStories);
     }
     public int getImage(String imageName) {
 
@@ -59,10 +61,10 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.ViewHold
     }
     @Override
     public int getItemCount() {
-        return 6;
+        return arrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private CircleImageView imgUserStories;
         private RoundedImageView imgStories;
         private TextView txtUserName;
@@ -71,6 +73,22 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.ViewHold
             imgUserStories = (CircleImageView) itemView.findViewById(R.id.imgUserStories);
             txtUserName = (TextView) itemView.findViewById(R.id.txtUserName);
             imgStories = (RoundedImageView) itemView.findViewById(R.id.imgStories);
+
+            imgStories.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.imgStories:
+                    mListener.onClick(getAdapterPosition());
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    public interface onCLickStories{
+        void onClick(int position);
     }
 }

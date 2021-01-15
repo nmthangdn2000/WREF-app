@@ -1,7 +1,9 @@
 package thang.com.wref.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +21,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.github.mikephil.charting.charts.CombinedChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.CombinedData;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import org.w3c.dom.Text;
 
@@ -29,6 +48,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import thang.com.wref.Adapter.DetailLocationMapAdapter;
+import thang.com.wref.Date.TimeCaculater;
 import thang.com.wref.IconWeather;
 import thang.com.wref.Login.SharedPreferencesManagement;
 import thang.com.wref.Models.Weather.currentWeather;
@@ -58,15 +78,24 @@ public class DetailLocationMap extends Fragment {
     private ImageView imgWeather;
     private LinearLayout notImg;
     private LottieAnimationView lottieLoadingData;
-    private RelativeLayout rltData;
+    private RelativeLayout rltData, dataChart;
+    private ArrayList<String> tack;
+    private WeatherLocationModel weatherLocationModel;
+    private TimeCaculater timeCaculater;
+    private ArrayList<Entry> entries;
+    private LottieAnimationView lottieLoading;
+    private LineChart chart;
 
 
-    public DetailLocationMap(Context context, String nameLocation, String address, float lati, float longti) {
+    public DetailLocationMap(Context context, String nameLocation, String address, float lati, float longti, LottieAnimationView lottieLoading, RelativeLayout dataChart, LineChart chart) {
         this.context = context;
         this.nameLocation = nameLocation;
         this.address = address;
         this.lati = lati;
         this.longti = longti;
+        this.lottieLoading = lottieLoading;
+        this.dataChart = dataChart;
+        this.chart = chart;
     }
 
     @Override
@@ -76,6 +105,9 @@ public class DetailLocationMap extends Fragment {
         networkUtil = new NetworkUtil();
         retrofit = networkUtil.getRetrofit();
         iconWeather = new IconWeather();
+        tack = new ArrayList<>();
+        timeCaculater = new TimeCaculater();
+        entries = new ArrayList<>();
         sharedPreferencesManagement = new SharedPreferencesManagement(context);
         String[] strings = address.split(", ");
         addressLine = strings[0];
@@ -101,6 +133,7 @@ public class DetailLocationMap extends Fragment {
         lottieLoadingData = (LottieAnimationView) view.findViewById(R.id.lottieLoadingData);
         rltData = (RelativeLayout) view.findViewById(R.id.rltData);
 
+
         txtNameLocation.setText(address);
 
     }
@@ -123,7 +156,7 @@ public class DetailLocationMap extends Fragment {
                     Toast.makeText(context, "Lỗi mạng", Toast.LENGTH_SHORT).show();
                     return;
                 }else{
-                    WeatherLocationModel weatherLocationModel = response.body();
+                    weatherLocationModel = response.body();
 
                     Log.d(TAG, "onResponse: "+weatherLocationModel.getMedia());
                     for (int i = 0; i < weatherLocationModel.getMedia().length; i++){
@@ -158,4 +191,73 @@ public class DetailLocationMap extends Fragment {
         detailLocationMapAdapter = new DetailLocationMapAdapter(context, arrImg);
         rcvInfTouchLocation.setAdapter(detailLocationMapAdapter);
     }
+    public WeatherLocationModel getWeather(){
+        return weatherLocationModel;
+    }
+    public void addDataChar(){
+        lottieLoading.setVisibility(View.VISIBLE);
+        dataChart.setVisibility(View.INVISIBLE);
+        tack.clear();
+        entries.clear();
+        for (int i = 0; i < weatherLocationModel.getWeather().getDaily().length - 3; i++) {
+            tack.add(timeCaculater.dayStringFormat(weatherLocationModel.getWeather().getDaily()[i].getDt()));
+            entries.add(new Entry(i, weatherLocationModel.getWeather().getDaily()[i].getTemp().getMax()-273));
+        }
+        setupChar();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                lottieLoading.setVisibility(View.GONE);
+                dataChart.setVisibility(View.VISIBLE);
+            }
+        }, 2000);
+    }
+    private void setupChar(){
+
+        Legend legend = chart.getLegend();
+        legend.setEnabled(false);
+
+        YAxis yAxisLeft = chart.getAxisLeft();
+        yAxisLeft.setEnabled(false);
+
+        YAxis yAxisRight = chart.getAxisRight();
+        yAxisRight.setEnabled(false);
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setEnabled(false);
+//        xAxis.setAxisMinimum(-0.5f);
+//        xAxis.setGranularity(1f);
+//
+//        xAxis.setTextSize(14f);
+//        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM_INSIDE);
+
+        chart.getDescription().setEnabled(false);
+        chart.setScaleEnabled(false);
+        chart.setExtraOffsets(5f,5f,5f,5f);
+
+        LineDataSet lineDataSet = new LineDataSet(entries, "Data set 1");
+        lineDataSet.setFillAlpha(35);
+        lineDataSet.setValueTextSize(12f);
+        lineDataSet.setLineWidth(2f);
+        lineDataSet.setHighlightEnabled(false);
+        lineDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) Math.floor(value)) + "°C";
+            }
+        });
+        lineDataSet.notifyDataSetChanged();
+
+        ArrayList<ILineDataSet> iLineDataSets = new ArrayList<>();
+        iLineDataSets.add(lineDataSet);
+
+        LineData lineData = new LineData(iLineDataSets);
+        yAxisLeft.setAxisMaximum(lineData.getYMax()+0.5f);
+        yAxisLeft.setAxisMinimum(lineData.getYMin()-5f);
+        xAxis.setAxisMaximum(lineData.getXMax()+0.5f);
+        chart.setVisibleXRangeMaximum(5);
+        chart.setData(lineData);
+    }
+
 }

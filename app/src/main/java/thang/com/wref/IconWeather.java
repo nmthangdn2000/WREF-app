@@ -4,7 +4,12 @@ public class IconWeather {
     public int IconWeather(String desWeather){
         if(desWeather.equals("Rain"))
             return R.drawable.ic_rain_sun_small;
-//        else if(desWeather.equals(""))
+        else if(desWeather.equals("Clear"))
+            return R.drawable.ic_sun_small;
+        else if(desWeather.equals("Clouds"))
+            return R.drawable.ic_sun_small;
+        else if(desWeather.equals("Clear"))
+            return R.drawable.ic_sun_small;
         else return 0;
     }
     public String Temp(float max, float min){
@@ -20,5 +25,31 @@ public class IconWeather {
         else if(des.equals("light rain"))
             return "Mưa nhỏ";
         else return "";
+    }
+    public String wind_Deg(int deg){
+        if(deg <= 75 )
+            return "Đông bắc";
+        else if (deg > 75 && deg <= 110)
+            return "Đông";
+        else if(deg > 120 && deg <= 180 )
+            return "Đông nam";
+        else if(deg > 180 && deg <= 230 )
+            return "Tây nam";
+        else if(deg > 230 && deg <= 270 )
+            return "Tây";
+        else if(deg > 270 && deg <= 360 )
+            return "Tây bắc";
+        else return "Đông bắc";
+    }
+    public int IconWeatherAnimation(String desWeather){
+        if(desWeather.equals("Rain"))
+            return 1;
+        else if(desWeather.equals("Clear"))
+            return 2;
+        else if(desWeather.equals("Clouds"))
+            return 3;
+        else if(desWeather.equals("Clear"))
+            return R.drawable.ic_sun_small;
+        else return 2;
     }
 }

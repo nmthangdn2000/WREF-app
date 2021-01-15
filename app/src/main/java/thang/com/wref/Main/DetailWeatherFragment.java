@@ -34,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -73,11 +74,12 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
     private View view;
     private ImageView imgSunWeather;
     private AnimatedVectorDrawable animation;
-    private RelativeLayout rltSunWeather, rltDuBao5Ngay, bacgroundImgWeather, bacgroundColorWeather;
+    private RelativeLayout rltSunWeather, rltDuBao5Ngay, bacgroundImgWeather, bacgroundColorWeather, splashWeather, layoutRltWeather;
     private TextView txtNhietdo, txtDesWeather, txtWeatherCurrent, txtWeatherNextOne, txtWeatherNextTwo,
             txtDataNhietdo1, txtDataNhietdo2, txtDataNhietdo3, txtDetailGio, txtDetailNhietdo, txtDetailUVo, txtDetailApsuat,
             txtNameLocation;
 
+    private LottieAnimationView lottieLoadingData;
     private Path path, path2;
     private int night = 0;
     private int morning = 0;
@@ -159,6 +161,9 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
         imhWeather2 = (ImageView) view.findViewById(R.id.imhWeather2);
         imhWeather3 = (ImageView) view.findViewById(R.id.imhWeather3);
         txtNameLocation = (TextView) view.findViewById(R.id.txtNameLocation);
+        splashWeather = (RelativeLayout) view.findViewById(R.id.splashWeather);
+        layoutRltWeather = (RelativeLayout) view.findViewById(R.id.layoutRltWeather);
+        lottieLoadingData = (LottieAnimationView) view.findViewById(R.id.lottieLoadingData);
 
         rltDuBao5Ngay.setOnClickListener(this);
         txtNhietdo.setOnClickListener(this);
@@ -171,6 +176,9 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
         super.onActivityCreated(savedInstanceState);
         entries = new ArrayList<>();
         sDay = new ArrayList<>();
+        lottieLoadingData.playAnimation();
+        splashWeather.setVisibility(View.VISIBLE);
+        layoutRltWeather.setVisibility(View.INVISIBLE);
 //        setUpData();
 
 
@@ -182,7 +190,7 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
                 animationSundown();
                 break;
             case R.id.rltDuBao5Ngay:
-                animationSunrise();
+
                 break;
             default:
                 break;
@@ -200,13 +208,15 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
     }
 
     private void setDataIn5Day(){
+        animationSunrise(iconWeather.IconWeather(detailWeatherModel.getCurrent().getWeather()[0].getMain()));
+
         txtWeatherCurrent.setText(timeUtil.dayStringFormat(detailWeatherModel.getCurrent().getDt())+"-"+iconWeather.typeWeather(detailWeatherModel.getCurrent().getWeather()[0].getDescription()));
-        txtWeatherNextOne.setText(timeUtil.dayStringFormat(dailyWeathers.get(0).getDt())+"-"+iconWeather.typeWeather(dailyWeathers.get(0).getWeather()[0].getDescription()));
-        txtWeatherNextTwo.setText(timeUtil.dayStringFormat(dailyWeathers.get(1).getDt())+"-"+iconWeather.typeWeather(dailyWeathers.get(1).getWeather()[0].getDescription()));
+        txtWeatherNextOne.setText(timeUtil.dayStringFormat(dailyWeathers.get(1).getDt())+"-"+iconWeather.typeWeather(dailyWeathers.get(1).getWeather()[0].getDescription()));
+        txtWeatherNextTwo.setText(timeUtil.dayStringFormat(dailyWeathers.get(2).getDt())+"-"+iconWeather.typeWeather(dailyWeathers.get(2).getWeather()[0].getDescription()));
 
         txtDataNhietdo1.setText(iconWeather.Temp(detailWeatherModel.getCurrent().getTemp(), detailWeatherModel.getCurrent().getFeels_like()));
-        txtDataNhietdo2.setText(iconWeather.Temp(dailyWeathers.get(0).getTemp().getMax(), dailyWeathers.get(0).getTemp().getMin()));
-        txtDataNhietdo3.setText(iconWeather.Temp(dailyWeathers.get(1).getTemp().getMax(), dailyWeathers.get(1).getTemp().getMin()));
+        txtDataNhietdo2.setText(iconWeather.Temp(dailyWeathers.get(1).getTemp().getMax(), dailyWeathers.get(1).getTemp().getMin()));
+        txtDataNhietdo3.setText(iconWeather.Temp(dailyWeathers.get(2).getTemp().getMax(), dailyWeathers.get(2).getTemp().getMin()));
 
         txtDetailGio.setText(detailWeatherModel.getCurrent().getWind_speed()+" km/h");
         txtDetailNhietdo.setText((int) (detailWeatherModel.getCurrent().getTemp() - 273)+"°C");
@@ -214,8 +224,8 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
         txtDetailApsuat.setText(detailWeatherModel.getCurrent().getPressure()+" mb");
 
         imhWeather1.setImageResource(iconWeather.IconWeather(detailWeatherModel.getCurrent().getWeather()[0].getMain()));
-        imhWeather2.setImageResource(iconWeather.IconWeather(dailyWeathers.get(0).getWeather()[0].getMain()));
-        imhWeather3.setImageResource(iconWeather.IconWeather(dailyWeathers.get(1).getWeather()[0].getMain()));
+        imhWeather2.setImageResource(iconWeather.IconWeather(dailyWeathers.get(1).getWeather()[0].getMain()));
+        imhWeather3.setImageResource(iconWeather.IconWeather(dailyWeathers.get(2).getWeather()[0].getMain()));
     }
     private void getData(){
         Call<DetailWeatherModel> detailWeatherModelCall = weatherRetrofit.getWeather(sharedPreferencesManagement.getTOKEN(), sharedPreferencesManagement.getLAT(), sharedPreferencesManagement.getLONG());
@@ -226,7 +236,7 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
                     Toast.makeText(getContext(), "Lỗi mạng", Toast.LENGTH_SHORT).show();
                 }else{
                     detailWeatherModel = response.body();
-                    Log.d(TAG, "onResponse: lozzzz"+detailWeatherModel.getCurrent().getWeather()[0].getDescription());
+                    Log.d(TAG, "onResponse: "+detailWeatherModel.getCurrent().getWeather()[0].getDescription());
                     for (int i = 0; i < detailWeatherModel.getDaily().length; i++){
                         dailyWeathers.add(detailWeatherModel.getDaily()[i]);
                     }
@@ -260,15 +270,18 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
                     sDay.add("Bây giờ");
 
                     for (int i = 0; i < detailWeatherModel.getHourly().length-24; i++){
-                        cal.setTime(new Date(detailWeatherModel.getHourly()[i].getDt()*1000));
-                        cal.add(Calendar.HOUR, -1);
-                        oneHourBack = cal.getTime().getHours();
+                        cal.setTime(new Date(detailWeatherModel.getHourly()[i].getDt()));
+                        oneHourBack = cal.get(Calendar.HOUR_OF_DAY);
+                        Log.d(TAG, "onResponse: "+oneHourBack);
                         entries.add(new Entry(i+1, detailWeatherModel.getHourly()[i].getTemp()-273, "°C"));
                         if(oneHourBack > 9 )
                             sDay.add(oneHourBack+":00");
                         else sDay.add("0"+oneHourBack+":00");
                     }
                     setupChar();
+                    lottieLoadingData.pauseAnimation();
+                    splashWeather.setVisibility(View.GONE);
+                    layoutRltWeather.setVisibility(View.VISIBLE);
                 }
                 call.cancel();
             }
@@ -337,49 +350,12 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
         chart.setVisibleXRangeMaximum(5);
         chart.setData(lineData);
     }
-//    private void setUpData(){
-//        entries.clear();
-//        entries.add(new Entry(0, 22f, "°C"));
-//        entries.add(new Entry(1, 20f, "°C"));
-//        entries.add(new Entry(2, 20f, "°C"));
-//        entries.add(new Entry(3, 20f, "°C"));
-//        entries.add(new Entry(4, 20f, "°C"));
-//        entries.add(new Entry(5, 18f, "°C"));
-//        entries.add(new Entry(6, 18f, "°C"));
-//        entries.add(new Entry(7, 17f, "°C"));
-//        entries.add(new Entry(8, 17f, "°C"));
-//        entries.add(new Entry(9, 20f, "°C"));
-//        entries.add(new Entry(10, 23f, "°C"));
-//        entries.add(new Entry(11, 23f, "°C"));
-//        entries.add(new Entry(12, 23f, "°C"));
-//        entries.add(new Entry(13, 24f, "°C"));
-//        entries.add(new Entry(14, 24f, "°C"));
-//        entries.add(new Entry(15, 24f, "°C"));
-//        entries.add(new Entry(16, 20f, "°C"));
-//        entries.add(new Entry(17, 20f, "°C"));
-//
-//        sDay.clear();
-//        sDay.add("Bây giờ");
-//        sDay.add("01:00");
-//        sDay.add("02:00");
-//        sDay.add("03:00");
-//        sDay.add("04:00");
-//        sDay.add("05:00");
-//        sDay.add("06:00");
-//        sDay.add("07:00");
-//        sDay.add("08:00");
-//        sDay.add("09:00");
-//        sDay.add("10:00");
-//        sDay.add("11:00");
-//        sDay.add("12:00");
-//        sDay.add("13:00");
-//        sDay.add("14:00");
-//        sDay.add("15:00");
-//        sDay.add("16:00");
-//        sDay.add("17:00");
-//        sDay.add("18:00");
-//    }
-    private void animationSunrise(){
+
+    private void animationSunrise(int img){
+//        if(img == 1)
+//            imgSunWeather.setImageResource(R.drawable.ic_rain_sun_small);
+//        else if(img == 2)
+            imgSunWeather.setImageResource(img);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Log.d(TAG, "animationWeather: "+ imgSunWeather.getX() +" "+imgSunWeather.getY());
             path = new Path();

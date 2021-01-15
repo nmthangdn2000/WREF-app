@@ -7,38 +7,28 @@ import java.util.Arrays;
 public class StoriesModels {
     @SerializedName("_id")
     private String id;
-//    @SerializedName("iduser")
-//    private UsersModel users;
-    @SerializedName("file")
-    private String[] file;
-    @SerializedName("text")
-    private String textStory;
-//    @SerializedName("numberLike")
-//    private UserLike[] like;
+    @SerializedName("idUser")
+    private UsersModel users;
+    @SerializedName("media")
+    private String[] media;
     @SerializedName("createdAt")
     private String createdAt;
-    @SerializedName("updatedAt")
-    private String updatedAt;
+
+    public StoriesModels(String id, UsersModel users, String[] media, String createdAt) {
+        this.id = id;
+        this.users = users;
+        this.media = media;
+        this.createdAt = createdAt;
+    }
 
     @Override
     public String toString() {
         return "StoriesModels{" +
                 "id='" + id + '\'' +
-//                ", users=" + users +
-                ", file=" + Arrays.toString(file) +
-                ", textStory='" + textStory + '\'' +
+                ", users=" + users +
+                ", media=" + Arrays.toString(media) +
                 ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
                 '}';
-    }
-
-    public StoriesModels(String id, String[] file, String textStory, String createdAt, String updatedAt) {
-        this.id = id;
-//        this.users = users;
-        this.file = file;
-        this.textStory = textStory;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public String getId() {
@@ -49,28 +39,20 @@ public class StoriesModels {
         this.id = id;
     }
 
-//    public UsersModel getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(UsersModel users) {
-//        this.users = users;
-//    }
-
-    public String[] getFile() {
-        return file;
+    public UsersModel getUsers() {
+        return users;
     }
 
-    public void setFile(String[] file) {
-        this.file = file;
+    public void setUsers(UsersModel users) {
+        this.users = users;
     }
 
-    public String getTextStory() {
-        return textStory;
+    public String[] getMedia() {
+        return media;
     }
 
-    public void setTextStory(String textStory) {
-        this.textStory = textStory;
+    public void setMedia(String[] media) {
+        this.media = media;
     }
 
     public String getCreatedAt() {
@@ -79,13 +61,5 @@ public class StoriesModels {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
     }
 }
