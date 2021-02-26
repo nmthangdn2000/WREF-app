@@ -101,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="2"
-                android:rowCount="4"
+                android:rowCount="2"
                 android:alignmentMode="alignMargins"
                 android:columnOrderPreserved="false"
                 android:layout_weight="8"
@@ -159,12 +159,12 @@
                         <ImageView
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:src="@drawable/ic_medal"/>
+                            android:src="@drawable/ic_menu"/>
                         <TextView
                             android:layout_marginTop="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tích điểm"
+                            android:text="Sản phẩm"
                             android:textSize="18sp"
                             android:textColor="@color/color_text"/>
                     </LinearLayout>
@@ -181,26 +181,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/ic_location" />
-                        <TextView
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Địa điểm bán hàng"
-                            android:textSize="18sp"
-                            android:textColor="@color/color_text"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                    android:layout_marginBottom="10dp"/>
                 <!--        column 2        -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
@@ -212,26 +193,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="20dp"
-                    android:layout_marginBottom="10dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/ic_giftbox"/>
-                        <TextView
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Đổi thưởng"
-                            android:textSize="18sp"
-                            android:textColor="@color/color_text"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
+                    android:layout_marginBottom="10dp"/>
                 <!--     Row 3          -->
                 <!--     column 1           -->
                 <androidx.cardview.widget.CardView
@@ -254,12 +216,12 @@
                         <ImageView
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:src="@drawable/ic_menu"/>
+                            android:src="@drawable/ic_qr_code"/>
                         <TextView
                             android:layout_marginTop="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Sản phẩm"
+                            android:text="Quét mã"
                             android:textSize="18sp"
                             android:textColor="@color/color_text"/>
                     </LinearLayout>
@@ -296,75 +258,13 @@
                             android:textColor="@color/color_text"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
-                <!--     Row 4         -->
-                <!--     column 1           -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="8dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/ic_customer_agent"/>
-                        <TextView
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Liên hệ kỷ thuật"
-                            android:textSize="18sp"
-                            android:textColor="@color/color_text"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-                <!--        column 2        -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="8dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="10dp">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/ic_qr_code"/>
-                        <TextView
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Quét mã"
-                            android:textSize="18sp"
-                            android:textColor="@color/color_text"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
             </GridLayout>
         </LinearLayout>
             <LinearLayout
                 android:paddingTop="10dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
+                android:paddingBottom="40dp"
                 android:clipToPadding="false"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

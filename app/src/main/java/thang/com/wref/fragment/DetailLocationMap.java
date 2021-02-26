@@ -51,6 +51,7 @@ import thang.com.wref.Adapter.DetailLocationMapAdapter;
 import thang.com.wref.Date.TimeCaculater;
 import thang.com.wref.IconWeather;
 import thang.com.wref.Login.SharedPreferencesManagement;
+import thang.com.wref.Main.MapFragment;
 import thang.com.wref.Models.Weather.currentWeather;
 import thang.com.wref.Models.WeatherLocationModel;
 import thang.com.wref.NetworkUtil;
@@ -85,9 +86,10 @@ public class DetailLocationMap extends Fragment {
     private ArrayList<Entry> entries;
     private LottieAnimationView lottieLoading;
     private LineChart chart;
+    private setDataDetailWeather setDataDetailWeather;
 
 
-    public DetailLocationMap(Context context, String nameLocation, String address, float lati, float longti, LottieAnimationView lottieLoading, RelativeLayout dataChart, LineChart chart) {
+    public DetailLocationMap(Context context, String nameLocation, String address, float lati, float longti, LottieAnimationView lottieLoading, RelativeLayout dataChart, LineChart chart, setDataDetailWeather setDataDetailWeather) {
         this.context = context;
         this.nameLocation = nameLocation;
         this.address = address;
@@ -96,6 +98,7 @@ public class DetailLocationMap extends Fragment {
         this.lottieLoading = lottieLoading;
         this.dataChart = dataChart;
         this.chart = chart;
+        this.setDataDetailWeather = setDataDetailWeather;
     }
 
     @Override
@@ -111,7 +114,6 @@ public class DetailLocationMap extends Fragment {
         sharedPreferencesManagement = new SharedPreferencesManagement(context);
         String[] strings = address.split(", ");
         addressLine = strings[0];
-
     }
 
     @Nullable
@@ -147,6 +149,8 @@ public class DetailLocationMap extends Fragment {
 
     }
     private void getData(){
+        lottieLoading.setVisibility(View.VISIBLE);
+        dataChart.setVisibility(View.INVISIBLE);
         locationRetrofit = retrofit.create(LocationRetrofit.class);
         Call<WeatherLocationModel> weatherLocationModelCall = locationRetrofit.getWeatherLocation(sharedPreferencesManagement.getTOKEN(), addressLine, lati, longti);
         weatherLocationModelCall.enqueue(new Callback<WeatherLocationModel>() {
@@ -175,6 +179,9 @@ public class DetailLocationMap extends Fragment {
                             (int) (weatherLocationModel.getWeather().getCurrent().getFeels_like() - 273)+"°C");
                     imgWeather.setImageResource(iconWeather.IconWeather(weatherLocationModel.getWeather().getCurrent()
                             .getWeather()[0].getMain()));
+                    addDataChar();
+                    Log.d(TAG, "cai lozz: "+weatherLocationModel);
+                    setDataDetailWeather.setDataDetailWeather(weatherLocationModel);
                 }
                 call.cancel();
                 lottieLoadingData.pauseAnimation();
@@ -195,8 +202,6 @@ public class DetailLocationMap extends Fragment {
         return weatherLocationModel;
     }
     public void addDataChar(){
-        lottieLoading.setVisibility(View.VISIBLE);
-        dataChart.setVisibility(View.INVISIBLE);
         tack.clear();
         entries.clear();
         for (int i = 0; i < weatherLocationModel.getWeather().getDaily().length - 3; i++) {
@@ -259,5 +264,7 @@ public class DetailLocationMap extends Fragment {
         chart.setVisibleXRangeMaximum(5);
         chart.setData(lineData);
     }
-
+    public interface setDataDetailWeather{
+        void setDataDetailWeather(WeatherLocationModel weatherLocationModel);
+    }
 }

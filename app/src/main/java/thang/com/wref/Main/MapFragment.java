@@ -124,7 +124,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             txtDayOfWeek4, txtDay4, txtTypeWeather4, txtWind4, txtDataWind4,
             txtDayOfWeek5, txtDay5, txtTypeWeather5, txtWind5, txtDataWind5;
     private ImageView imgWeather1, imgWeather2, imgWeather3, imgWeather4, imgWeather5;
-    private WeatherLocationModel weatherLocationModel;
+//    private WeatherLocationModel weatherLocationModel;
+    private DetailLocationMap.setDataDetailWeather setDataDetailWeather;
 
     private IconWeather iconWeather;
     private TimeCaculater timeCaculater;
@@ -191,6 +192,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         super.onActivityCreated(savedInstanceState);
         openGooogleMap();
         searchLocation();
+        setDataDetailWeather();
         clospaneSlidingUpPanel();
     }
 
@@ -432,7 +434,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private void showDetailLocationMap(String query, String address, float lati, float longti) {
         if(getFragmentManager().findFragmentByTag("detailLocationMap") != null)
             getFragmentManager().beginTransaction().remove(detailLocationMap).commit();
-        detailLocationMap = new DetailLocationMap(getContext().getApplicationContext(), query, address, lati, longti, lottieLoading, dataChart, chart);
+        detailLocationMap = new DetailLocationMap(getContext().getApplicationContext(), query, address, lati, longti, lottieLoading, dataChart, chart, setDataDetailWeather);
         getFragmentManager().beginTransaction().add(R.id.frameInforTouchLocation, detailLocationMap, "detailLocationMap").commit();
         if(iconsearch.getTag().equals("location")){
             iconsearch.setTag("backMap");
@@ -464,8 +466,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 }else if(newState == SlidingUpPanelLayout.PanelState.EXPANDED){
                     if(rltDataCharBottm.getVisibility() != View.VISIBLE){
                         rltDataCharBottm.setVisibility(View.VISIBLE);
-                        detailLocationMap.addDataChar();
-                        setDataDetailWeather();
                     }
                 }else if(newState == SlidingUpPanelLayout.PanelState.ANCHORED){
 
@@ -473,54 +473,57 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             }
         });
     }
-    private void setDataDetailWeather(){
-        ArrayList<String> strings= new ArrayList<>();
-        cal = Calendar.getInstance();
-        weatherLocationModel = detailLocationMap.getWeather();
-        strings.clear();
-        cal.clear();
-        for (int index = 0; index < 5; index++) {
-            cal.setTime(new Date((long) weatherLocationModel.getWeather().getDaily()[index].getDt()*1000));
-            day = cal.get(Calendar.DAY_OF_MONTH);
-            month = cal.get(Calendar.MONTH);
-            cal.clear();
-            strings.add(day+"/"+(month+1));
-        }
-        txtDayOfWeek1.setText("Hôm nay");
-        txtDay1.setText(strings.get(0));
-        txtTypeWeather1.setText(""+iconWeather.typeWeather(weatherLocationModel.getWeather().getCurrent().getWeather()[0].getDescription()));
-        txtWind1.setText(iconWeather.wind_Deg(weatherLocationModel.getWeather().getCurrent().getWind_deg()));
-        txtDataWind1.setText(weatherLocationModel.getWeather().getCurrent().getWind_speed()+" km/h");
-        imgWeather1.setImageResource(iconWeather.IconWeather(weatherLocationModel.getWeather().getCurrent().getWeather()[0].getMain()));
+    public void setDataDetailWeather(){
+        setDataDetailWeather = new DetailLocationMap.setDataDetailWeather() {
+            @Override
+            public void setDataDetailWeather(WeatherLocationModel weatherLocationModel) {
+                ArrayList<String> strings= new ArrayList<>();
+                cal = Calendar.getInstance();
+                strings.clear();
+                cal.clear();
+                for (int index = 0; index < 5; index++) {
+                    cal.setTime(new Date((long) weatherLocationModel.getWeather().getDaily()[index].getDt()*1000));
+                    day = cal.get(Calendar.DAY_OF_MONTH);
+                    month = cal.get(Calendar.MONTH);
+                    cal.clear();
+                    strings.add(day+"/"+(month+1));
+                }
+                txtDayOfWeek1.setText("Hôm nay");
+                txtDay1.setText(strings.get(0));
+                txtTypeWeather1.setText(""+iconWeather.typeWeather(weatherLocationModel.getWeather().getCurrent().getWeather()[0].getDescription()));
+                txtWind1.setText(iconWeather.wind_Deg(weatherLocationModel.getWeather().getCurrent().getWind_deg()));
+                txtDataWind1.setText(weatherLocationModel.getWeather().getCurrent().getWind_speed()+" km/h");
+                imgWeather1.setImageResource(iconWeather.IconWeather(weatherLocationModel.getWeather().getCurrent().getWeather()[0].getMain()));
 
-        txtDayOfWeek2.setText("Ngày mai");
-        txtDay2.setText(strings.get(1));
-        txtTypeWeather2.setText(""+iconWeather.typeWeather(weatherLocationModel.getWeather().getDaily()[1].getWeather()[0].getDescription()));
-        txtWind2.setText(iconWeather.wind_Deg(weatherLocationModel.getWeather().getDaily()[1].getWind_deg()));
-        txtDataWind2.setText(weatherLocationModel.getWeather().getDaily()[1].getWind_speed()+" km/h");
-        imgWeather2.setImageResource(iconWeather.IconWeather(weatherLocationModel.getWeather().getDaily()[1].getWeather()[0].getMain()));
+                txtDayOfWeek2.setText("Ngày mai");
+                txtDay2.setText(strings.get(1));
+                txtTypeWeather2.setText(""+iconWeather.typeWeather(weatherLocationModel.getWeather().getDaily()[1].getWeather()[0].getDescription()));
+                txtWind2.setText(iconWeather.wind_Deg(weatherLocationModel.getWeather().getDaily()[1].getWind_deg()));
+                txtDataWind2.setText(weatherLocationModel.getWeather().getDaily()[1].getWind_speed()+" km/h");
+                imgWeather2.setImageResource(iconWeather.IconWeather(weatherLocationModel.getWeather().getDaily()[1].getWeather()[0].getMain()));
 
-        txtDayOfWeek3.setText(timeCaculater.dayStringFormat(weatherLocationModel.getWeather().getDaily()[2].getDt()));
-        txtDay3.setText(strings.get(2));
-        txtTypeWeather3.setText(""+iconWeather.typeWeather(weatherLocationModel.getWeather().getDaily()[2].getWeather()[0].getDescription()));
-        txtWind3.setText(iconWeather.wind_Deg(weatherLocationModel.getWeather().getDaily()[2].getWind_deg()));
-        txtDataWind3.setText(weatherLocationModel.getWeather().getDaily()[2].getWind_speed()+" km/h");
-        imgWeather3.setImageResource(iconWeather.IconWeather(weatherLocationModel.getWeather().getDaily()[2].getWeather()[0].getMain()));
+                txtDayOfWeek3.setText(timeCaculater.dayStringFormat(weatherLocationModel.getWeather().getDaily()[2].getDt()));
+                txtDay3.setText(strings.get(2));
+                txtTypeWeather3.setText(""+iconWeather.typeWeather(weatherLocationModel.getWeather().getDaily()[2].getWeather()[0].getDescription()));
+                txtWind3.setText(iconWeather.wind_Deg(weatherLocationModel.getWeather().getDaily()[2].getWind_deg()));
+                txtDataWind3.setText(weatherLocationModel.getWeather().getDaily()[2].getWind_speed()+" km/h");
+                imgWeather3.setImageResource(iconWeather.IconWeather(weatherLocationModel.getWeather().getDaily()[2].getWeather()[0].getMain()));
 
-        txtDayOfWeek4.setText(timeCaculater.dayStringFormat(weatherLocationModel.getWeather().getDaily()[3].getDt()));
-        txtDay4.setText(strings.get(3));
-        txtTypeWeather4.setText(""+iconWeather.typeWeather(weatherLocationModel.getWeather().getDaily()[3].getWeather()[0].getDescription()));
-        txtWind4.setText(iconWeather.wind_Deg(weatherLocationModel.getWeather().getDaily()[3].getWind_deg()));
-        txtDataWind4.setText(weatherLocationModel.getWeather().getDaily()[3].getWind_speed()+" km/h");
-        imgWeather4.setImageResource(iconWeather.IconWeather(weatherLocationModel.getWeather().getDaily()[3].getWeather()[0].getMain()));
+                txtDayOfWeek4.setText(timeCaculater.dayStringFormat(weatherLocationModel.getWeather().getDaily()[3].getDt()));
+                txtDay4.setText(strings.get(3));
+                txtTypeWeather4.setText(""+iconWeather.typeWeather(weatherLocationModel.getWeather().getDaily()[3].getWeather()[0].getDescription()));
+                txtWind4.setText(iconWeather.wind_Deg(weatherLocationModel.getWeather().getDaily()[3].getWind_deg()));
+                txtDataWind4.setText(weatherLocationModel.getWeather().getDaily()[3].getWind_speed()+" km/h");
+                imgWeather4.setImageResource(iconWeather.IconWeather(weatherLocationModel.getWeather().getDaily()[3].getWeather()[0].getMain()));
 
-        txtDayOfWeek5.setText(timeCaculater.dayStringFormat(weatherLocationModel.getWeather().getDaily()[4].getDt()));
-        txtDay5.setText(strings.get(4));
-        txtTypeWeather5.setText(""+iconWeather.typeWeather(weatherLocationModel.getWeather().getDaily()[4].getWeather()[0].getDescription()));
-        txtWind5.setText(iconWeather.wind_Deg(weatherLocationModel.getWeather().getDaily()[4].getWind_deg()));
-        txtDataWind5.setText(weatherLocationModel.getWeather().getDaily()[4].getWind_speed()+" km/h");
-        imgWeather5.setImageResource(iconWeather.IconWeather(weatherLocationModel.getWeather().getDaily()[4].getWeather()[0].getMain()));
-
+                txtDayOfWeek5.setText(timeCaculater.dayStringFormat(weatherLocationModel.getWeather().getDaily()[4].getDt()));
+                txtDay5.setText(strings.get(4));
+                txtTypeWeather5.setText(""+iconWeather.typeWeather(weatherLocationModel.getWeather().getDaily()[4].getWeather()[0].getDescription()));
+                txtWind5.setText(iconWeather.wind_Deg(weatherLocationModel.getWeather().getDaily()[4].getWind_deg()));
+                txtDataWind5.setText(weatherLocationModel.getWeather().getDaily()[4].getWind_speed()+" km/h");
+                imgWeather5.setImageResource(iconWeather.IconWeather(weatherLocationModel.getWeather().getDaily()[4].getWeather()[0].getMain()));
+            }
+        };
     }
     private void clearImg(){
 

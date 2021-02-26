@@ -56,7 +56,8 @@ public class SplashActivity extends AppCompatActivity {
         networkUtil = new NetworkUtil();
         retrofit = networkUtil.getRetrofit();
         sharedPreferencesManagement = new SharedPreferencesManagement(this);
-        new checkLogin().execute();
+        mappingView();
+        getData();
     }
     private void mappingView(){
         logoImg = (ImageView) findViewById(R.id.logoImg);
@@ -68,45 +69,6 @@ public class SplashActivity extends AppCompatActivity {
         logoImg.startAnimation(animationDown);
         logoName.startAnimation(animationUp);
     }
-    private class checkLogin extends AsyncTask<Void, String, Integer>{
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mappingView();
-        }
-        @Override
-        protected Integer doInBackground(Void... voids) {
-            getData();
-            return check;
-        }
-
-        @Override
-        protected void onPostExecute(Integer integer) {
-            super.onPostExecute(integer);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if(check == 0){
-                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                        Pair[] pairs = new Pair[2];
-                        pairs[0] = new Pair<View, String>(logoImg, "logo_img");
-                        pairs[1] = new Pair<View, String>(logoName, "logo_text");
-
-                        ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this, pairs);
-                        startActivity(intent, activityOptions.toBundle());
-                        finish();
-                    }else if(check == 1){
-                        Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                    }
-
-                }
-            },SPLASH_SCREEN);
-        }
-    }
     private void getData(){
         userRetrofit = retrofit.create(UserRetrofit.class);
         Call<UsersModel> usersModelCall = userRetrofit.checkLogin(sharedPreferencesManagement.getTOKEN());
@@ -115,14 +77,17 @@ public class SplashActivity extends AppCompatActivity {
             public void onResponse(Call<UsersModel> call, Response<UsersModel> response) {
                 if(!response.isSuccessful()){
                     Toast.makeText(SplashActivity.this, "không có mạng", Toast.LENGTH_SHORT).show();
-                    check = 0;
+                    activitiLogin();
                 }else{
                     UsersModel usersModel = response.body();
                     String[] strings = sharedPreferencesManagement.getTOKEN().split(" ");
                     usersModel.setToken(strings[1]);
                     Log.d(TAG, "onResponse: "+ usersModel);
                     sharedPreferencesManagement.saveData(usersModel);
-                    check = 1;
+
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
                 call.cancel();
             }
@@ -131,8 +96,20 @@ public class SplashActivity extends AppCompatActivity {
             public void onFailure(Call<UsersModel> call, Throwable t) {
                 Log.d(TAG, "onFailure: "+ t.getMessage());
                 call.cancel();
-                check = 0;
+                activitiLogin();
             }
         });
+    }
+    private void activitiLogin(){
+        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        Pair[] pairs = new Pair[2];
+        pairs[0] = new Pair<View, String>(logoImg, "logo_img");
+        pairs[1] = new Pair<View, String>(logoName, "logo_text");
+
+        ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(SplashActivity.this, pairs);
+        startActivity(intent, activityOptions.toBundle());
+        finish();
     }
 }

@@ -36,6 +36,19 @@
             android:text="WREF"
             android:textColor="@color/black"
             android:textSize="80sp"/>
+        <TextView
+            android:layout_below="@+id/logoName"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:layout_marginTop="80dp"
+            android:transitionName="logo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bungee_regular"
+            android:includeFontPadding="false"
+            android:text="Vì cuộc sống an toàn - thịnh vượng"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
     </RelativeLayout>
 
 </LinearLayout>
