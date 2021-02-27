@@ -73,8 +73,8 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     private NetworkUtil networkUtil;
     private NewsRetrofit newsRetrofit;
     private StoriesRetrofit storiesRetrofit;
-    private ArrayList<StoriesModels> stories;
     private StoriesAdapter.onCLickStories mListener;
+    private List<Fragment> fragmentStories;
 
     private SharedPreferencesManagement sharedPreferencesManagement;
 
@@ -102,7 +102,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         }
         networkUtil = new NetworkUtil();
         retrofit = networkUtil.getRetrofit();
-        stories = new ArrayList<>();
+        fragmentStories = new ArrayList<>();
     }
 
     @Override
@@ -124,7 +124,6 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         onClickStories();
         addStoriesAdapter();
         addNewsAdapter();
-        setUpStories();
         clospaneSlidingUpPanel();
 
     }
@@ -149,7 +148,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 meowBottomNavigation.startAnimation(animation);
                 meowBottomNavigation.setVisibility(View.GONE);
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-
+                setUpStories(position);
             }
         };
 
@@ -275,7 +274,8 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         newsAdapter = new NewsAdapter(newsArr, getContext().getApplicationContext(), mListenerNews);
         rcvNews.setAdapter(newsAdapter);
     }
-    private void setUpStories(){
+    private void setUpStories(int position){
+        getStories(position);
         viewPager2story.setVisibility(View.VISIBLE);
         fragmentCommnet.setVisibility(View.INVISIBLE);
         viewPager2story.setPageTransformer(new CubeTransformerViewpager());
@@ -285,13 +285,9 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 super.onPageSelected(position);
             }
         });
-//        viewPager2story.setCurrentItem(0,false);
-        getStories();
     }
-    private void getStories(){
-        Log.d(TAG, "getStories: aaaaaaaaaaa");
-        stories.clear();
-        List<Fragment> fragments = new ArrayList<>();
+    private void getStories(int position){
+        fragmentStories.clear();
         storiesRetrofit = retrofit.create(StoriesRetrofit.class);
         Call<List<StoriesModels>> listCall = storiesRetrofit.getStories(sharedPreferencesManagement.getTOKEN());
         listCall.enqueue(new Callback<List<StoriesModels>>() {
@@ -302,9 +298,20 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                     return;
                 }else{
                     List<StoriesModels> storiesModels = response.body();
-                    for (StoriesModels models : storiesModels){
-                        stories.add(models);
-                        fragments.add(new StoriesFragment(stories, getContext(), viewPager2story));
+                    for(StoriesModels story : storiesModels){
+                        if(story.getUsers().getId().equals(sharedPreferencesManagement.getID())){
+                            ArrayList<StoriesModels> stories = new ArrayList<>();
+                            stories.add(story);
+                            fragmentStories.add(new StoriesFragment(stories, getContext(), viewPager2story, slidingUpPanelLayout));
+                            break;
+                        }
+                    }
+                    for(StoriesModels story : storiesModels){
+                        if(!story.getUsers().getId().equals(sharedPreferencesManagement.getID())){
+                            ArrayList<StoriesModels> stories = new ArrayList<>();
+                            stories.add(story);
+                            fragmentStories.add(new StoriesFragment(stories, getContext(), viewPager2story, slidingUpPanelLayout));
+                        }
                     }
                     storiesViewpaerAdapter.notifyDataSetChanged();
                 }
@@ -317,8 +324,9 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 Log.d(TAG, "onFailure: "+t.getMessage());
             }
         });
-        storiesViewpaerAdapter = new StoriesViewpaerAdapter(getFragmentManager(),getLifecycle(),fragments);
+        storiesViewpaerAdapter = new StoriesViewpaerAdapter(getFragmentManager(), getLifecycle(), fragmentStories);
         viewPager2story.setAdapter(storiesViewpaerAdapter);
+        viewPager2story.setCurrentItem(position,false);
     }
     private void clospaneSlidingUpPanel(){
         slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
@@ -334,6 +342,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                     animation.setDuration(500);
                     meowBottomNavigation.setVisibility(View.VISIBLE);
                     meowBottomNavigation.startAnimation(animation);
+                    slidingUpPanelLayout.setOverlayed(true);
                     clearFragment();
                 }
             }
@@ -346,6 +355,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 Log.d(TAG, "onClickComment: aaaaaaaaaaaaa"+ getFragmentManager().getFragments().size());
                 viewPager2story.setVisibility(View.INVISIBLE);
                 fragmentCommnet.setVisibility(View.VISIBLE);
+                slidingUpPanelLayout.setOverlayed(false);
                 Log.d(TAG, "onClickComment: "+position);
                 Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_down);
                 meowBottomNavigation.startAnimation(animation);

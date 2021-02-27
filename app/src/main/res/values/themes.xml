@@ -21,6 +21,10 @@
     <style name="text">
         <item name="android:textColorHint">@color/white</item>
     </style>
+    <style name="textHint">
+        <item name="android:textColorHint">@color/time</item>
+        <item name="android:textSize">18sp</item>
+    </style>
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>

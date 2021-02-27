@@ -17,16 +17,28 @@ import com.airbnb.lottie.L;
 
 import thang.com.wref.Login.LoginActivity;
 import thang.com.wref.Login.SharedPreferencesManagement;
+import thang.com.wref.Main.More.InforAgriActivity;
+import thang.com.wref.Main.More.ProductAgriActivity;
+import thang.com.wref.Main.More.SearchActivity;
 import thang.com.wref.R;
 
-public class AboutFragment extends Fragment {
+public class AboutFragment extends Fragment implements View.OnClickListener{
     private View view;
-    private LinearLayout btnLogout;
+    private LinearLayout btnLogout, lnlInforAgri, lnlSearch, lnlProduct, lnlCodeScan;
     private SharedPreferencesManagement sharedPreferencesManagement;
     public AboutFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,15 +56,61 @@ public class AboutFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_about, container, false);
         btnLogout = (LinearLayout) view.findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sharedPreferencesManagement.clearData();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
+        lnlInforAgri = (LinearLayout) view.findViewById(R.id.lnlInforAgri);
+        lnlSearch = (LinearLayout) view.findViewById(R.id.lnlSearch);
+        lnlProduct = (LinearLayout) view.findViewById(R.id.lnlProduct);
+        lnlCodeScan = (LinearLayout) view.findViewById(R.id.lnlCodeScan);
+
+        lnlInforAgri.setOnClickListener(this);
+        lnlSearch.setOnClickListener(this);
+        lnlProduct.setOnClickListener(this);
+        lnlCodeScan.setOnClickListener(this);
+        btnLogout.setOnClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.lnlInforAgri:
+                inforAgri();
+                break;
+            case R.id.lnlSearch:
+                search();
+                break;
+            case R.id.lnlProduct:
+                product();
+                break;
+            case R.id.lnlCodeScan:
+                codeScan();
+                break;
+            case R.id.btnLogout:
+                logOut();
+                break;
+            default:
+                break;
+        }
+    }
+    private void inforAgri(){
+        Intent intent = new Intent(getContext(), InforAgriActivity.class);
+        startActivity(intent);
+    }
+    private void search(){
+        Intent intent = new Intent(getContext(), SearchActivity.class);
+        startActivity(intent);
+    }
+    private void product(){
+        Intent intent = new Intent(getContext(), ProductAgriActivity.class);
+        startActivity(intent);
+    }
+    private void codeScan(){
+
+    }
+
+    private void logOut(){
+        sharedPreferencesManagement.clearData();
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
     }
 }

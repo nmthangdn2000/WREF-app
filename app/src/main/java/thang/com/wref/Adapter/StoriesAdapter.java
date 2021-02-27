@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import thang.com.wref.Login.SharedPreferencesManagement;
-import thang.com.wref.Main.Stories.ViewpagerStoriesActivity;
+//import thang.com.wref.Main.Stories.ViewpagerStoriesActivity;
 import thang.com.wref.Models.StoriesModels;
 import thang.com.wref.R;
 

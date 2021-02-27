@@ -13,7 +13,8 @@
         android:gravity="bottom"
         app:umanoPanelHeight="0dp"
         app:umanoDragView="@id/viewInforTouchLocation"
-        app:umanoScrollableView="@id/scrollviewSliding">
+        app:umanoScrollableView="@id/scrollviewSliding"
+        app:umanoOverlay="false">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">

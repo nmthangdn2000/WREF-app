@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -26,6 +27,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
 
@@ -40,15 +42,17 @@ public class StoriesFragment extends Fragment implements StoriesProgressView.Sto
     private static final String TAG = "StoriesFragment";
     private View view, reverse, skip;
     private Context context;
+    private EditText edtFeeback;
     private CircleImageView userAvata;
     private TextView txtusername, txtTimeStory;
-    private ImageView btnClose, imageStories;
+    private ImageView imageStories;
     private RelativeLayout RelativeStoriesInfor;
-    private LinearLayout imgStoryhear, linearStoriesBottom;
+    private LinearLayout imgStoryhear, linearStoriesBottom, btnClose;
     private StoriesProgressView stories;
     private ViewPager2 viewPager2story;
     private int counter = 0, counterPause = 0;
     private Palette palette;
+    private SlidingUpPanelLayout slidingUpPanelLayout;
 
     private ArrayList<StoriesModels> arrayList;
 
@@ -62,7 +66,7 @@ public class StoriesFragment extends Fragment implements StoriesProgressView.Sto
                     pressTime = System.currentTimeMillis();
                     stories.pause();
                     RelativeStoriesInfor.animate().alpha(0.0f).setDuration(500);
-                    imgStoryhear.animate().alpha(0.0f).setDuration(500);
+                    linearStoriesBottom.animate().alpha(0.0f).setDuration(500);
                     Log.d(TAG,"ACTION_DOWN");
                     return false;
                 case MotionEvent.ACTION_UP:
@@ -83,10 +87,11 @@ public class StoriesFragment extends Fragment implements StoriesProgressView.Sto
             return true;
         }
     };
-    public StoriesFragment(ArrayList<StoriesModels> arrayList, Context context, ViewPager2 viewPager2story) {
+    public StoriesFragment(ArrayList<StoriesModels> arrayList, Context context, ViewPager2 viewPager2story, SlidingUpPanelLayout slidingUpPanelLayout) {
         this.arrayList = arrayList;
         this.context = context;
         this.viewPager2story = viewPager2story;
+        this.slidingUpPanelLayout = slidingUpPanelLayout;
     }
 
     @Override
@@ -122,6 +127,7 @@ public class StoriesFragment extends Fragment implements StoriesProgressView.Sto
         linearStoriesBottom = (LinearLayout) view.findViewById(R.id.linearStoriesBottom);
         txtusername = (TextView) view.findViewById(R.id.txtusername);
         userAvata = (CircleImageView) view.findViewById(R.id.userAvata);
+        edtFeeback = (EditText) view.findViewById(R.id.edtFeeback);
     }
     private void setupStories(){
         stories.setStoriesCount(arrayList.get(0).getMedia().length); // <- set stories
@@ -129,7 +135,7 @@ public class StoriesFragment extends Fragment implements StoriesProgressView.Sto
         stories.setStoriesListener(this);
     }
     private void setUpTouch(){
-        btnClose = (ImageView) view.findViewById(R.id.btnClose);
+        btnClose = (LinearLayout) view.findViewById(R.id.btnClose);
         reverse = (View) view.findViewById(R.id.reverse);
         skip = (View) view.findViewById(R.id.skip);
         reverse.setOnTouchListener(onTouchListener);
@@ -152,12 +158,13 @@ public class StoriesFragment extends Fragment implements StoriesProgressView.Sto
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
             }
         });
     }
     private void setData(){
 //        txtTimeStory.setText(date.time(arrayListStory.get(0).getCreatedAt()));
+        edtFeeback.setHint("Trả lời "+arrayList.get(0).getUsers().getUsername()+ " ...");
         txtusername.setText(""+arrayList.get(0).getUsers().getUsername());
         Glide.with(context).load(BASE_URL+"uploads/"+arrayList.get(0).getUsers().getAvata())
                 .apply(new RequestOptions().override(100,100)).into(userAvata);

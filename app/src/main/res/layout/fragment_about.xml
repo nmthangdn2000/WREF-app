@@ -110,7 +110,7 @@
                 <!--     column 1           -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
                     app:cardElevation="8dp"
@@ -119,29 +119,34 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp">
+
                     <LinearLayout
+                        android:id="@+id/lnlSearch"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
+                        android:layout_height="match_parent"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
                         <ImageView
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:src="@drawable/ic_search"/>
+                            android:src="@drawable/ic_search" />
+
                         <TextView
-                            android:layout_marginTop="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:text="Tra cứu"
-                            android:textSize="18sp"
-                            android:textColor="@color/color_text"/>
+                            android:textColor="@color/color_text"
+                            android:textSize="18sp" />
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <!--        column 2        -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
                     app:cardElevation="8dp"
@@ -151,11 +156,13 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp">
                     <LinearLayout
+                        android:id="@+id/lnlProduct"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:padding="10dp"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:foreground="?android:attr/selectableItemBackground">
                         <ImageView
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -198,7 +205,7 @@
                 <!--     column 1           -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
                     app:cardElevation="8dp"
@@ -208,11 +215,13 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginBottom="10dp">
                     <LinearLayout
+                        android:id="@+id/lnlCodeScan"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:padding="10dp"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:foreground="?android:attr/selectableItemBackground">
                         <ImageView
                             android:layout_width="50dp"
                             android:layout_height="50dp"
@@ -229,7 +238,7 @@
                 <!--        column 2        -->
                 <androidx.cardview.widget.CardView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="120dp"
                     android:layout_columnWeight="1"
                     android:layout_rowWeight="1"
                     app:cardElevation="8dp"
@@ -239,11 +248,13 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="10dp">
                     <LinearLayout
+                        android:id="@+id/lnlInforAgri"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:foreground="?android:attr/selectableItemBackground">
                         <ImageView
                             android:layout_width="50dp"
                             android:layout_height="50dp"

@@ -75,15 +75,21 @@
                     android:text="Time 12"
                     android:layout_below="@id/txtusername"
                     />
-                <ImageView
+                <LinearLayout
                     android:id="@+id/btnClose"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
                     android:layout_marginLeft="191dp"
-                    android:src="@drawable/ic_baseline_close_24"
-                    android:backgroundTint="#FFFFFF"/>
+                    android:orientation="vertical"
+                    android:foreground="?android:attr/selectableItemBackground">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_baseline_close_24"
+                        android:backgroundTint="#FFFFFF"/>
+                </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>
         <LinearLayout
@@ -100,27 +106,27 @@
                 android:scrollbars="none">
                 <LinearLayout
                     android:descendantFocusability="blocksDescendants"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="10dp"
                     android:orientation="horizontal">
                     <EditText
+                        android:id="@+id/edtFeeback"
                         android:paddingLeft="20dp"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:textStyle="bold"
-                        android:text="Trả lời Thắng..."
-                        android:textColor="@color/white"
-                        android:background="@drawable/circle"
-                        android:backgroundTint="#00FFFFFF"/>
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/reycStoriesEjmotion"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"/>
-                    </RelativeLayout>
+                        android:hint="Trả lời Thắng..."
+                        android:textColorHint="@color/white"
+                        android:background="@drawable/circle" />
+<!--                    <RelativeLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent">-->
+<!--                        <androidx.recyclerview.widget.RecyclerView-->
+<!--                            android:id="@+id/reycStoriesEjmotion"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"/>-->
+<!--                    </RelativeLayout>-->
                 </LinearLayout>
             </HorizontalScrollView>
         </LinearLayout>
