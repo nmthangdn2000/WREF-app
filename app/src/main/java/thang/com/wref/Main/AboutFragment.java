@@ -10,14 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
-
-import com.airbnb.lottie.L;
 
 import thang.com.wref.Login.LoginActivity;
 import thang.com.wref.Login.SharedPreferencesManagement;
-import thang.com.wref.Main.More.InforAgriActivity;
+import thang.com.wref.Main.More.ThemeAgriActivity;
 import thang.com.wref.Main.More.ProductAgriActivity;
 import thang.com.wref.Main.More.SearchActivity;
 import thang.com.wref.R;
@@ -92,7 +89,7 @@ public class AboutFragment extends Fragment implements View.OnClickListener{
         }
     }
     private void inforAgri(){
-        Intent intent = new Intent(getContext(), InforAgriActivity.class);
+        Intent intent = new Intent(getContext(), ThemeAgriActivity.class);
         startActivity(intent);
     }
     private void search(){

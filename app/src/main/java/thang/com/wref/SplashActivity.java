@@ -28,7 +28,7 @@ import thang.com.wref.Retrofits.UserRetrofit;
 
 public class SplashActivity extends AppCompatActivity {
     private static final String TAG = "SplashActivity";
-    private static final int SPLASH_SCREEN = 4000;
+    private static final int SPLASH_SCREEN = 3000;
     private Handler handler;;
 
     private ImageView logoImg;
@@ -57,7 +57,13 @@ public class SplashActivity extends AppCompatActivity {
         retrofit = networkUtil.getRetrofit();
         sharedPreferencesManagement = new SharedPreferencesManagement(this);
         mappingView();
-        getData();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getData();
+            }
+        }, SPLASH_SCREEN);
+
     }
     private void mappingView(){
         logoImg = (ImageView) findViewById(R.id.logoImg);

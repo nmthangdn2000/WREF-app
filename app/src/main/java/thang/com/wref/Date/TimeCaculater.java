@@ -1,5 +1,6 @@
 package thang.com.wref.Date;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -51,5 +52,7 @@ public class TimeCaculater {
 
         return "Unknown";
     }
-
+    public String day(long msecs){
+        return new SimpleDateFormat("dd/MM/yyyy").format(msecs);
+    }
 }

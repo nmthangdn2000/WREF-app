@@ -162,7 +162,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         latLngs = new Vector<>();
-        if(Build.VERSION.SDK_INT >= 21){
+        if(Build.VERSION.SDK_INT >= 23){
             Window window = getActivity().getWindow();
             window.setStatusBarColor(getContext().getResources().getColor(R.color.purple_700));
         }
