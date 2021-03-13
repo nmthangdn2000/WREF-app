@@ -1,5 +1,6 @@
 package thang.com.wref.Main.More;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EdgeEffect;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,6 +21,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import thang.com.wref.Adapter.AgriAdapter;
 import thang.com.wref.Adapter.ItemThemeAgriAdapter;
+import thang.com.wref.Animation.RecyclerViewAnimation;
 import thang.com.wref.Login.SharedPreferencesManagement;
 import thang.com.wref.Models.AgriModel;
 import thang.com.wref.Models.InforAgriModel;
@@ -38,8 +41,13 @@ public class ItemThemeAgriActivity extends AppCompatActivity implements View.OnC
     private String iduser = "", token ="";
     private SharedPreferencesManagement sharedPreferencesManagement;
     private ItemThemeAgriAdapter itemThemeAgriAdapter;
+    private RecyclerViewAnimation recyclerViewAnimation;
 
     private RecyclerView rcvItemThemeAgri;
+    /** The magnitude of translation distance while the list is over-scrolled. */
+    private static final float OVERSCROLL_TRANSLATION_MAGNITUDE = 0.2f;
+    /** The magnitude of translation distance when the list reaches the edge on fling. */
+    private static final float FLING_TRANSLATION_MAGNITUDE = 0.5f;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +69,7 @@ public class ItemThemeAgriActivity extends AppCompatActivity implements View.OnC
         themeAgriId = getIntent().getStringExtra("idTheme");
         networkUtil = new NetworkUtil();
         retrofit = networkUtil.getRetrofit();
+        recyclerViewAnimation = new RecyclerViewAnimation();
         sharedPreferencesManagement = new SharedPreferencesManagement(this);
         iduser= sharedPreferencesManagement.getID();
         token = sharedPreferencesManagement.getTOKEN();
@@ -74,6 +83,8 @@ public class ItemThemeAgriActivity extends AppCompatActivity implements View.OnC
         rcvItemThemeAgri.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rcvItemThemeAgri.setLayoutManager(linearLayoutManager);
+
+        recyclerViewAnimation.setAnimationRecyclerviewVertical(rcvItemThemeAgri, TAG);
     }
     @Override
     public void onClick(View v) {

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.dynamicanimation.animation.SpringAnimation;
+import androidx.dynamicanimation.animation.SpringForce;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -53,11 +55,20 @@ public class ItemThemeAgriAdapter extends RecyclerView.Adapter<ItemThemeAgriAdap
     public class ViewHodler extends RecyclerView.ViewHolder implements View.OnClickListener {
         private RoundedImageView imgAgri;
         private TextView txtTitleAgri, txtTime;
+        public float currentVelocity = 0f;
+        public SpringAnimation rotation;
+        public SpringAnimation translationY;
         public ViewHodler(@NonNull View itemView) {
             super(itemView);
             imgAgri = (RoundedImageView) itemView.findViewById(R.id.imgAgri);
             txtTitleAgri = (TextView) itemView.findViewById(R.id.txtTitleAgri);
             txtTime = (TextView) itemView.findViewById(R.id.txtTime);
+
+            translationY = new SpringAnimation(itemView, SpringAnimation.TRANSLATION_Y).setSpring(
+                    new SpringForce().setFinalPosition(0f)
+                            .setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY)
+                            .setStiffness(SpringForce.STIFFNESS_LOW)
+            );
         }
 
         @Override

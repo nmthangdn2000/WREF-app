@@ -19,6 +19,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import thang.com.wref.Adapter.AgriAdapter;
+import thang.com.wref.Animation.RecyclerViewAnimation;
 import thang.com.wref.Login.SharedPreferencesManagement;
 import thang.com.wref.Models.AgriModel;
 import thang.com.wref.Models.ThemeAgriModel;
@@ -37,6 +38,7 @@ public class ThemeAgriActivity extends AppCompatActivity implements View.OnClick
     private SharedPreferencesManagement sharedPreferencesManagement;
     private AgriAdapter agriAdapter;
     private AgriAdapter.onClickItemAgri mListenner;
+    private RecyclerViewAnimation recyclerViewAnimation;
 
     private RecyclerView rcvInforAgri;
     @Override
@@ -57,6 +59,7 @@ public class ThemeAgriActivity extends AppCompatActivity implements View.OnClick
         });
         networkUtil = new NetworkUtil();
         retrofit = networkUtil.getRetrofit();
+        recyclerViewAnimation = new RecyclerViewAnimation();
         sharedPreferencesManagement = new SharedPreferencesManagement(this);
         iduser= sharedPreferencesManagement.getID();
         token = sharedPreferencesManagement.getTOKEN();
@@ -70,6 +73,8 @@ public class ThemeAgriActivity extends AppCompatActivity implements View.OnClick
         rcvInforAgri = (RecyclerView) findViewById(R.id.rcvInforAgri);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         rcvInforAgri.setLayoutManager(gridLayoutManager);
+
+        recyclerViewAnimation.setAnimationRecyclerviewVertical(rcvInforAgri, "agriAdapter");
     }
     private void eventOnClick() {
         mListenner = new AgriAdapter.onClickItemAgri() {

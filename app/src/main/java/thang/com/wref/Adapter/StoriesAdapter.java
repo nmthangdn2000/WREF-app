@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.dynamicanimation.animation.SpringAnimation;
+import androidx.dynamicanimation.animation.SpringForce;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -68,12 +70,18 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.ViewHold
         private CircleImageView imgUserStories;
         private RoundedImageView imgStories;
         private TextView txtUserName;
+        public SpringAnimation translationX;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imgUserStories = (CircleImageView) itemView.findViewById(R.id.imgUserStories);
             txtUserName = (TextView) itemView.findViewById(R.id.txtUserName);
             imgStories = (RoundedImageView) itemView.findViewById(R.id.imgStories);
 
+            translationX = new SpringAnimation(itemView, SpringAnimation.TRANSLATION_X).setSpring(
+                    new SpringForce().setFinalPosition(0f)
+                            .setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY)
+                            .setStiffness(SpringForce.STIFFNESS_LOW)
+            );
             imgStories.setOnClickListener(this);
         }
 

@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".Main.AboutFragment">
-    <androidx.core.widget.NestedScrollView
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarInfor"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:clipToPadding="false">
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+            android:background="@color/white"
+            android:theme="@style/ThemeOverlay.AppCompat.Light">
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp">
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -28,412 +27,428 @@
                     android:textStyle="bold"
                     android:textSize="26sp"/>
             </LinearLayout>
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:paddingTop="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:clipToPadding="false">
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:elevation="15dp"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/anh4"
-                    android:background="@drawable/shadow_cirle_img"/>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/color_text"
-                        android:text="Nguyễn Đình Huy"
-                        android:textStyle="bold"
-                        android:textSize="18sp"/>
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center">
-                        <LinearLayout
-                            android:layout_gravity="center"
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:backgroundTint="@color/time"
-                            android:background="@drawable/ic_baseline_location_on_24"/>
-                        <TextView
-                            android:layout_gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/time"
-                            android:text="Hòa Nhơn, Hòa Vang"
-                            android:textSize="14sp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingBottom="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:id="@+id/lineTop1">
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="#CCCCCC"
-                    android:elevation="5dp"
-                    android:outlineSpotShadowColor="#000000"/>
-            </RelativeLayout>
-        <LinearLayout
-            android:clipToPadding="false"
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="10">
-            <GridLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:columnCount="2"
-                android:rowCount="2"
-                android:alignmentMode="alignMargins"
-                android:columnOrderPreserved="false"
-                android:layout_weight="8"
-                android:clipToPadding="false">
-                <!--     Row 1           -->
-                <!--     column 1           -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="8dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp">
-
-                    <LinearLayout
-                        android:id="@+id/lnlSearch"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/ic_search" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:text="Tra cứu"
-                            android:textColor="@color/color_text"
-                            android:textSize="18sp" />
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-                <!--        column 2        -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="8dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="10dp">
-                    <LinearLayout
-                        android:id="@+id/lnlProduct"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:foreground="?android:attr/selectableItemBackground">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/ic_menu"/>
-                        <TextView
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Sản phẩm"
-                            android:textSize="18sp"
-                            android:textColor="@color/color_text"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-                <!--     Row 2          -->
-                <!--     column 1           -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="8dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp"/>
-                <!--        column 2        -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="8dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="10dp"/>
-                <!--     Row 3          -->
-                <!--     column 1           -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="8dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="10dp">
-                    <LinearLayout
-                        android:id="@+id/lnlCodeScan"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:foreground="?android:attr/selectableItemBackground">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/ic_qr_code"/>
-                        <TextView
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Quét mã"
-                            android:textSize="18sp"
-                            android:textColor="@color/color_text"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-                <!--        column 2        -->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_columnWeight="1"
-                    android:layout_rowWeight="1"
-                    app:cardElevation="8dp"
-                    app:cardCornerRadius="8dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="10dp">
-                    <LinearLayout
-                        android:id="@+id/lnlInforAgri"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:foreground="?android:attr/selectableItemBackground">
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:src="@drawable/ic_knowledge"/>
-                        <TextView
-                            android:gravity="center"
-                            android:layout_marginTop="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Kiến thức nông nghiệp"
-                            android:textSize="18sp"
-                            android:textColor="@color/color_text"/>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-            </GridLayout>
-        </LinearLayout>
+            app:layout_behavior=".Animation.OverScrollBounceBehavior">
             <LinearLayout
-                android:paddingTop="10dp"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:paddingBottom="40dp"
-                android:clipToPadding="false"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:descendantFocusability="blocksDescendants"
+                android:clipToPadding="false">
                 <LinearLayout
-                    android:layout_marginBottom="15dp"
-                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:paddingTop="10dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="center_vertical"
-                    android:elevation="15dp"
-                    android:background="@drawable/shadow_linearlayout">
-                    <TextView
-                        android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:clipToPadding="false">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:elevation="15dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/anh4"
+                        android:background="@drawable/shadow_cirle_img"/>
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Thông tin tài khoảng"
-                        android:textSize="16sp"
-                        android:drawablePadding="10dp"
-                        android:textColor="@color/color_text"
-                        android:drawableTint="@color/color_text"
-                        android:drawableLeft="@drawable/ic_baseline_account_circle_24"/>
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/color_text"
+                            android:text="Nguyễn Đình Huy"
+                            android:textStyle="bold"
+                            android:textSize="18sp"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center">
+                            <LinearLayout
+                                android:layout_gravity="center"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:backgroundTint="@color/time"
+                                android:background="@drawable/ic_baseline_location_on_24"/>
+                            <TextView
+                                android:layout_gravity="center"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/time"
+                                android:text="Hòa Nhơn, Hòa Vang"
+                                android:textSize="14sp"/>
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_marginBottom="15dp"
-                    android:paddingLeft="10dp"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="center_vertical"
-                    android:elevation="15dp"
-                    android:background="@drawable/shadow_linearlayout">
-                    <TextView
-                        android:gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:paddingBottom="10dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:id="@+id/lineTop1">
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:background="#CCCCCC"
+                        android:elevation="5dp"
+                        android:outlineSpotShadowColor="#000000"/>
+                </RelativeLayout>
+                <LinearLayout
+                    android:clipToPadding="false"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="10">
+                    <GridLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Bản đồ"
-                        android:textSize="16sp"
-                        android:drawablePadding="10dp"
-                        android:textColor="@color/color_text"
-                        android:drawableLeft="@drawable/ic_baseline_map_24"
-                        android:drawableTint="@color/color_text"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginBottom="15dp"
-                    android:paddingLeft="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="center_vertical"
-                    android:elevation="15dp"
-                    android:background="@drawable/shadow_linearlayout">
-                    <TextView
-                        android:gravity="center_vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Đập thủy điện"
-                        android:textSize="16sp"
-                        android:drawablePadding="10dp"
-                        android:textColor="@color/color_text"
-                        android:drawableLeft="@drawable/ic_power_plant"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginBottom="15dp"
-                    android:paddingLeft="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="center_vertical"
-                    android:elevation="15dp"
-                    android:background="@drawable/shadow_linearlayout">
-                    <TextView
-                        android:gravity="center_vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Thời tiết"
-                        android:textSize="16sp"
-                        android:drawablePadding="10dp"
-                        android:textColor="@color/color_text"
-                        android:drawableTint="@color/color_text"
-                        android:drawableLeft="@drawable/ic_baseline_cloud_circle_24"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginBottom="15dp"
-                    android:paddingLeft="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="center_vertical"
-                    android:elevation="15dp"
-                    android:background="@drawable/shadow_linearlayout">
-                    <TextView
-                        android:gravity="center_vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Tôi cần giúp đỡ"
-                        android:textSize="16sp"
-                        android:drawablePadding="10dp"
-                        android:textColor="@color/color_text"
-                        android:drawableLeft="@drawable/ic_sos"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginBottom="15dp"
-                    android:paddingLeft="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="center_vertical"
-                    android:elevation="15dp"
-                    android:background="@drawable/shadow_linearlayout">
-                    <TextView
-                        android:gravity="center_vertical"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Trợ giúp &amp; Hổ trợ"
-                        android:textSize="16sp"
-                        android:drawablePadding="10dp"
-                        android:textColor="@color/color_text"
-                        android:drawableTint="@color/color_text"
-                        android:drawableLeft="@drawable/ic_baseline_support_agent_24"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_marginBottom="15dp"
-                    android:paddingLeft="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="center_vertical"
-                    android:elevation="15dp"
-                    android:background="@drawable/shadow_linearlayout">
+                        android:columnCount="2"
+                        android:rowCount="2"
+                        android:alignmentMode="alignMargins"
+                        android:columnOrderPreserved="false"
+                        android:layout_weight="8"
+                        android:clipToPadding="false">
+                        <!--     Row 1           -->
+                        <!--     column 1           -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="120dp"
+                            android:layout_columnWeight="1"
+                            android:layout_rowWeight="1"
+                            app:cardElevation="8dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_baseline_settings_applications_24"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/color_text"
-                        android:gravity="center_vertical"
-                        android:text="Cài đặt"
-                        android:textColor="@color/color_text"
-                        android:textSize="16sp" />
+                            <LinearLayout
+                                android:id="@+id/lnlSearch"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:foreground="?android:attr/selectableItemBackground"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="10dp">
+
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_search" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp"
+                                    android:text="Tra cứu"
+                                    android:textColor="@color/color_text"
+                                    android:textSize="18sp" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <!--        column 2        -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="120dp"
+                            android:layout_columnWeight="1"
+                            android:layout_rowWeight="1"
+                            app:cardElevation="8dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="10dp">
+                            <LinearLayout
+                                android:id="@+id/lnlProduct"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="10dp"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:foreground="?android:attr/selectableItemBackground">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_menu"/>
+                                <TextView
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sản phẩm"
+                                    android:textSize="18sp"
+                                    android:textColor="@color/color_text"/>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <!--     Row 2          -->
+                        <!--     column 1           -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_rowWeight="1"
+                            app:cardElevation="8dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp"/>
+                        <!--        column 2        -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:layout_rowWeight="1"
+                            app:cardElevation="8dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="10dp"/>
+                        <!--     Row 3          -->
+                        <!--     column 1           -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="120dp"
+                            android:layout_columnWeight="1"
+                            android:layout_rowWeight="1"
+                            app:cardElevation="8dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="10dp">
+                            <LinearLayout
+                                android:id="@+id/lnlCodeScan"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="10dp"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:foreground="?android:attr/selectableItemBackground">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_qr_code"/>
+                                <TextView
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Quét mã"
+                                    android:textSize="18sp"
+                                    android:textColor="@color/color_text"/>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        <!--        column 2        -->
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="0dp"
+                            android:layout_height="120dp"
+                            android:layout_columnWeight="1"
+                            android:layout_rowWeight="1"
+                            app:cardElevation="8dp"
+                            app:cardCornerRadius="8dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="10dp">
+                            <LinearLayout
+                                android:id="@+id/lnlInforAgri"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:foreground="?android:attr/selectableItemBackground">
+                                <ImageView
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:src="@drawable/ic_knowledge"/>
+                                <TextView
+                                    android:gravity="center"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Kiến thức nông nghiệp"
+                                    android:textSize="18sp"
+                                    android:textColor="@color/color_text"/>
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                    </GridLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/btnLogout"
-                    android:layout_marginBottom="15dp"
-                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingBottom="40dp"
+                    android:clipToPadding="false"
                     android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:gravity="center_vertical"
-                    android:elevation="15dp"
-                    android:background="@drawable/shadow_linearlayout">
-
-                    <TextView
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_marginBottom="15dp"
+                        android:paddingLeft="10dp"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_logout"
-                        android:drawablePadding="10dp"
-                        android:drawableTint="@color/color_text"
+                        android:layout_height="60dp"
                         android:gravity="center_vertical"
-                        android:text="Đăng xuất"
-                        android:textColor="@color/color_text"
-                        android:textSize="16sp" />
+                        android:elevation="15dp"
+                        android:background="@drawable/shadow_linearlayout">
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Thông tin tài khoảng"
+                            android:textSize="16sp"
+                            android:drawablePadding="10dp"
+                            android:textColor="@color/color_text"
+                            android:drawableTint="@color/color_text"
+                            android:drawableLeft="@drawable/ic_baseline_account_circle_24"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginBottom="15dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical"
+                        android:elevation="15dp"
+                        android:background="@drawable/shadow_linearlayout">
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bản đồ"
+                            android:textSize="16sp"
+                            android:drawablePadding="10dp"
+                            android:textColor="@color/color_text"
+                            android:drawableLeft="@drawable/ic_baseline_map_24"
+                            android:drawableTint="@color/color_text"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginBottom="15dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical"
+                        android:elevation="15dp"
+                        android:background="@drawable/shadow_linearlayout">
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Đập thủy điện"
+                            android:textSize="16sp"
+                            android:drawablePadding="10dp"
+                            android:textColor="@color/color_text"
+                            android:drawableLeft="@drawable/ic_power_plant"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginBottom="15dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical"
+                        android:elevation="15dp"
+                        android:background="@drawable/shadow_linearlayout">
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Thời tiết"
+                            android:textSize="16sp"
+                            android:drawablePadding="10dp"
+                            android:textColor="@color/color_text"
+                            android:drawableTint="@color/color_text"
+                            android:drawableLeft="@drawable/ic_baseline_cloud_circle_24"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginBottom="15dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical"
+                        android:elevation="15dp"
+                        android:background="@drawable/shadow_linearlayout">
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Tôi cần giúp đỡ"
+                            android:textSize="16sp"
+                            android:drawablePadding="10dp"
+                            android:textColor="@color/color_text"
+                            android:drawableLeft="@drawable/ic_sos"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginBottom="15dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical"
+                        android:elevation="15dp"
+                        android:background="@drawable/shadow_linearlayout">
+                        <TextView
+                            android:gravity="center_vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Trợ giúp &amp; Hổ trợ"
+                            android:textSize="16sp"
+                            android:drawablePadding="10dp"
+                            android:textColor="@color/color_text"
+                            android:drawableTint="@color/color_text"
+                            android:drawableLeft="@drawable/ic_baseline_support_agent_24"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_marginBottom="15dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical"
+                        android:elevation="15dp"
+                        android:background="@drawable/shadow_linearlayout">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_baseline_settings_applications_24"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/color_text"
+                            android:gravity="center_vertical"
+                            android:text="Cài đặt"
+                            android:textColor="@color/color_text"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/btnLogout"
+                        android:layout_marginBottom="15dp"
+                        android:paddingLeft="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:gravity="center_vertical"
+                        android:elevation="15dp"
+                        android:background="@drawable/shadow_linearlayout">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_logout"
+                            android:drawablePadding="10dp"
+                            android:drawableTint="@color/color_text"
+                            android:gravity="center_vertical"
+                            android:text="Đăng xuất"
+                            android:textColor="@color/color_text"
+                            android:textSize="16sp" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-</FrameLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

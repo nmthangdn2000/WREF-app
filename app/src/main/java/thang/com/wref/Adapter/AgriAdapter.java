@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.dynamicanimation.animation.SpringAnimation;
+import androidx.dynamicanimation.animation.SpringForce;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -54,11 +56,19 @@ public class AgriAdapter extends RecyclerView.Adapter<AgriAdapter.ViewHodler>{
         private ImageView imgAgri;
         private TextView txtTitleAgri;
         private LinearLayout lnlItemAgri;
+
+        public SpringAnimation translationY;
         public ViewHodler(@NonNull View itemView) {
             super(itemView);
             imgAgri = (ImageView) itemView.findViewById(R.id.imgAgri);
             txtTitleAgri = (TextView) itemView.findViewById(R.id.txtTitleAgri);
             lnlItemAgri = (LinearLayout) itemView.findViewById(R.id.lnlItemAgri);
+
+            translationY = new SpringAnimation(itemView, SpringAnimation.TRANSLATION_Y).setSpring(
+                    new SpringForce().setFinalPosition(0f)
+                            .setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY)
+                            .setStiffness(SpringForce.STIFFNESS_LOW)
+            );
 
             lnlItemAgri.setOnClickListener(this);
         }

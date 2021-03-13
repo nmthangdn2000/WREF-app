@@ -37,6 +37,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import thang.com.wref.Adapter.NewsAdapter;
 import thang.com.wref.Adapter.StoriesAdapter;
+import thang.com.wref.Animation.RecyclerViewAnimation;
 import thang.com.wref.Login.SharedPreferencesManagement;
 import thang.com.wref.Main.Stories.CubeTransformerViewpager;
 import thang.com.wref.Main.Stories.StoriesFragment;
@@ -75,6 +76,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     private StoriesRetrofit storiesRetrofit;
     private StoriesAdapter.onCLickStories mListener;
     private List<Fragment> fragmentStories;
+    private RecyclerViewAnimation recyclerViewAnimation;
 
     private SharedPreferencesManagement sharedPreferencesManagement;
 
@@ -103,6 +105,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         networkUtil = new NetworkUtil();
         retrofit = networkUtil.getRetrofit();
         fragmentStories = new ArrayList<>();
+        recyclerViewAnimation = new RecyclerViewAnimation();
     }
 
     @Override
@@ -185,6 +188,8 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 return false;
             }
         });
+
+
     }
     private void clickPostNews(){
         Intent intent = new Intent(getContext().getApplicationContext(), PostNewsActivity.class);
