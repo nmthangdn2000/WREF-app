@@ -95,7 +95,7 @@
                                 android:padding="10dp"
                                 android:elevation="8dp"
                                 android:background="@drawable/shadow_linearlayout">
-                                <HorizontalScrollView
+                                <thang.com.wref.Animation.HorizontalOverScrollView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:fillViewport="true"
@@ -133,6 +133,7 @@
                                                         android:layout_height="match_parent"
                                                         android:layout_weight="2" />
                                                 </LinearLayout>
+
                                                 <de.hdodenhof.circleimageview.CircleImageView
                                                     android:id="@+id/imgUserStories"
                                                     android:layout_marginTop="80dp"
@@ -154,7 +155,7 @@
                                                 android:layout_height="match_parent" />
                                         </RelativeLayout>
                                     </LinearLayout>
-                                </HorizontalScrollView>
+                                </thang.com.wref.Animation.HorizontalOverScrollView>
                             </LinearLayout>
                         </RelativeLayout>
                         <!--                -->

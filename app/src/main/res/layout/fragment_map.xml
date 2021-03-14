@@ -12,8 +12,7 @@
         android:layout_height="match_parent"
         android:gravity="bottom"
         app:umanoPanelHeight="0dp"
-        app:umanoDragView="@id/viewInforTouchLocation"
-        app:umanoScrollableView="@id/scrollviewSliding"
+        app:umanoScrollableView="@id/collapsing_toolbar"
         app:umanoOverlay="false">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -276,25 +275,52 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="20dp" />
         </RelativeLayout>
-        <ScrollView
-            android:id="@+id/scrollviewSliding"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/viewInforTouchLocation"
+            android:clickable="true"
+            android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <RelativeLayout
-                android:id="@+id/viewInforTouchLocation"
-                android:clickable="true"
-                android:focusable="false"
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                    android:id="@+id/collapsing_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:contentScrim="?attr/colorPrimary"
+                    app:expandedTitleMarginEnd="64dp"
+                    app:expandedTitleMarginStart="48dp"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="?attr/actionBarSize"
+                        app:layout_scrollFlags="scroll|enterAlways" />
+                    <FrameLayout
+                        android:id="@+id/frameInforTouchLocation"
+                        app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                        app:layout_collapseMode="parallax"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/scrollviewSliding"
+                app:layout_anchor="@+id/appBarLayout"
+                app:layout_anchorGravity="bottom"
+                android:fillViewport="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <FrameLayout
-                    android:id="@+id/frameInforTouchLocation"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
                 <RelativeLayout
-
                     android:id="@+id/rltDataCharBottm"
                     android:visibility="gone"
-                    android:layout_below="@+id/frameInforTouchLocation"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <com.airbnb.lottie.LottieAnimationView
@@ -309,8 +335,9 @@
                         android:layout_height="wrap_content"
                         layout="@layout/detail_weather_5_day_location" />
                 </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-            </RelativeLayout>
-        </ScrollView>
+
     </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 </FrameLayout>

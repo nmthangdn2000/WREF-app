@@ -10,8 +10,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -61,6 +65,7 @@ import com.google.android.gms.maps.model.TileProvider;
 import com.google.android.gms.maps.model.UrlTileProvider;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.maps.android.data.Feature;
 import com.google.maps.android.data.Layer;
 import com.google.maps.android.data.kml.KmlLayer;
@@ -79,6 +84,7 @@ import java.util.List;
 import java.util.Vector;
 
 
+import thang.com.wref.Animation.NestedScrollableViewHelper;
 import thang.com.wref.Date.TimeCaculater;
 import thang.com.wref.IconWeather;
 import thang.com.wref.Login.SharedPreferencesManagement;
@@ -105,6 +111,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private ImageView iconsearch;
     private DetailLocationMap detailLocationMap;
     private Bundle savedInstanceStates;
+    private Toolbar toolbar;
     // gis
     private ArcGISMap mapGis;
     private ServiceFeatureTable serviceFeatureTable;
@@ -176,6 +183,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_map, container, false);
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
         mappingView();
         savedInstanceStates = savedInstanceState;
         return view;
@@ -455,6 +465,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                Log.d(TAG, "onPanelStateChanged: "+ newState);
                 if(newState == SlidingUpPanelLayout.PanelState.COLLAPSED){
                     rltDataCharBottm.setVisibility(View.INVISIBLE);
                     iconsearch.setTag("location");
@@ -468,7 +479,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                         rltDataCharBottm.setVisibility(View.VISIBLE);
                     }
                 }else if(newState == SlidingUpPanelLayout.PanelState.ANCHORED){
-
+                    rltDataCharBottm.setVisibility(View.INVISIBLE);
                 }
             }
         });
