@@ -10,7 +10,6 @@ const getPosts = async (req, res) => {
             success: false,
             msg: "get Posts failed"
         }))
-    
 }
 const addNewPosts = async (req, res) => {
     let arrMedia = []

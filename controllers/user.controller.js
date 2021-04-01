@@ -1,7 +1,6 @@
 const User = require('../models/user.model')
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = require('../config/appconfig')
-const { find } = require('../models/user.model')
 
 const endCodeToken = (inforUser) => {
     return jwt.sign(inforUser, JWT_SECRET, {expiresIn: '30d'})
