@@ -5,6 +5,8 @@ const app = express();
 const bodyParser = require("body-parser");
 var path = require("path");
 
+require("./service/crawlData");
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
@@ -20,6 +22,7 @@ const apiLocation = require("./router/api/location.api");
 const apiStories = require("./router/api/stories.api");
 const apiWeather = require("./router/api/weather.api");
 const apiInforAgri = require("./router/api/inforAgri.api");
+
 // router api passport.authenticate('jwt', { session: false })
 app.use("/api", apiLogin);
 app.use("/api", apiInforAgri);
