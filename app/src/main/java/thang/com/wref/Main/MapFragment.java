@@ -139,6 +139,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private Calendar cal;
     private int day = 0;
     private int month = 0;
+    private String addressLocationInfor = "";
 
     private static final int COLOR_WHITE_ARGB = 0xffffffff;
     private static final int COLOR_GREEN_ARGB = 0xff388E3C;
@@ -184,8 +185,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_map, container, false);
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                finish();
+            }
+        });
         mappingView();
         savedInstanceStates = savedInstanceState;
         return view;
@@ -444,6 +450,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private void showDetailLocationMap(String query, String address, float lati, float longti) {
         if(getFragmentManager().findFragmentByTag("detailLocationMap") != null)
             getFragmentManager().beginTransaction().remove(detailLocationMap).commit();
+        addressLocationInfor = address;
         detailLocationMap = new DetailLocationMap(getContext().getApplicationContext(), query, address, lati, longti, lottieLoading, dataChart, chart, setDataDetailWeather);
         getFragmentManager().beginTransaction().add(R.id.frameInforTouchLocation, detailLocationMap, "detailLocationMap").commit();
         if(iconsearch.getTag().equals("location")){
@@ -474,12 +481,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                     animation.setDuration(500);
                     meowBottomNavigation.setVisibility(View.VISIBLE);
                     meowBottomNavigation.startAnimation(animation);
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
                 }else if(newState == SlidingUpPanelLayout.PanelState.EXPANDED){
                     if(rltDataCharBottm.getVisibility() != View.VISIBLE){
                         rltDataCharBottm.setVisibility(View.VISIBLE);
+                        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+                        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+                        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(addressLocationInfor);
                     }
                 }else if(newState == SlidingUpPanelLayout.PanelState.ANCHORED){
-                    rltDataCharBottm.setVisibility(View.INVISIBLE);
+                    if(rltDataCharBottm.getVisibility() == View.VISIBLE) {
+                        rltDataCharBottm.setVisibility(View.INVISIBLE);
+                        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
+                        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("cái lozz");
+                    }
                 }
             }
         });

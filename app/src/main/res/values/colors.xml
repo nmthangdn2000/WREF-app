@@ -26,4 +26,5 @@
     <color name="colorStatusBar_Weather">#4A90E2</color>
     <color name="background_weather_location_map_1">#307FE7E7</color>
     <color name="background_weather_location_map_2">#30CCF5F5</color>
+    <color name="mtrl_textinput_default_box_stroke_color">#62AEFB</color>
 </resources>

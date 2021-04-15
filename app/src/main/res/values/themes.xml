@@ -28,4 +28,8 @@
     <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">#62AEFB</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
 </resources>

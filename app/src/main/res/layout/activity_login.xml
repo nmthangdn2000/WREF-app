@@ -5,52 +5,88 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Login.LoginActivity">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_img_in_login"/>
     <LinearLayout
-        android:layout_centerInParent="true"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <RelativeLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="10dp">
             <ImageView
                 android:id="@+id/logoImg"
-                android:transitionName="logo_img"
-                android:layout_centerHorizontal="true"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:src="@drawable/logo"/>
+                android:src="@drawable/logo"
+                android:transitionName="logo_img" />
         </RelativeLayout>
         <LinearLayout
             android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:orientation="vertical">
             <TextView
                 android:id="@+id/logoName"
-                android:transitionName="logo_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/bungee_regular"
+                android:fontFamily="@font/roboto_medium"
+                android:textFontWeight="500"
                 android:includeFontPadding="false"
-                android:text="WREF"
-                android:textColor="@color/black"
-                android:textSize="40sp"/>
+                android:text="WREF - An toàn Thịnh vượng"
+                android:textColor="#ADADAC"
+                android:textSize="12sp"
+                android:lineHeight="12sp"
+                android:transitionName="logo_text" />
             <TextView
                 android:id="@+id/logoPage"
                 android:transitionName="logo_textPage"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="#2285E0"
                 android:text="Đăng nhập"
-                android:textSize="24sp"/>
+                android:textStyle="bold"
+                android:textSize="26sp"/>
         </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/loginWithGoogle"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="13dp"
+                android:text="Đăng nhập bằng Google"
+                android:textColor="#2285E0"
+                android:drawableTint="#2285E0"
+                android:drawableLeft="@drawable/googleg_disabled_color_18"
+                android:drawablePadding="20px"
+                android:background="@drawable/circle"/>
+            <TextView
+                android:layout_below="@+id/loginWithGoogle"
+                android:layout_marginVertical="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="hoặc"
+                android:textSize="12dp"
+                android:textColor="#ADADAC"/>
+        </RelativeLayout>
         <LinearLayout
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -63,12 +99,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
-                android:backgroundTint="@color/white"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                app:startIconTint="@color/mtrl_textinput_default_box_stroke_color"
+                style="@style/TextInputLayoutStyle">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text"/>
+                    android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:transitionName="edit_password"
@@ -76,29 +112,32 @@
                 app:startIconDrawable="@drawable/ic_baseline_lock_24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:startIconTint="@color/mtrl_textinput_default_box_stroke_color"
                 android:hint="Mật khẩu"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleDrawable="@drawable/show_password_selecter"
+                app:passwordToggleTint="@color/mtrl_textinput_default_box_stroke_color"
                 android:backgroundTint="@color/white"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                style="@style/TextInputLayoutStyle">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end">
-                <Button
+                <TextView
+                    android:layout_gravity="center"
+                    android:layout_marginVertical="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Quên mật khẩu?"
                     android:textColor="@color/black"
-                    android:textSize="10sp"
+                    android:textSize="12dp"
                     android:elevation="0dp"
-                    android:background="#00000000"
-                    android:gravity="end" />
+                    android:background="#00000000"/>
             </LinearLayout>
             <LinearLayout
                 android:transitionName="btn_page"
@@ -119,7 +158,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <Button
+                <TextView
                     android:transitionName="btn_text_tran"
                     android:id="@+id/btnSignUpPage"
                     android:layout_centerHorizontal="true"
@@ -129,7 +168,7 @@
                     android:elevation="0dp"
                     android:textSize="14sp"
                     android:textColor="@color/time"
-                    android:text="New user? Sign up"/>
+                    android:text="Bạn chưa có tài khoảng? Đăng ký"/>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

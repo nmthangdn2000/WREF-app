@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -24,7 +25,7 @@ import thang.com.wref.Retrofits.UserRetrofit;
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "RegisterActivity";
 
-    private Button btnLoginPage;
+    private TextView btnLoginPage;
     private TextInputLayout edit_username, edit_email, edit_Password, edit_EnterPassword;
     private AppCompatButton btnSignUp;
 
@@ -41,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void mappingView() {
-        btnLoginPage = (Button) findViewById(R.id.btnLoginPage);
+        btnLoginPage = (TextView) findViewById(R.id.btnLoginPage);
         edit_username = (TextInputLayout) findViewById(R.id.edit_username);
         edit_email = (TextInputLayout) findViewById(R.id.edit_email);
         edit_Password = (TextInputLayout) findViewById(R.id.edit_Password);

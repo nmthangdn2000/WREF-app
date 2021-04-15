@@ -24,7 +24,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position) {
             case 0:
-                return new MapFragment(meowBottomNavigation);
+//                return new MapFragment(meowBottomNavigation);
+                return new HomeFragment();
             case 1:
                 return new SocialNetworkFragment(meowBottomNavigation);
             case 2:
@@ -32,7 +33,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 3:
                 return new AboutFragment();
             default:
-                return new MapFragment(meowBottomNavigation);
+                return new HomeFragment();
         }
     }
 

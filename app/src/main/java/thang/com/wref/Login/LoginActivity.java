@@ -30,7 +30,7 @@ import thang.com.wref.Retrofits.UserRetrofit;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "LoginActivity";
 
-    private Button btnSignUpPage;
+    private TextView btnSignUpPage;
     private ImageView logoImg;
     private TextView logoName, logoPage;
     private TextInputLayout edit_email, edit_password;
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void mappingView() {
-        btnSignUpPage = (Button) findViewById(R.id.btnSignUpPage);
+        btnSignUpPage = (TextView) findViewById(R.id.btnSignUpPage);
         logoImg = (ImageView) findViewById(R.id.logoImg);
         logoName = (TextView) findViewById(R.id.logoName);
         logoPage = (TextView) findViewById(R.id.logoPage);

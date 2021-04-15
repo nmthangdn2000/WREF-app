@@ -5,8 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Login.LoginActivity">
+    <ImageView
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_img_in_register"
+        android:scaleType="centerCrop"/>
     <LinearLayout
-        android:layout_centerInParent="true"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -15,7 +23,6 @@
             android:layout_height="wrap_content">
             <ImageView
                 android:transitionName="logo_img"
-                android:layout_centerHorizontal="true"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@drawable/logo"/>
@@ -24,29 +31,31 @@
             android:layout_margin="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:orientation="vertical">
             <TextView
                 android:transitionName="logo_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/bungee_regular"
+                android:fontFamily="@font/roboto_medium"
+                android:textFontWeight="500"
                 android:includeFontPadding="false"
-                android:text="WREF"
-                android:textColor="@color/black"
-                android:textSize="40sp"/>
+                android:text="Bắt đầu miễn phí"
+                android:textSize="12sp"
+                android:textColor="#ADADAC"
+                android:lineHeight="12sp"/>
             <TextView
                 android:transitionName="logo_textPage"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đăng ký"
-                android:textSize="24sp"/>
+                android:text="Tạo tài khoản"
+                android:fontFamily="@font/roboto_medium"
+                android:textColor="#2285E0"
+                android:textStyle="bold"
+                android:textSize="26sp"/>
         </LinearLayout>
         <LinearLayout
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -59,7 +68,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Tên đăng nhập"
                 android:backgroundTint="@color/white"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                app:startIconTint="@color/mtrl_textinput_default_box_stroke_color"
+                style="@style/TextInputLayoutStyle">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -74,7 +84,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Email"
                 android:backgroundTint="@color/white"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                app:startIconTint="@color/mtrl_textinput_default_box_stroke_color"
+                style="@style/TextInputLayoutStyle">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -91,7 +102,9 @@
                 app:passwordToggleEnabled="true"
                 app:passwordToggleDrawable="@drawable/show_password_selecter"
                 android:backgroundTint="@color/white"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                app:startIconTint="@color/mtrl_textinput_default_box_stroke_color"
+                style="@style/TextInputLayoutStyle"
+                app:passwordToggleTint="@color/mtrl_textinput_default_box_stroke_color">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -102,11 +115,13 @@
                 app:startIconDrawable="@drawable/ic_baseline_lock_24"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Enter the password"
+                android:hint="Nhập lại mật khẩu"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleDrawable="@drawable/show_password_selecter"
                 android:backgroundTint="@color/white"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                app:startIconTint="@color/mtrl_textinput_default_box_stroke_color"
+                style="@style/TextInputLayoutStyle"
+                app:passwordToggleTint="@color/mtrl_textinput_default_box_stroke_color">
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -131,7 +146,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <Button
+                <TextView
                     android:transitionName="btn_text_tran"
                     android:id="@+id/btnLoginPage"
                     android:layout_centerHorizontal="true"
@@ -141,7 +156,7 @@
                     android:elevation="0dp"
                     android:textSize="14sp"
                     android:textColor="@color/time"
-                    android:text="Already have an account? login"/>
+                    android:text="Bạn đã có tài khoản? Đăng nhập"/>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
