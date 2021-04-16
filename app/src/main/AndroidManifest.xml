@@ -21,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WREF"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Main.More.ItemThemeAgriActivity"></activity>
+        <activity android:name=".Main.MapActivity"></activity>
+        <activity android:name=".Main.More.ItemThemeAgriActivity" />
         <activity android:name=".Main.More.ProductAgriActivity" />
         <activity android:name=".Main.More.ThemeAgriActivity" />
         <activity android:name=".Main.More.SearchActivity" />

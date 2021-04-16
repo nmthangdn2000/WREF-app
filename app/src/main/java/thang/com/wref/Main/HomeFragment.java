@@ -1,6 +1,8 @@
 package thang.com.wref.Main;
 
 import android.Manifest;
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -15,9 +17,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -33,6 +37,7 @@ import com.google.android.gms.tasks.Task;
 import java.io.IOException;
 import java.util.List;
 
+import thang.com.wref.Login.LoginActivity;
 import thang.com.wref.Login.SharedPreferencesManagement;
 import thang.com.wref.R;
 
@@ -41,11 +46,11 @@ import thang.com.wref.R;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements OnMapReadyCallback {
+public class HomeFragment extends Fragment implements OnMapReadyCallback, View.OnClickListener {
     private static final String TAG = "HomeFragment";
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private GoogleMap map;
-    private View view;
+    private View view, gradientMap;
     private Task<Location> task;
     private FusedLocationProviderClient client;
     private SharedPreferencesManagement sharedPreferencesManagement;
@@ -99,7 +104,23 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         mapFragment.getMapAsync(this);
     }
     private void mappingView(){
+        gradientMap = (View) view.findViewById(R.id.gradientMap);
 
+        gradientMap.setOnClickListener(this);
+    }
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.gradientMap:
+                clickMapView();
+                break;
+            default:
+                break;
+        }
+    }
+    private void clickMapView(){
+        Intent intent = new Intent(getContext(), MapActivity.class);
+        getActivity().startActivity(intent);
     }
     private void getLocationPermission() {
         if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
@@ -141,4 +162,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
     }
+
+
 }

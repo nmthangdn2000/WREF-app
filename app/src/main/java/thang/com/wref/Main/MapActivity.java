@@ -1,31 +1,22 @@
 package thang.com.wref.Main;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
@@ -36,7 +27,6 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.bumptech.glide.Glide;
 import com.esri.arcgisruntime.data.ServiceFeatureTable;
 import com.esri.arcgisruntime.layers.FeatureLayer;
 import com.esri.arcgisruntime.mapping.ArcGISMap;
@@ -65,7 +55,6 @@ import com.google.android.gms.maps.model.TileProvider;
 import com.google.android.gms.maps.model.UrlTileProvider;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.appbar.AppBarLayout;
 import com.google.maps.android.data.Feature;
 import com.google.maps.android.data.Layer;
 import com.google.maps.android.data.kml.KmlLayer;
@@ -83,8 +72,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-
-import thang.com.wref.Animation.NestedScrollableViewHelper;
 import thang.com.wref.Date.TimeCaculater;
 import thang.com.wref.IconWeather;
 import thang.com.wref.Login.SharedPreferencesManagement;
@@ -92,10 +79,9 @@ import thang.com.wref.Models.WeatherLocationModel;
 import thang.com.wref.R;
 import thang.com.wref.fragment.DetailLocationMap;
 
-public class MapFragment extends Fragment implements OnMapReadyCallback, View.OnClickListener {
-    private final static String TAG = "MapFragment";
+public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener{
+    private final static String TAG = "MapActivity";
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private View view;
     private GoogleMap map;
     private MapView mapView;
     private KmlLayer layer;
@@ -106,7 +92,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private LinearLayout location, typeMap, showTypeMap, btnChangeMapGis, btnChangeGoogleMap, btnMapTemp, btnMapCloud, btnMapRain;
     private Task<Location> task;
     private Marker marker;
-    private MeowBottomNavigation meowBottomNavigation;
     private FrameLayout frameInforTouchLocation;
     private ImageView iconsearch;
     private DetailLocationMap detailLocationMap;
@@ -131,7 +116,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             txtDayOfWeek4, txtDay4, txtTypeWeather4, txtWind4, txtDataWind4,
             txtDayOfWeek5, txtDay5, txtTypeWeather5, txtWind5, txtDataWind5;
     private ImageView imgWeather1, imgWeather2, imgWeather3, imgWeather4, imgWeather5;
-//    private WeatherLocationModel weatherLocationModel;
+    //    private WeatherLocationModel weatherLocationModel;
     private DetailLocationMap.setDataDetailWeather setDataDetailWeather;
 
     private IconWeather iconWeather;
@@ -161,112 +146,91 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     // Create a stroke pattern of a dot followed by a gap, a dash, and another gap.
     private static final List<PatternItem> PATTERN_POLYGON_BETA =
             Arrays.asList(DOT, GAP, DASH, GAP);
-
-    public MapFragment(MeowBottomNavigation meowBottomNavigation) {
-        this.meowBottomNavigation = meowBottomNavigation;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(Build.VERSION.SDK_INT >= 23){
-            Window window = getActivity().getWindow();
-            window.setStatusBarColor(getContext().getResources().getColor(R.color.purple_700));
-        }
+        setContentView(R.layout.activity_map);
+
         latLngs = new Vector<>();
-        sharedPreferencesManagement = new SharedPreferencesManagement(getContext());
+        sharedPreferencesManagement = new SharedPreferencesManagement(MapActivity.this);
         iconWeather = new IconWeather();
         timeCaculater = new TimeCaculater();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_map, container, false);
-        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                finish();
-            }
-        });
-        mappingView();
         savedInstanceStates = savedInstanceState;
-        return view;
+        mappingView();
     }
-    private void openGooogleMap(){
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        mapFragment = SupportMapFragment.newInstance();
-        fragmentTransaction.replace(R.id.map, mapFragment, "googlemap").commit();
-        mapFragment.getMapAsync(this);
-    }
+
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    protected void onStart() {
+        super.onStart();
         openGooogleMap();
         searchLocation();
         setDataDetailWeather();
         clospaneSlidingUpPanel();
     }
 
+    private void openGooogleMap(){
+        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        mapFragment = SupportMapFragment.newInstance();
+        fragmentTransaction.replace(R.id.map, mapFragment, "googlemap").commit();
+        mapFragment.getMapAsync(this);
+    }
     private void mappingView() {
-        mapView = (MapView) view.findViewById(R.id.map);
-        searchView = (SearchView) view.findViewById(R.id.searchView);
-        client = LocationServices.getFusedLocationProviderClient(getContext().getApplicationContext());
-        location = (LinearLayout) view.findViewById(R.id.location);
-        frameInforTouchLocation = (FrameLayout) view.findViewById(R.id.frameInforTouchLocation);
-        iconsearch = (ImageView) view.findViewById(R.id.iconsearch);
-        typeMap = (LinearLayout) view.findViewById(R.id.typeMap);
-        showTypeMap = (LinearLayout) view.findViewById(R.id.showTypeMap);
-        btnChangeMapGis = (LinearLayout) view.findViewById(R.id.btnChangeMapGis);
-        btnChangeGoogleMap = (LinearLayout) view.findViewById(R.id.btnChangeGoogleMap);
-        btnMapTemp = (LinearLayout) view.findViewById(R.id.btnMapTemp);
-        btnMapCloud = (LinearLayout) view.findViewById(R.id.btnMapCloud);
-        btnMapRain = (LinearLayout) view.findViewById(R.id.btnMapRain);
-        slidingUpPanelLayout = (SlidingUpPanelLayout) view.findViewById(R.id.slidingUpPanelLayout);
-        lottieLoading = (LottieAnimationView) view.findViewById(R.id.lottieLoading);
-        dataChart = (RelativeLayout) view.findViewById(R.id.rltdataChart);
-        rltDataCharBottm = (RelativeLayout) view.findViewById(R.id.rltDataCharBottm);
-        chart = (LineChart) view.findViewById(R.id.combinedChart);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        txtDayOfWeek1 = (TextView) view.findViewById(R.id.txtDayOfWeek1);
-        txtDay1 = (TextView) view.findViewById(R.id.txtDay1);
-        txtTypeWeather1 = (TextView) view.findViewById(R.id.txtTypeWeather1);
-        txtWind1 = (TextView) view.findViewById(R.id.txtWind1);
-        txtDataWind1 = (TextView) view.findViewById(R.id.txtDataWind1);
+        mapView = (MapView) findViewById(R.id.map);
+        searchView = (SearchView) findViewById(R.id.searchView);
+        client = LocationServices.getFusedLocationProviderClient(this.getApplicationContext());
+        location = (LinearLayout) findViewById(R.id.location);
+        frameInforTouchLocation = (FrameLayout) findViewById(R.id.frameInforTouchLocation);
+        iconsearch = (ImageView) findViewById(R.id.iconsearch);
+        typeMap = (LinearLayout) findViewById(R.id.typeMap);
+        showTypeMap = (LinearLayout) findViewById(R.id.showTypeMap);
+        btnChangeMapGis = (LinearLayout) findViewById(R.id.btnChangeMapGis);
+        btnChangeGoogleMap = (LinearLayout) findViewById(R.id.btnChangeGoogleMap);
+        btnMapTemp = (LinearLayout) findViewById(R.id.btnMapTemp);
+        btnMapCloud = (LinearLayout) findViewById(R.id.btnMapCloud);
+        btnMapRain = (LinearLayout) findViewById(R.id.btnMapRain);
+        slidingUpPanelLayout = (SlidingUpPanelLayout) findViewById(R.id.slidingUpPanelLayout);
+        lottieLoading = (LottieAnimationView) findViewById(R.id.lottieLoading);
+        dataChart = (RelativeLayout) findViewById(R.id.rltdataChart);
+        rltDataCharBottm = (RelativeLayout) findViewById(R.id.rltDataCharBottm);
+        chart = (LineChart) findViewById(R.id.combinedChart);
 
-        txtDayOfWeek2 = (TextView) view.findViewById(R.id.txtDayOfWeek2);
-        txtDay2 = (TextView) view.findViewById(R.id.txtDay2);
-        txtTypeWeather2 = (TextView) view.findViewById(R.id.txtTypeWeather2);
-        txtWind2 = (TextView) view.findViewById(R.id.txtWind2);
-        txtDataWind2 = (TextView) view.findViewById(R.id.txtDataWind2);
+        txtDayOfWeek1 = (TextView) findViewById(R.id.txtDayOfWeek1);
+        txtDay1 = (TextView) findViewById(R.id.txtDay1);
+        txtTypeWeather1 = (TextView) findViewById(R.id.txtTypeWeather1);
+        txtWind1 = (TextView) findViewById(R.id.txtWind1);
+        txtDataWind1 = (TextView) findViewById(R.id.txtDataWind1);
 
-        txtDayOfWeek3 = (TextView) view.findViewById(R.id.txtDayOfWeek3);
-        txtDay3= (TextView) view.findViewById(R.id.txtDay3);
-        txtTypeWeather3 = (TextView) view.findViewById(R.id.txtTypeWeather3);
-        txtWind3 = (TextView) view.findViewById(R.id.txtWind3);
-        txtDataWind3 = (TextView) view.findViewById(R.id.txtDataWind3);
+        txtDayOfWeek2 = (TextView) findViewById(R.id.txtDayOfWeek2);
+        txtDay2 = (TextView) findViewById(R.id.txtDay2);
+        txtTypeWeather2 = (TextView) findViewById(R.id.txtTypeWeather2);
+        txtWind2 = (TextView) findViewById(R.id.txtWind2);
+        txtDataWind2 = (TextView) findViewById(R.id.txtDataWind2);
 
-        txtDayOfWeek4 = (TextView) view.findViewById(R.id.txtDayOfWeek4);
-        txtDay4 = (TextView) view.findViewById(R.id.txtDay4);
-        txtTypeWeather4 = (TextView) view.findViewById(R.id.txtTypeWeather4);
-        txtWind4 = (TextView) view.findViewById(R.id.txtWind4);
-        txtDataWind4 = (TextView) view.findViewById(R.id.txtDataWind4);
+        txtDayOfWeek3 = (TextView) findViewById(R.id.txtDayOfWeek3);
+        txtDay3= (TextView) findViewById(R.id.txtDay3);
+        txtTypeWeather3 = (TextView) findViewById(R.id.txtTypeWeather3);
+        txtWind3 = (TextView) findViewById(R.id.txtWind3);
+        txtDataWind3 = (TextView) findViewById(R.id.txtDataWind3);
 
-        txtDayOfWeek5 = (TextView) view.findViewById(R.id.txtDayOfWeek5);
-        txtDay5 = (TextView) view.findViewById(R.id.txtDay5);
-        txtTypeWeather5 = (TextView) view.findViewById(R.id.txtTypeWeather5);
-        txtWind5 = (TextView) view.findViewById(R.id.txtWind5);
-        txtDataWind5 = (TextView) view.findViewById(R.id.txtDataWind5);
+        txtDayOfWeek4 = (TextView) findViewById(R.id.txtDayOfWeek4);
+        txtDay4 = (TextView) findViewById(R.id.txtDay4);
+        txtTypeWeather4 = (TextView) findViewById(R.id.txtTypeWeather4);
+        txtWind4 = (TextView) findViewById(R.id.txtWind4);
+        txtDataWind4 = (TextView) findViewById(R.id.txtDataWind4);
 
-        imgWeather1 = (ImageView) view.findViewById(R.id.imgWeather1);
-        imgWeather2 = (ImageView) view.findViewById(R.id.imgWeather2);
-        imgWeather3 = (ImageView) view.findViewById(R.id.imgWeather3);
-        imgWeather4 = (ImageView) view.findViewById(R.id.imgWeather4);
-        imgWeather5 = (ImageView) view.findViewById(R.id.imgWeather5);
+        txtDayOfWeek5 = (TextView) findViewById(R.id.txtDayOfWeek5);
+        txtDay5 = (TextView) findViewById(R.id.txtDay5);
+        txtTypeWeather5 = (TextView) findViewById(R.id.txtTypeWeather5);
+        txtWind5 = (TextView) findViewById(R.id.txtWind5);
+        txtDataWind5 = (TextView) findViewById(R.id.txtDataWind5);
+
+        imgWeather1 = (ImageView) findViewById(R.id.imgWeather1);
+        imgWeather2 = (ImageView) findViewById(R.id.imgWeather2);
+        imgWeather3 = (ImageView) findViewById(R.id.imgWeather3);
+        imgWeather4 = (ImageView) findViewById(R.id.imgWeather4);
+        imgWeather5 = (ImageView) findViewById(R.id.imgWeather5);
 
 
         btnMapTemp.setOnClickListener(this);
@@ -279,7 +243,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         btnChangeGoogleMap.setOnClickListener(this);
 
     }
-
     private void searchLocation() {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -365,7 +328,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     private void searchLocation(String query) {
         List<Address> addressesList = null;
         if (query != null || !query.equals("")) {
-            Geocoder geocoder = new Geocoder(getContext());
+            Geocoder geocoder = new Geocoder(MapActivity.this);
             try {
                 addressesList = geocoder.getFromLocationName(query, 1);
             } catch (IOException e) {
@@ -387,7 +350,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         }
     }
     private void getLocationPermission() {
-        if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(MapActivity.this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
             map.getUiSettings().setMyLocationButtonEnabled(false);
@@ -395,7 +358,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             getCurrentLocation();
             return;
         }else{
-            ActivityCompat.requestPermissions(getActivity(),
+            ActivityCompat.requestPermissions(MapActivity.this,
                     new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                     PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
@@ -409,7 +372,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                     float lati = (float) location.getLatitude();
                     float longti = (float) location.getLongitude();
                     List<Address> addressesList = null;
-                    Geocoder geocoder = new Geocoder(getContext());
+                    Geocoder geocoder = new Geocoder(MapActivity.this);
                     try {
                         addressesList = geocoder.getFromLocation(lati, longti, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
                     } catch (IOException e) {
@@ -448,19 +411,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         return str;
     }
     private void showDetailLocationMap(String query, String address, float lati, float longti) {
-        if(getFragmentManager().findFragmentByTag("detailLocationMap") != null)
-            getFragmentManager().beginTransaction().remove(detailLocationMap).commit();
+        if(getSupportFragmentManager().findFragmentByTag("detailLocationMap") != null)
+            getSupportFragmentManager().beginTransaction().remove(detailLocationMap).commit();
         addressLocationInfor = address;
-        detailLocationMap = new DetailLocationMap(getContext().getApplicationContext(), query, address, lati, longti, lottieLoading, dataChart, chart, setDataDetailWeather);
-        getFragmentManager().beginTransaction().add(R.id.frameInforTouchLocation, detailLocationMap, "detailLocationMap").commit();
+        detailLocationMap = new DetailLocationMap(this.getApplicationContext(), query, address, lati, longti, lottieLoading, dataChart, chart, setDataDetailWeather);
+        getSupportFragmentManager().beginTransaction().add(R.id.frameInforTouchLocation, detailLocationMap, "detailLocationMap").commit();
         if(iconsearch.getTag().equals("location")){
             iconsearch.setTag("backMap");
             iconsearch.setImageResource(R.drawable.ic_baseline_arrow_back_24);
             slidingUpPanelLayout.setAnchorPoint(0.35f);
             slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
-            Animation animationDown = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_down);
-            meowBottomNavigation.startAnimation(animationDown);
-            meowBottomNavigation.setVisibility(View.GONE);
         }
     }
     private void clospaneSlidingUpPanel(){
@@ -477,27 +437,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                     rltDataCharBottm.setVisibility(View.INVISIBLE);
                     iconsearch.setTag("location");
                     iconsearch.setImageResource(R.drawable.ic_baseline_location_on_24);
-                    Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_up);
-                    animation.setDuration(500);
-                    meowBottomNavigation.setVisibility(View.VISIBLE);
-                    meowBottomNavigation.startAnimation(animation);
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("");
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    getSupportActionBar().setDisplayShowHomeEnabled(false);
+                    getSupportActionBar().setTitle("");
                 }else if(newState == SlidingUpPanelLayout.PanelState.EXPANDED){
                     if(rltDataCharBottm.getVisibility() != View.VISIBLE){
                         rltDataCharBottm.setVisibility(View.VISIBLE);
-                        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-                        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
-                        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(addressLocationInfor);
+                        setSupportActionBar(toolbar);
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                        getSupportActionBar().setDisplayShowHomeEnabled(true);
+                        getSupportActionBar().setTitle(addressLocationInfor);
                     }
                 }else if(newState == SlidingUpPanelLayout.PanelState.ANCHORED){
                     if(rltDataCharBottm.getVisibility() == View.VISIBLE) {
                         rltDataCharBottm.setVisibility(View.INVISIBLE);
-                        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-                        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
-                        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("cái lozz");
+                        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                        getSupportActionBar().setDisplayShowHomeEnabled(false);
+                        getSupportActionBar().setTitle("cái lozz");
                     }
                 }
             }
@@ -574,12 +530,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                 if(iconsearch.getTag().equals("backMap")){
                     iconsearch.setTag("location");
                     iconsearch.setImageResource(R.drawable.ic_baseline_location_on_24);
-                    getFragmentManager().beginTransaction().remove(detailLocationMap).commit();
-                    Animation animationDown = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_down);
+                    getSupportFragmentManager().beginTransaction().remove(detailLocationMap).commit();
+                    Animation animationDown = AnimationUtils.loadAnimation(MapActivity.this, R.anim.bottom_down);
                     frameInforTouchLocation.startAnimation(animationDown);
-                    Animation animationUp = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_up);
-                    meowBottomNavigation.startAnimation(animationUp);
-                    meowBottomNavigation.setVisibility(View.VISIBLE);
                 }
                 break;
             case R.id.typeMap:
@@ -617,7 +570,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         }
     }
     private void checkMap(){
-        if(getFragmentManager().findFragmentByTag("googlemap") == null){
+        if(getSupportFragmentManager().findFragmentByTag("googlemap") == null){
             mapView.setMap(null);
             openGooogleMap();
             setupGoogleMap();
@@ -625,7 +578,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
     }
     private void setupGoogleMap(){
         try {
-            layer = new KmlLayer(map, R.raw.dananga, getContext().getApplicationContext());
+            layer = new KmlLayer(map, R.raw.dananga, MapActivity.this.getApplicationContext());
         } catch (XmlPullParserException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -636,8 +589,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         setOnclickFeature(layer);
     }
     private void setupMapGis() {
-        if(getFragmentManager().findFragmentByTag("googlemap") != null)
-            getFragmentManager().beginTransaction().remove(mapFragment).commit();
+        if(getSupportFragmentManager().findFragmentByTag("googlemap") != null)
+            getSupportFragmentManager().beginTransaction().remove(mapFragment).commit();
         if (mapView != null) {
             Basemap.Type basemapType = Basemap.Type.OPEN_STREET_MAP;
             double latitude = 16.048856; //16.048856, 108.201523
@@ -694,37 +647,4 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
             }
         }
     }
-    //    private KmlLayer createLayerFromKmz(InputStream kmzFileName) {
-//        KmlLayer kml = null;
-//
-//        InputStream inputStream;
-//        ZipInputStream zipInputStream;
-//
-//        try {
-//            inputStream = kmzFileName;
-//            zipInputStream = new ZipInputStream(new BufferedInputStream(inputStream));
-//            ZipEntry zipEntry;
-//
-//            while ((zipEntry = zipInputStream.getNextEntry()) != null) {
-//                if (!zipEntry.isDirectory()) {
-//                    String fileName = zipEntry.getName();
-//                    if (fileName.endsWith(".kml")) {
-//                        kml = new KmlLayer(map, zipInputStream, getContext().getApplicationContext());
-//                    }
-//                }
-//
-//                zipInputStream.closeEntry();
-//            }
-//
-//            zipInputStream.close();
-//        }
-//        catch(IOException e)
-//        {
-//            e.printStackTrace();
-//        } catch (XmlPullParserException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return kml;
-//    }
 }
