@@ -119,15 +119,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()){
             case R.id.btnSignUpPage:
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                Pair[] pairs = new Pair[7];
+                Pair[] pairs = new Pair[6];
 
-                pairs[0] = new Pair<View, String>(logoImg, "logoImg");
-                pairs[1] = new Pair<View, String>(logoName, "logo_text");
-                pairs[2] = new Pair<View, String>(logoPage, "logo_textPage");
-                pairs[3] = new Pair<View, String>(edit_email, "edit_email");
-                pairs[4] = new Pair<View, String>(edit_password, "edit_password");
-                pairs[5] = new Pair<View, String>(btnLogin, "btnLogin");
-                pairs[6] = new Pair<View, String>(btnSignUpPage, "btn_text_tran");
+                pairs[0] = new Pair<View, String>(logoName, "logo_text");
+                pairs[1] = new Pair<View, String>(logoPage, "logo_textPage");
+                pairs[2] = new Pair<View, String>(edit_email, "edit_email");
+                pairs[3] = new Pair<View, String>(edit_password, "edit_password");
+                pairs[4] = new Pair<View, String>(btnLogin, "btnLogin");
+                pairs[5] = new Pair<View, String>(btnSignUpPage, "btn_text_tran");
 
                 ActivityOptions activityOptions = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
                 startActivity(intent, activityOptions.toBundle());

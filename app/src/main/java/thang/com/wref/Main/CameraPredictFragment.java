@@ -19,11 +19,11 @@ import thang.com.wref.Main.More.ProductAgriActivity;
 import thang.com.wref.Main.More.SearchActivity;
 import thang.com.wref.R;
 
-public class AboutFragment extends Fragment implements View.OnClickListener{
+public class CameraPredictFragment extends Fragment implements View.OnClickListener{
     private View view;
     private LinearLayout btnLogout, lnlInforAgri, lnlSearch, lnlProduct, lnlCodeScan;
     private SharedPreferencesManagement sharedPreferencesManagement;
-    public AboutFragment() {
+    public CameraPredictFragment() {
         // Required empty public constructor
     }
 
@@ -51,7 +51,7 @@ public class AboutFragment extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_about, container, false);
+        view = inflater.inflate(R.layout.fragment_camera_predict, container, false);
         btnLogout = (LinearLayout) view.findViewById(R.id.btnLogout);
         lnlInforAgri = (LinearLayout) view.findViewById(R.id.lnlInforAgri);
         lnlSearch = (LinearLayout) view.findViewById(R.id.lnlSearch);

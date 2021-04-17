@@ -1,6 +1,5 @@
 package thang.com.wref.Main;
 
-import android.Manifest;
 import android.animation.AnimatorSet;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
@@ -10,22 +9,16 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Path;
 import android.graphics.drawable.AnimatedVectorDrawable;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -63,7 +56,7 @@ import thang.com.wref.NetworkUtil;
 import thang.com.wref.R;
 import thang.com.wref.Retrofits.WeatherRetrofit;
 
-public class DetailWeatherFragment extends Fragment implements View.OnClickListener {
+public class DetailWeatherFragment extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = "DetailWeatherFragment";
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
@@ -71,7 +64,7 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
     private ArrayList<Entry> entries;
     private ArrayList<String> sDay;
 
-    private View view;
+    private Toolbar toolbar;
     private ImageView imgSunWeather;
     private AnimatedVectorDrawable animation;
     private RelativeLayout rltSunWeather, rltDuBao5Ngay, bacgroundImgWeather, bacgroundColorWeather, splashWeather, layoutRltWeather;
@@ -107,63 +100,80 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
     @Override
     public void onStart() {
         super.onStart();
+        getData();
+        getData24h();
+        txtNameLocation.setText(sharedPreferencesManagement.getADDRESS());
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_detail_weather);
         if(Build.VERSION.SDK_INT >= 21){
-            Window window = getActivity().getWindow();
-            window.setStatusBarColor(getContext().getResources().getColor(R.color.purple_700));
+            Window window = getWindow();
+            window.setStatusBarColor(DetailWeatherFragment.this.getResources().getColor(R.color.purple_700));
         }
+        setupToolbar();
         networkUtil = new NetworkUtil();
         retrofit = networkUtil.getRetrofit();
-        sharedPreferencesManagement = new SharedPreferencesManagement(getContext());
+        sharedPreferencesManagement = new SharedPreferencesManagement(DetailWeatherFragment.this);
         dailyWeathers = new ArrayList<>();
         iconWeather = new IconWeather();
         timeUtil = new TimeCaculater();
         weatherRetrofit = retrofit.create(WeatherRetrofit.class);
 
-        cal = Calendar.getInstance();
-// remove next line if you're always using the current time.
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_detail_weather, container, false);
-        night = ContextCompat.getColor(getContext(), R.color.nig_color);
-        morning = ContextCompat.getColor(getContext(), R.color.mor_color);
+        night = ContextCompat.getColor(DetailWeatherFragment.this, R.color.nig_color);
+        morning = ContextCompat.getColor(DetailWeatherFragment.this, R.color.mor_color);
         mapingView();
-        return view;
+
+        entries = new ArrayList<>();
+        sDay = new ArrayList<>();
+        lottieLoadingData.playAnimation();
+        splashWeather.setVisibility(View.VISIBLE);
+        layoutRltWeather.setVisibility(View.INVISIBLE);
+
+        cal = Calendar.getInstance();
+    }
+    private void setupToolbar(){
+        toolbar = (Toolbar) findViewById(R.id.toolbarInfor);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Thời tiết");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
     private void mapingView(){
-        rltSunWeather = (RelativeLayout) view.findViewById(R.id.rltSunWeather);
-        rltDuBao5Ngay = (RelativeLayout) view.findViewById(R.id.rltDuBao5Ngay);
-        chart  = (LineChart) view.findViewById(R.id.combinedChart);
-        imgSunWeather = (ImageView) view.findViewById(R.id.imgSunWeather);
-        txtNhietdo = (TextView) view.findViewById(R.id.txtNhietdo);
-        txtDesWeather = (TextView) view.findViewById(R.id.txtDesWeather);
-        bacgroundImgWeather = (RelativeLayout) view.findViewById(R.id.bacgroundImgWeather);
-        bacgroundColorWeather = (RelativeLayout) view.findViewById(R.id.bacgroundColorWeather);
-        txtWeatherCurrent = (TextView) view.findViewById(R.id.txtWeatherCurrent);
-        txtWeatherNextOne = (TextView) view.findViewById(R.id.txtWeatherNextOne);
-        txtWeatherNextTwo = (TextView) view.findViewById(R.id.txtWeatherNextTwo);
-        txtDataNhietdo1 = (TextView) view.findViewById(R.id.txtDataNhietdo1);
-        txtDataNhietdo2 = (TextView) view.findViewById(R.id.txtDataNhietdo2);
-        txtDataNhietdo3 = (TextView) view.findViewById(R.id.txtDataNhietdo3);
-        txtDetailGio = (TextView) view.findViewById(R.id.txtDetailGio);
-        txtDetailNhietdo = (TextView) view.findViewById(R.id.txtDetailNhietdo);
-        txtDetailUVo = (TextView) view.findViewById(R.id.txtDetailUVo);
-        txtDetailApsuat = (TextView) view.findViewById(R.id.txtDetailApsuat);
-        imhWeather1 = (ImageView) view.findViewById(R.id.imhWeather1);
-        imhWeather2 = (ImageView) view.findViewById(R.id.imhWeather2);
-        imhWeather3 = (ImageView) view.findViewById(R.id.imhWeather3);
-        txtNameLocation = (TextView) view.findViewById(R.id.txtNameLocation);
-        splashWeather = (RelativeLayout) view.findViewById(R.id.splashWeather);
-        layoutRltWeather = (RelativeLayout) view.findViewById(R.id.layoutRltWeather);
-        lottieLoadingData = (LottieAnimationView) view.findViewById(R.id.lottieLoadingData);
+        rltSunWeather = (RelativeLayout) findViewById(R.id.rltSunWeather);
+        rltDuBao5Ngay = (RelativeLayout) findViewById(R.id.rltDuBao5Ngay);
+        chart  = (LineChart) findViewById(R.id.combinedChart);
+        imgSunWeather = (ImageView) findViewById(R.id.imgSunWeather);
+        txtNhietdo = (TextView) findViewById(R.id.txtNhietdo);
+        txtDesWeather = (TextView) findViewById(R.id.txtDesWeather);
+        bacgroundImgWeather = (RelativeLayout) findViewById(R.id.bacgroundImgWeather);
+        bacgroundColorWeather = (RelativeLayout) findViewById(R.id.bacgroundColorWeather);
+        txtWeatherCurrent = (TextView) findViewById(R.id.txtWeatherCurrent);
+        txtWeatherNextOne = (TextView) findViewById(R.id.txtWeatherNextOne);
+        txtWeatherNextTwo = (TextView) findViewById(R.id.txtWeatherNextTwo);
+        txtDataNhietdo1 = (TextView) findViewById(R.id.txtDataNhietdo1);
+        txtDataNhietdo2 = (TextView) findViewById(R.id.txtDataNhietdo2);
+        txtDataNhietdo3 = (TextView) findViewById(R.id.txtDataNhietdo3);
+        txtDetailGio = (TextView) findViewById(R.id.txtDetailGio);
+        txtDetailNhietdo = (TextView) findViewById(R.id.txtDetailNhietdo);
+        txtDetailUVo = (TextView) findViewById(R.id.txtDetailUVo);
+        txtDetailApsuat = (TextView) findViewById(R.id.txtDetailApsuat);
+        imhWeather1 = (ImageView) findViewById(R.id.imhWeather1);
+        imhWeather2 = (ImageView) findViewById(R.id.imhWeather2);
+        imhWeather3 = (ImageView) findViewById(R.id.imhWeather3);
+        txtNameLocation = (TextView) findViewById(R.id.txtNameLocation);
+        splashWeather = (RelativeLayout) findViewById(R.id.splashWeather);
+        layoutRltWeather = (RelativeLayout) findViewById(R.id.layoutRltWeather);
+        lottieLoadingData = (LottieAnimationView) findViewById(R.id.lottieLoadingData);
 
         rltDuBao5Ngay.setOnClickListener(this);
         txtNhietdo.setOnClickListener(this);
@@ -171,18 +181,6 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
 
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        entries = new ArrayList<>();
-        sDay = new ArrayList<>();
-        lottieLoadingData.playAnimation();
-        splashWeather.setVisibility(View.VISIBLE);
-        layoutRltWeather.setVisibility(View.INVISIBLE);
-//        setUpData();
-
-
-    }
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -197,15 +195,7 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
         }
     }
 
-    @Override
-    public void setMenuVisibility(boolean menuVisible) {
-        super.setMenuVisibility(menuVisible);
-        if (menuVisible) {
-            getData();
-            getData24h();
-            txtNameLocation.setText(sharedPreferencesManagement.getADDRESS());
-        }
-    }
+
 
     private void setDataIn5Day(){
         animationSunrise(iconWeather.IconWeather(detailWeatherModel.getCurrent().getWeather()[0].getMain()));
@@ -233,7 +223,7 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
             @Override
             public void onResponse(Call<DetailWeatherModel> call, Response<DetailWeatherModel> response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(getContext(), "Lỗi mạng", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailWeatherFragment.this, "Lỗi mạng", Toast.LENGTH_SHORT).show();
                 }else{
                     detailWeatherModel = response.body();
                     Log.d(TAG, "onResponse: "+detailWeatherModel.getCurrent().getWeather()[0].getDescription());
@@ -260,7 +250,7 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
             @Override
             public void onResponse(Call<DetailWeatherModel> call, Response<DetailWeatherModel> response) {
                 if(!response.isSuccessful()){
-                    Toast.makeText(getContext(), "Lỗi mạng", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailWeatherFragment.this, "Lỗi mạng", Toast.LENGTH_SHORT).show();
                 }else{
                     entries.clear();
                     sDay.clear();
@@ -413,7 +403,7 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
         animatorSet.start();
     }
     private void changeBackgroundImg(int background){
-        Animation fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.fade_out);
+        Animation fadeOut = AnimationUtils.loadAnimation(DetailWeatherFragment.this, R.anim.fade_out);
         bacgroundImgWeather.startAnimation(fadeOut);
         fadeOut.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -424,7 +414,7 @@ public class DetailWeatherFragment extends Fragment implements View.OnClickListe
             @Override
             public void onAnimationEnd(Animation animation) {
                 bacgroundImgWeather.setBackgroundResource(background);
-                Animation fadeOut = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
+                Animation fadeOut = AnimationUtils.loadAnimation(DetailWeatherFragment.this, R.anim.fade_in);
                 bacgroundImgWeather.startAnimation(fadeOut);
             }
 

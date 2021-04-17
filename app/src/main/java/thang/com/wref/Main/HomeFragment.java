@@ -51,6 +51,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private GoogleMap map;
     private View view, gradientMap;
+    private RelativeLayout rltWeather;
     private Task<Location> task;
     private FusedLocationProviderClient client;
     private SharedPreferencesManagement sharedPreferencesManagement;
@@ -105,7 +106,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
     }
     private void mappingView(){
         gradientMap = (View) view.findViewById(R.id.gradientMap);
+        rltWeather = (RelativeLayout) view.findViewById(R.id.rltWeather);
 
+        rltWeather.setOnClickListener(this);
         gradientMap.setOnClickListener(this);
     }
     @Override
@@ -114,12 +117,19 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
             case R.id.gradientMap:
                 clickMapView();
                 break;
+            case R.id.rltWeather:
+                clickWeather();
+                break;
             default:
                 break;
         }
     }
     private void clickMapView(){
         Intent intent = new Intent(getContext(), MapActivity.class);
+        getActivity().startActivity(intent);
+    }
+    private void clickWeather(){
+        Intent intent = new Intent(getContext(), DetailWeatherFragment.class);
         getActivity().startActivity(intent);
     }
     private void getLocationPermission() {

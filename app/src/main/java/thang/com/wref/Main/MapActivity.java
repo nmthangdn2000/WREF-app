@@ -418,7 +418,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         getSupportFragmentManager().beginTransaction().add(R.id.frameInforTouchLocation, detailLocationMap, "detailLocationMap").commit();
         if(iconsearch.getTag().equals("location")){
             iconsearch.setTag("backMap");
-            iconsearch.setImageResource(R.drawable.ic_baseline_arrow_back_24);
             slidingUpPanelLayout.setAnchorPoint(0.35f);
             slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
         }
@@ -436,7 +435,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 if(newState == SlidingUpPanelLayout.PanelState.COLLAPSED){
                     rltDataCharBottm.setVisibility(View.INVISIBLE);
                     iconsearch.setTag("location");
-                    iconsearch.setImageResource(R.drawable.ic_baseline_location_on_24);
+//                    iconsearch.setImageResource(R.drawable.ic_baseline_location_on_24);
                     getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                     getSupportActionBar().setDisplayShowHomeEnabled(false);
                     getSupportActionBar().setTitle("");
@@ -529,11 +528,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     showTypeMap.setVisibility(View.INVISIBLE);
                 if(iconsearch.getTag().equals("backMap")){
                     iconsearch.setTag("location");
-                    iconsearch.setImageResource(R.drawable.ic_baseline_location_on_24);
+//                    iconsearch.setImageResource(R.drawable.ic_baseline_location_on_24);
                     getSupportFragmentManager().beginTransaction().remove(detailLocationMap).commit();
                     Animation animationDown = AnimationUtils.loadAnimation(MapActivity.this, R.anim.bottom_down);
                     frameInforTouchLocation.startAnimation(animationDown);
                 }
+                finish();
                 break;
             case R.id.typeMap:
                 if(showTypeMap.getVisibility() == View.VISIBLE)

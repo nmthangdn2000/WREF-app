@@ -12,24 +12,13 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_img_in_login"/>
     <LinearLayout
+        android:layout_centerInParent="true"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="10dp">
-            <ImageView
-                android:id="@+id/logoImg"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/logo"
-                android:transitionName="logo_img" />
-        </RelativeLayout>
         <LinearLayout
             android:layout_margin="5dp"
             android:layout_width="match_parent"
@@ -143,8 +132,7 @@
                 android:transitionName="btn_page"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:elevation="15dp"
-                android:background="@drawable/shadow_button_login">
+                android:elevation="15dp">
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnLogin"
                     style="@style/Widget.AppCompat.Button.Colored"

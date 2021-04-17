@@ -7,11 +7,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
-import thang.com.wref.Main.AboutFragment;
-import thang.com.wref.Main.DetailWeatherFragment;
-import thang.com.wref.Main.MapFragment;
-import thang.com.wref.Main.SocialNetworkFragment;
-
 public class ViewPagerAdapter extends FragmentStateAdapter {
     private MeowBottomNavigation meowBottomNavigation;
     public ViewPagerAdapter(@NonNull FragmentActivity fragmentActivity, MeowBottomNavigation meowBottomNavigation) {
@@ -29,9 +24,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
             case 1:
                 return new SocialNetworkFragment(meowBottomNavigation);
             case 2:
-                return new DetailWeatherFragment();
-            case 3:
-                return new AboutFragment();
+                return new CameraPredictFragment();
             default:
                 return new HomeFragment();
         }
@@ -39,6 +32,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 4;
+        return 3;
     }
 }

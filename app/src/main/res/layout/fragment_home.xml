@@ -20,11 +20,19 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
-                <ImageView
+                <RelativeLayout
                     android:layout_width="45dp"
                     android:layout_height="45dp"
-                    android:src="@drawable/ic_medal"
-                    android:layout_centerVertical="true"/>
+                    android:padding="10dp"
+                    android:background="@drawable/circle"
+                    android:backgroundTint="#10000000">
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:src="@drawable/ic_logout"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
                 <TextView
                     android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
@@ -55,42 +63,49 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <RelativeLayout
+                    android:id="@+id/rltWeather"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
                     android:layout_weight="2"
+                    android:layout_height="50dp"
                     android:layout_marginRight="10dp"
                     android:paddingHorizontal="30dp"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:background="@drawable/circle_transparent"
                     android:backgroundTint="#2062AEFB">
-                    <TextView
-                        android:layout_centerVertical="true"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_carbon_temperature_hot"
-                        android:text="15℃"
-                        android:drawablePadding="5dp"
-                        android:fontFamily="@font/roboto_medium"
-                        android:textColor="#2285E0"
-                        android:textSize="12sp"/>
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_marginVertical="6dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_height="match_parent"
-                        android:background="#502285E0"/>
-                    <TextView
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="24dp"
-                        android:drawableLeft="@drawable/ic_air_humidity"
-                        android:text="80%"
-                        android:drawablePadding="5dp"
-                        android:fontFamily="@font/roboto_medium"
-                        android:textColor="#2285E0"
-                        android:textSize="12sp"/>
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawableLeft="@drawable/ic_carbon_temperature_hot"
+                            android:text="15℃"
+                            android:drawablePadding="5dp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textColor="#2285E0"
+                            android:textSize="12sp"/>
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_marginVertical="6dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_height="match_parent"
+                            android:background="#502285E0"/>
+                        <TextView
+                            android:layout_centerVertical="true"
+                            android:layout_alignParentEnd="true"
+                            android:gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="24dp"
+                            android:drawableLeft="@drawable/ic_air_humidity"
+                            android:text="80%"
+                            android:drawablePadding="5dp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:textColor="#2285E0"
+                            android:textSize="12sp"/>
+                    </RelativeLayout>
+
                 </RelativeLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -195,7 +210,7 @@
                                 app:riv_corner_radius_bottom_left="8dp"
                                 app:riv_corner_radius_top_left="8dp"
                                 app:riv_corner_radius_top_right="8dp"
-                                android:src="@drawable/anh4"
+                                android:src="@drawable/img_dua_leo"
                                 android:scaleType="centerCrop"
                                 android:elevation="20dp"/>
                         </LinearLayout>
@@ -237,7 +252,7 @@
                                 app:riv_corner_radius_bottom_left="8dp"
                                 app:riv_corner_radius_top_left="8dp"
                                 app:riv_corner_radius_top_right="8dp"
-                                android:src="@drawable/anh4"
+                                android:src="@drawable/img_ca_chua"
                                 android:scaleType="centerCrop"
                                 android:elevation="20dp"/>
                         </LinearLayout>
@@ -276,7 +291,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bản tin mới"
+                        android:text="Giải pháp đề xuất"
                         android:fontFamily="@font/roboto_medium"
                         android:textColor="@color/black"
                         android:textSize="20dp"
@@ -306,12 +321,11 @@
                     android:clipToPadding="false">
                     <!--     Row 1           -->
                     <!--     column 1           -->
-                    <androidx.cardview.widget.CardView
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="250dp"
                         android:layout_columnWeight="1"
                         android:layout_rowWeight="1"
-                        app:cardCornerRadius="8dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp">
@@ -326,7 +340,7 @@
                                 android:layout_height="230dp"
                                 app:riv_corner_radius_top_left="8dp"
                                 app:riv_corner_radius_top_right="8dp"
-                                android:src="@drawable/img_bi_do"
+                                android:src="@drawable/img_ca_chua_2"
                                 android:scaleType="centerCrop"/>
                             <View
                                 android:layout_width="match_parent"
@@ -341,27 +355,26 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Cách trồng bí hiệu quả"
+                                    android:text="Nông nghiệp - Đà Nẵng"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:textColor="@color/black"
+                                    android:textSize="10sp"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:text="Quy trình thực hiện - cà chua"
                                     android:fontFamily="@font/roboto_medium"
                                     android:textColor="@color/black"
                                     android:textStyle="bold"
                                     android:textSize="16sp"/>
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Nông nghiệp - Đà Nẵng"
-                                    android:fontFamily="@font/roboto_medium"
-                                    android:textColor="#ADADAC"
-                                    android:textSize="10sp"/>
                             </LinearLayout>
                         </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="250dp"
                         android:layout_columnWeight="1"
                         android:layout_rowWeight="1"
-                        app:cardCornerRadius="8dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="10dp">
@@ -376,7 +389,7 @@
                                 android:layout_height="230dp"
                                 app:riv_corner_radius_top_left="8dp"
                                 app:riv_corner_radius_top_right="8dp"
-                                android:src="@drawable/img_bi_do"
+                                android:src="@drawable/img_dua_leo_2"
                                 android:scaleType="centerCrop"/>
                             <View
                                 android:layout_width="match_parent"
@@ -391,28 +404,28 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Cách trồng bí hiệu quả"
+                                    android:text="Nông nghiệp - Đà Nẵng"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:textColor="@color/black"
+                                    android:textSize="10sp"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:text="Quy trình thực hiện - dưa leo"
                                     android:fontFamily="@font/roboto_medium"
                                     android:textColor="@color/black"
                                     android:textStyle="bold"
                                     android:textSize="16sp"/>
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Nông nghiệp - Đà Nẵng"
-                                    android:fontFamily="@font/roboto_medium"
-                                    android:textColor="#ADADAC"
-                                    android:textSize="10sp"/>
-                            </LinearLayout>
-                        </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
 
-                    <androidx.cardview.widget.CardView
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="250dp"
                         android:layout_columnWeight="1"
                         android:layout_rowWeight="1"
-                        app:cardCornerRadius="8dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp">
@@ -427,7 +440,7 @@
                                 android:layout_height="230dp"
                                 app:riv_corner_radius_top_left="8dp"
                                 app:riv_corner_radius_top_right="8dp"
-                                android:src="@drawable/img_bi_do"
+                                android:src="@drawable/img_thuoc_tru_sau"
                                 android:scaleType="centerCrop"/>
                             <View
                                 android:layout_width="match_parent"
@@ -442,27 +455,27 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Cách trồng bí hiệu quả"
+                                    android:text="Nông nghiệp - Đà Nẵng"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:textColor="@color/black"
+                                    android:textSize="10sp"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:text="Đề xuất sản phẩm"
                                     android:fontFamily="@font/roboto_medium"
                                     android:textColor="@color/black"
                                     android:textStyle="bold"
                                     android:textSize="16sp"/>
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Nông nghiệp - Đà Nẵng"
-                                    android:fontFamily="@font/roboto_medium"
-                                    android:textColor="#ADADAC"
-                                    android:textSize="10sp"/>
+
                             </LinearLayout>
                         </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
-                    <androidx.cardview.widget.CardView
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="250dp"
                         android:layout_columnWeight="1"
                         android:layout_rowWeight="1"
-                        app:cardCornerRadius="8dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="10dp">
@@ -477,7 +490,7 @@
                                 android:layout_height="230dp"
                                 app:riv_corner_radius_top_left="8dp"
                                 app:riv_corner_radius_top_right="8dp"
-                                android:src="@drawable/img_bi_do"
+                                android:src="@drawable/img_phan_bon"
                                 android:scaleType="centerCrop"/>
                             <View
                                 android:layout_width="match_parent"
@@ -492,21 +505,22 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Cách trồng bí hiệu quả"
+                                    android:text="Nông nghiệp - Đà Nẵng"
+                                    android:fontFamily="@font/roboto_medium"
+                                    android:textColor="@color/black"
+                                    android:textSize="10sp"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="40dp"
+                                    android:text="Đề xuất phân bón"
                                     android:fontFamily="@font/roboto_medium"
                                     android:textColor="@color/black"
                                     android:textStyle="bold"
                                     android:textSize="16sp"/>
-                                <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Nông nghiệp - Đà Nẵng"
-                                    android:fontFamily="@font/roboto_medium"
-                                    android:textColor="#ADADAC"
-                                    android:textSize="10sp"/>
+
                             </LinearLayout>
                         </RelativeLayout>
-                    </androidx.cardview.widget.CardView>
+                    </LinearLayout>
                 </GridLayout>
             </LinearLayout>
             <LinearLayout
@@ -555,7 +569,7 @@
                             app:riv_corner_radius_bottom_left="8dp"
                             app:riv_corner_radius_top_left="8dp"
                             app:riv_corner_radius_top_right="8dp"
-                            android:src="@drawable/anh4"
+                            android:src="@drawable/img_nha_ban_thuoc"
                             android:scaleType="centerCrop"
                             android:elevation="20dp"/>
                     </LinearLayout>
@@ -575,7 +589,7 @@
                             android:fontFamily="@font/roboto_medium"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:text="Công ty trách nhiệm hữu hạn Xẻo Lá"/>
+                            android:text="Hiệu thuốc-cô Sáu"/>
                         <View
                             android:layout_width="100dp"
                             android:layout_height="1dp"
@@ -595,14 +609,14 @@
                             android:textSize="12sp"
                             android:textStyle="bold"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="Cam Quýt Xoài Ổi"/>
+                            android:text="Thuốc bảo vệ thực vật"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="#62AEFB"
                             android:textSize="12sp"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="Nhập hàng vào tháng 5 - 6"/>
+                            android:text="KLC"/>
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
@@ -621,7 +635,7 @@
                             app:riv_corner_radius_bottom_left="8dp"
                             app:riv_corner_radius_top_left="8dp"
                             app:riv_corner_radius_top_right="8dp"
-                            android:src="@drawable/anh4"
+                            android:src="@drawable/img_nha_ban_phan_bon"
                             android:scaleType="centerCrop"
                             android:elevation="20dp"/>
                     </LinearLayout>
@@ -641,7 +655,7 @@
                             android:fontFamily="@font/roboto_medium"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:text="Công ty trách nhiệm hữu hạn Xẻo Lá"/>
+                            android:text="Phân bón anh Bảy"/>
                         <View
                             android:layout_width="100dp"
                             android:layout_height="1dp"
@@ -661,14 +675,14 @@
                             android:textSize="12sp"
                             android:textStyle="bold"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="Cam Quýt Xoài Ổi"/>
+                            android:text="Phân bón cây trồng"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="#62AEFB"
                             android:textSize="12sp"
                             android:fontFamily="@font/roboto_medium"
-                            android:text="Nhập hàng vào tháng 5 - 6"/>
+                            android:text="Phân hữ cơ, vô cơ, ..."/>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
