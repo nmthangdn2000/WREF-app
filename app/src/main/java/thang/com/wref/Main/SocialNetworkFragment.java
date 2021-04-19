@@ -86,10 +86,9 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     public SocialNetworkFragment() {
 
     }
-
-    public static SocialNetworkFragment newInstance() {
+    public static SocialNetworkFragment newInstance(MeowBottomNavigation meowBottomNavigation) {
         Bundle args = new Bundle();
-        SocialNetworkFragment fragment = new SocialNetworkFragment();
+        SocialNetworkFragment fragment = new SocialNetworkFragment(meowBottomNavigation);
         fragment.setArguments(args);
         return fragment;
     }
@@ -223,7 +222,6 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                     return;
                 }else{
                     List<StoriesModels> storiesModels = response.body();
-                    Log.d(TAG, "onResponse: "+storiesModels);
                     for(StoriesModels story : storiesModels){
                         if(story.getUsers().getId().equals(sharedPreferencesManagement.getID())) { // lấy story userLogin để đầu mảng
                             storiesArr.add(story);
@@ -259,7 +257,6 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 if(!response.isSuccessful()){
                     Toast.makeText(getContext(), "Không có mạng", Toast.LENGTH_SHORT).show();
                 }else{
-                    Log.d(TAG, "onResponse: "+response.body());
                     List<NewsModels> news = response.body();
                     for(NewsModels post : news){
                         newsArr.add(post);
@@ -357,11 +354,10 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         mListenerNews = new NewsAdapter.onClickRecyclerNews() {
             @Override
             public void onClickComment(int position, LinearLayout btnComment) {
-                Log.d(TAG, "onClickComment: aaaaaaaaaaaaa"+ getFragmentManager().getFragments().size());
+//                Log.d(TAG, "onClickComment: aaaaaaaaaaaaa"+ getFragmentManager().getFragments().size());
                 viewPager2story.setVisibility(View.INVISIBLE);
                 fragmentCommnet.setVisibility(View.VISIBLE);
                 slidingUpPanelLayout.setOverlayed(false);
-                Log.d(TAG, "onClickComment: "+position);
                 Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_down);
                 meowBottomNavigation.startAnimation(animation);
                 meowBottomNavigation.setVisibility(View.GONE);

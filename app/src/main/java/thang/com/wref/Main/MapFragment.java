@@ -200,7 +200,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
         FragmentManager fragmentManager = getFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         mapFragment = SupportMapFragment.newInstance();
-        fragmentTransaction.replace(R.id.map, mapFragment, "googlemap").commit();
+        fragmentTransaction.replace(R.id.map1, mapFragment, "googlemap").commit();
         mapFragment.getMapAsync(this);
     }
     @Override

@@ -171,13 +171,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private void openGooogleMap(){
         fragmentTransaction = getSupportFragmentManager().beginTransaction();
         mapFragment = SupportMapFragment.newInstance();
-        fragmentTransaction.replace(R.id.map, mapFragment, "googlemap").commit();
+        fragmentTransaction.replace(R.id.mapHome, mapFragment, "googlemap").commit();
         mapFragment.getMapAsync(this);
     }
     private void mappingView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
-        mapView = (MapView) findViewById(R.id.map);
+        mapView = (MapView) findViewById(R.id.mapHome);
         searchView = (SearchView) findViewById(R.id.searchView);
         client = LocationServices.getFusedLocationProviderClient(this.getApplicationContext());
         location = (LinearLayout) findViewById(R.id.location);

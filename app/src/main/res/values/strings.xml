@@ -13,4 +13,7 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    
+    <string name="demo_text_1">Trong gia đoạn <b>Tiền thu hoạch</b></string>
+    <string name="demo_text_2"><![CDATA[EMOTION Driver5- UNCERTAINTY/VARIETY (Surprise, Diversity, Challenge,<font color="yellow">Không phát hiện </font>bệnh cây, Wild]]></string>
 </resources>

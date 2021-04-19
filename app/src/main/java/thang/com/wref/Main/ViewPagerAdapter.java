@@ -22,7 +22,8 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 //                return new MapFragment(meowBottomNavigation);
                 return new HomeFragment();
             case 1:
-                return new SocialNetworkFragment(meowBottomNavigation);
+                SocialNetworkFragment socialNetworkFragment = new SocialNetworkFragment();
+                return socialNetworkFragment.newInstance(meowBottomNavigation);
             case 2:
                 return new CameraPredictFragment();
             default:

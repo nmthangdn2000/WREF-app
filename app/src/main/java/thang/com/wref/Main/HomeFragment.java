@@ -55,6 +55,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
     private Task<Location> task;
     private FusedLocationProviderClient client;
     private SharedPreferencesManagement sharedPreferencesManagement;
+    private SupportMapFragment mapFragment;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -98,10 +99,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
         getLocationPermission();
     }
     private void openGooogleMap(){
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        SupportMapFragment mapFragment = SupportMapFragment.newInstance();
-        fragmentTransaction.replace(R.id.map, mapFragment, "googlemap").commit();
+        mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
     private void mappingView(){
@@ -173,5 +171,27 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
         });
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mapFragment.onStart();
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapFragment.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapFragment.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapFragment.onDestroy();
+    }
 }

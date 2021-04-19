@@ -18,6 +18,7 @@ import thang.com.wref.Main.ViewPagerAdapter;
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
 
+    private int NumberPageCurr = 1, NumberPagePause = 1;
     private MeowBottomNavigation bottomNavigation;
     private ViewPager2 viewPager2;
     private ViewPagerAdapter viewPagerAdapter;
@@ -25,11 +26,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        NumberPagePause = NumberPageCurr;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        bottomNavigation.show(NumberPagePause, true);
     }
 
     @Override
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_baseline_map_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_newspaper_folded));
 //        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_baseline_cloud_queue_24));
-        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_camera));
+        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_baseline_photo_camera_24));
         // default button
 
         //event
@@ -63,10 +66,12 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getId()){
                     case 1:
                         Log.d(TAG, " a1 "+ item.getId());
+                        NumberPageCurr = item.getId();
                         viewPager2.setCurrentItem(0);
                         break;
                     case 2:
                         Log.d(TAG, " a2 "+ item.getId());
+                        NumberPageCurr = item.getId();
                         bottomNavigation.clearCount(2);
                         viewPager2.setCurrentItem(1);
                         break;
@@ -77,10 +82,12 @@ public class MainActivity extends AppCompatActivity {
 //                        break;
                     case 3:
                         Log.d(TAG, " a3 "+ item.getId());
+                        NumberPageCurr = item.getId();
                         viewPager2.setCurrentItem(2);
                         break;
                     default:
                         viewPager2.setCurrentItem(0);
+                        NumberPageCurr = item.getId();
                         break;
                 }
             }
