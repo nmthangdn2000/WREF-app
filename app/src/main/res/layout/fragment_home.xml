@@ -195,6 +195,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
                     <LinearLayout
+                        android:id="@+id/lnlTrackProgress"
                         android:paddingVertical="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -237,6 +238,7 @@
                         </LinearLayout>
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/lnlTrackProgress2"
                         android:paddingVertical="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -268,14 +270,14 @@
                                 android:textColor="@color/black"
                                 android:fontFamily="@font/roboto_medium"
                                 android:textSize="16sp"
-                                android:text="Dưa leo"/>
+                                android:text="Cà chua"/>
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="#2285E0"
                                 android:textSize="10sp"
                                 android:fontFamily="@font/roboto_medium"
-                                android:text="20 ngày cho đến lúc thu hoạch"/>
+                                android:text="30 ngày cho đến lúc thu hoạch"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -323,13 +325,13 @@
                     <!--     column 1           -->
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="250dp"
+                        android:layout_height="280dp"
                         android:layout_columnWeight="1"
                         android:layout_rowWeight="1"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp">
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:foreground="?android:attr/selectableItemBackground"
@@ -337,21 +339,19 @@
                             android:orientation="vertical">
                             <com.makeramen.roundedimageview.RoundedImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="230dp"
+                                android:layout_height="220dp"
                                 app:riv_corner_radius_top_left="8dp"
                                 app:riv_corner_radius_top_right="8dp"
+                                app:riv_corner_radius_bottom_left="8dp"
+                                app:riv_corner_radius_bottom_right="8dp"
                                 android:src="@drawable/img_ca_chua_2"
                                 android:scaleType="centerCrop"/>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="230dp"
-                                android:background="@drawable/gradient_view_news"/>
                             <LinearLayout
                                 android:layout_alignParentBottom="true"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:paddingHorizontal="10dp">
+                                android:paddingTop="5dp">
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -368,17 +368,17 @@
                                     android:textStyle="bold"
                                     android:textSize="16sp"/>
                             </LinearLayout>
-                        </RelativeLayout>
+                        </LinearLayout>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="250dp"
+                        android:layout_height="280dp"
                         android:layout_columnWeight="1"
                         android:layout_rowWeight="1"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="10dp">
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:foreground="?android:attr/selectableItemBackground"
@@ -386,15 +386,13 @@
                             android:orientation="vertical">
                             <com.makeramen.roundedimageview.RoundedImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="230dp"
+                                android:layout_height="220dp"
                                 app:riv_corner_radius_top_left="8dp"
                                 app:riv_corner_radius_top_right="8dp"
+                                app:riv_corner_radius_bottom_left="8dp"
+                                app:riv_corner_radius_bottom_right="8dp"
                                 android:src="@drawable/img_dua_leo_2"
                                 android:scaleType="centerCrop"/>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="230dp"
-                                android:background="@drawable/gradient_view_news"/>
                             <LinearLayout
                                 android:layout_alignParentBottom="true"
                                 android:layout_width="match_parent"
@@ -418,18 +416,18 @@
                                     android:textSize="16sp"/>
 
                             </LinearLayout>
-                        </RelativeLayout>
+                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="250dp"
+                        android:layout_height="280dp"
                         android:layout_columnWeight="1"
                         android:layout_rowWeight="1"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
                         android:layout_marginBottom="10dp">
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:foreground="?android:attr/selectableItemBackground"
@@ -437,15 +435,13 @@
                             android:orientation="vertical">
                             <com.makeramen.roundedimageview.RoundedImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="230dp"
+                                android:layout_height="220dp"
                                 app:riv_corner_radius_top_left="8dp"
                                 app:riv_corner_radius_top_right="8dp"
+                                app:riv_corner_radius_bottom_left="8dp"
+                                app:riv_corner_radius_bottom_right="8dp"
                                 android:src="@drawable/img_thuoc_tru_sau"
                                 android:scaleType="centerCrop"/>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="230dp"
-                                android:background="@drawable/gradient_view_news"/>
                             <LinearLayout
                                 android:layout_alignParentBottom="true"
                                 android:layout_width="match_parent"
@@ -469,17 +465,17 @@
                                     android:textSize="16sp"/>
 
                             </LinearLayout>
-                        </RelativeLayout>
+                        </LinearLayout>
                     </LinearLayout>
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="250dp"
+                        android:layout_height="280dp"
                         android:layout_columnWeight="1"
                         android:layout_rowWeight="1"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="10dp">
-                        <RelativeLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:foreground="?android:attr/selectableItemBackground"
@@ -490,12 +486,10 @@
                                 android:layout_height="230dp"
                                 app:riv_corner_radius_top_left="8dp"
                                 app:riv_corner_radius_top_right="8dp"
+                                app:riv_corner_radius_bottom_left="8dp"
+                                app:riv_corner_radius_bottom_right="8dp"
                                 android:src="@drawable/img_phan_bon"
                                 android:scaleType="centerCrop"/>
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="230dp"
-                                android:background="@drawable/gradient_view_news"/>
                             <LinearLayout
                                 android:layout_alignParentBottom="true"
                                 android:layout_width="match_parent"
@@ -519,7 +513,7 @@
                                     android:textSize="16sp"/>
 
                             </LinearLayout>
-                        </RelativeLayout>
+                        </LinearLayout>
                     </LinearLayout>
                 </GridLayout>
             </LinearLayout>

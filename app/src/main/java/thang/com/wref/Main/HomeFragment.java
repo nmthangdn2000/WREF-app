@@ -21,6 +21,7 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -39,6 +40,7 @@ import java.util.List;
 
 import thang.com.wref.Login.LoginActivity;
 import thang.com.wref.Login.SharedPreferencesManagement;
+import thang.com.wref.Main.More.CropYieldActivity;
 import thang.com.wref.R;
 
 /**
@@ -52,6 +54,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
     private GoogleMap map;
     private View view, gradientMap;
     private RelativeLayout rltWeather;
+    private LinearLayout lnlTrackProgress, lnlTrackProgress2;
     private Task<Location> task;
     private FusedLocationProviderClient client;
     private SharedPreferencesManagement sharedPreferencesManagement;
@@ -105,9 +108,13 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
     private void mappingView(){
         gradientMap = (View) view.findViewById(R.id.gradientMap);
         rltWeather = (RelativeLayout) view.findViewById(R.id.rltWeather);
+        lnlTrackProgress = (LinearLayout) view.findViewById(R.id.lnlTrackProgress);
+        lnlTrackProgress2 = (LinearLayout) view.findViewById(R.id.lnlTrackProgress2);
 
         rltWeather.setOnClickListener(this);
         gradientMap.setOnClickListener(this);
+        lnlTrackProgress.setOnClickListener(this);
+        lnlTrackProgress2.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
@@ -117,6 +124,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
                 break;
             case R.id.rltWeather:
                 clickWeather();
+                break;
+            case R.id.lnlTrackProgress:
+                clickTrackProgress();
+                break;
+            case R.id.lnlTrackProgress2:
+                clickTrackProgress2();
                 break;
             default:
                 break;
@@ -171,6 +184,16 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
         });
     }
 
+    private void clickTrackProgress(){
+        Intent intent = new Intent(getContext(), CropYieldActivity.class);
+        intent.putExtra("plant", "Dưa leo");
+        getActivity().startActivity(intent);
+    }
+    private void clickTrackProgress2(){
+        Intent intent = new Intent(getContext(), CropYieldActivity.class);
+        intent.putExtra("plant", "Cà chua");
+        getActivity().startActivity(intent);
+    }
     @Override
     public void onStart() {
         super.onStart();
