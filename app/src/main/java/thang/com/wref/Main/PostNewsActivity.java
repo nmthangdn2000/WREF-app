@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
@@ -189,6 +190,7 @@ public class PostNewsActivity extends AppCompatActivity implements View.OnClickL
                         if (!errModel.isSuccess()) {
                             Toast.makeText(PostNewsActivity.this, "Không thể đăng bài", Toast.LENGTH_SHORT).show();
                         } else {
+                            setResult(Activity.RESULT_OK);
                             finish();
                         }
                     }
@@ -244,10 +246,18 @@ public class PostNewsActivity extends AppCompatActivity implements View.OnClickL
         toolBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                setResult(Activity.RESULT_CANCELED);
                 finish();
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        setResult(Activity.RESULT_CANCELED);
+        super.onBackPressed();
+    }
+
     private void clospaneSlidingUpPanel(){
         slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override

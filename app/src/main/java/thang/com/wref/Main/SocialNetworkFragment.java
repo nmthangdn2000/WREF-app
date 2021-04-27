@@ -1,5 +1,6 @@
 package thang.com.wref.Main;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
@@ -52,6 +54,7 @@ import thang.com.wref.fragment.CommentFragment;
 
 public class SocialNetworkFragment extends Fragment implements View.OnClickListener, View.OnTouchListener{
     private static final String TAG = "SocialNetworkFragment";
+    private static final int REQUEST_CODE_EXAMPLE = 1;
     private View view;
     private MeowBottomNavigation meowBottomNavigation;
 
@@ -62,6 +65,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     private StoriesAdapter storiesAdapter;
     private LinearLayout btnPostNewNews;
     private SearchView searchView;
+    private SwipeRefreshLayout srlSocial;
 
     private ViewPager2 viewPager2story;
     private StoriesViewpaerAdapter storiesViewpaerAdapter;
@@ -166,6 +170,19 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         }
         return false;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_CODE_EXAMPLE) {
+            if(resultCode == Activity.RESULT_OK){
+                addNewsAdapter();
+            }else {
+               //
+            }
+        }
+    }
+
     private void mapingView(){
         rcvStories = (RecyclerView) view.findViewById(R.id.rcvStories);
         rcvNews = (RecyclerView) view.findViewById(R.id.rcvNews);
@@ -174,6 +191,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         fragmentCommnet = (FrameLayout) view.findViewById(R.id.fragmentCommnet);
         btnPostNewNews = (LinearLayout) view.findViewById(R.id.btnPostNewNews);
         searchView = (SearchView) view.findViewById(R.id.searchView);
+        srlSocial = (SwipeRefreshLayout) view.findViewById(R.id.srlSocial);
 
         btnPostNewNews.setOnClickListener(this);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -187,12 +205,18 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 return false;
             }
         });
-
+        srlSocial.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                addStoriesAdapter();
+                addNewsAdapter();
+            }
+        });
 
     }
     private void clickPostNews(){
         Intent intent = new Intent(getContext().getApplicationContext(), PostNewsActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
     }
     private void setupRecyclerView(){
         rcvStories.setHasFixedSize(true);
@@ -265,6 +289,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                     newsAdapter.notifyDataSetChanged();
                 }
                 call.cancel();
+                srlSocial.setRefreshing(false);
             }
 
             @Override

@@ -61,10 +61,12 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
                 if (Math.abs(verticalOffset)-appBarLayout.getTotalScrollRange() == 0)
                 {
                     collapsingToolbarLayout.setExpandedTitleColor(Color.BLACK);
+                    toolbar.getNavigationIcon().setTint(Color.BLACK);
                 }
                 else
                 {
                     collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
+                    toolbar.getNavigationIcon().setTint(Color.WHITE);
                 }
             }
         });
