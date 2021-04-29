@@ -30,7 +30,7 @@
     <color name="cs_cloud">#B2E2FE</color>
     <color name="cs_gray">#818181</color>
     <color name="cs_success">#22E079</color>
-    <color name="cs_light_success">#68F3A8</color>
+    <color name="cs_light_success">#E3FFF0</color>
     <color name="cs_light_cloud">#E7F6FF</color>
     <color name="cs_light_blue">#C7EAFF</color>
     <color name="cs_danger">#E04422</color>

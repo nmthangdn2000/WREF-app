@@ -21,6 +21,8 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Environment;
 import android.provider.DocumentsContract;
@@ -45,11 +47,14 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import thang.com.wref.AI.AIServices;
+import thang.com.wref.Adapter.DiseaseAdapter;
 import thang.com.wref.Main.Prediction.DiseaseDetail;
 import thang.com.wref.camera.CameraUtilities;
 import thang.com.wref.Login.LoginActivity;
@@ -71,11 +76,14 @@ public class CameraPredictFragment extends Fragment implements View.OnClickListe
     private RelativeLayout layout_choose_img_plant;
     private ImageView img_choose_plant;
     private RelativeLayout rltChooseImage, rltCamera, rltArrowBack;
-    private LinearLayout lnlContainer;
+    private RecyclerView rvDiseasesList;
     private SharedPreferencesManagement sharedPreferencesManagement;
     private String realPathfile="";
     private CameraUtilities camUtils;
     private AIServices AI;
+
+    private DiseaseAdapter diseaseAdapter;
+
     public CameraPredictFragment() {
         // Required empty public constructor
     }
@@ -132,6 +140,21 @@ public class CameraPredictFragment extends Fragment implements View.OnClickListe
             camUtils.setPhotoUri(Uri.parse(imageUriString));
         }
 
+        diseaseAdapter = new DiseaseAdapter() {
+            @Override
+            public void handleItemClick(@NotNull String diseaseName, @NotNull String plantName) {
+                Intent detailIntent = new Intent(getContext(), DiseaseDetail.class);
+                detailIntent.putExtra("diseaseName", diseaseName);
+                detailIntent.putExtra("plantName", plantName);
+                startActivity(detailIntent);
+            }
+        };
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        rvDiseasesList.setLayoutManager(layoutManager);
+
+        rvDiseasesList.setAdapter(diseaseAdapter);
+
         return view;
     }
 
@@ -142,7 +165,7 @@ public class CameraPredictFragment extends Fragment implements View.OnClickListe
         img_choose_plant = (ImageView) view.findViewById(R.id.img_choose_plant);
         rltCamera = (RelativeLayout) view.findViewById(R.id.rltCamera);
         rltArrowBack = (RelativeLayout) view.findViewById(R.id.rltArrowBack);
-        lnlContainer = (LinearLayout) view.findViewById(R.id.lnlContainer);
+        rvDiseasesList = (RecyclerView) view.findViewById(R.id.rvDiseasesList);
 
         rltChooseImage.setOnClickListener(this);
         rltCamera.setOnClickListener(this);
@@ -219,96 +242,9 @@ public class CameraPredictFragment extends Fragment implements View.OnClickListe
     }
     private void addDataPlant(ArrayList<HashMap<String, String>> predictionsList){
         // Remove all old views
-        lnlContainer.removeAllViews();
+        diseaseAdapter.clear();
 
-        for (HashMap<String, String> prediction : predictionsList) {
-            lnlContainer.addView(generatePredictionLayout(
-                    prediction.get("diseaseName"),
-                    prediction.get("score")
-            ));
-
-            lnlContainer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent diseaseDetailIntent = new Intent(getContext(), DiseaseDetail.class);
-                    startActivity(diseaseDetailIntent);
-                }
-            });
-        }
-    }
-
-    private CardView generatePredictionLayout(String diseaseName, String score) {
-
-        // prediction layout
-        CardView cvContainer = new CardView(this.getContext());
-
-        CardView.LayoutParams cvContainerLayout = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-        cvContainerLayout.setMargins(24, 0, 24, 16);
-
-        cvContainer.setLayoutParams(cvContainerLayout);
-        cvContainer.setCardElevation(0);
-        cvContainer.setRadius(8);
-        cvContainer.setCardBackgroundColor(ResourcesCompat.getColor(
-                getResources(),
-                R.color.cs_light_danger,
-                null
-        ));
-
-        cvContainer.setPadding(24, 16, 24, 16);
-
-        LinearLayout lnlPredictionContainer = new LinearLayout(this.getContext());
-        lnlPredictionContainer.setOrientation(LinearLayout.HORIZONTAL);
-
-        lnlPredictionContainer.setLayoutParams(cvContainerLayout);
-
-        // text layout
-        LinearLayout lnlText = new LinearLayout(this.getContext());
-        LinearLayout.LayoutParams lnlTextLayout = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                1f
-        );
-
-        lnlText.setLayoutParams(lnlTextLayout);
-        lnlText.setOrientation(LinearLayout.VERTICAL);
-        lnlText.setPadding(16, 8, 16,8);
-
-        TextView tvDiseaseName = new TextView(this.getContext());
-        TextView tvScore = new TextView(this.getContext());
-        ImageView ivStatus = new ImageView(this.getContext());
-
-        Typeface typeface = ResourcesCompat.getFont(this.getContext(), R.font.lato);
-        tvDiseaseName.setTypeface(typeface, Typeface.BOLD);
-        tvDiseaseName.setTextColor(
-                ResourcesCompat.getColor(getResources(),
-                        R.color.cs_danger,
-                        null
-                ));
-        tvScore.setTypeface(typeface);
-
-        tvDiseaseName.setTextSize(24);
-        tvScore.setTextSize(16);
-
-        ivStatus.setImageResource(R.drawable.ic_baseline_close);
-        ivStatus.setMinimumWidth(24);
-        ivStatus.setMinimumHeight(24);
-        ivStatus.setPadding(8, 8, 8,8);
-
-        lnlText.addView(tvDiseaseName);
-        lnlText.addView(tvScore);
-
-        tvDiseaseName.setText(diseaseName);
-        tvScore.setText(score);
-
-        lnlPredictionContainer.addView(lnlText);
-        lnlPredictionContainer.addView(ivStatus);
-
-        cvContainer.addView(lnlPredictionContainer);
-
-        return cvContainer;
+        diseaseAdapter.replaceList(predictionsList);
     }
 
     private void getImage(){

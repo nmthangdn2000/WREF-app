@@ -13,9 +13,9 @@
         android:scaleType="centerCrop" />
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,15 +26,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="32dp" />
 
-            <LinearLayout
-                android:id="@+id/lnlContainer"
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <!--                Item go here-->
-
-            </LinearLayout>
+                android:id="@+id/rvDiseasesList"/>
 
         </LinearLayout>
 

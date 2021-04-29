@@ -35,7 +35,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato"
+                android:fontFamily="@font/lato_semibold"
                 android:text="NiTOX"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -45,7 +45,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato"
+                android:fontFamily="@font/lato_regular"
                 android:textSize="10sp"
                 android:text="Hiệu quả cao"
                 android:textColor="@color/cs_success"
@@ -55,7 +55,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/lato"
+                android:fontFamily="@font/lato_regular"
                 android:textSize="10sp"
                 android:textColor="@color/cs_dark"
                 android:text="150.000 VNĐ"

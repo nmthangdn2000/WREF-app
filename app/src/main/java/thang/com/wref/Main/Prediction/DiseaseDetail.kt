@@ -20,7 +20,7 @@ class DiseaseDetail : AppCompatActivity() {
         val data = ArrayList<HashMap<String, String>>();
         val pesticide1 = HashMap<String, String>();
         pesticide1["name"] = "NiTOX";
-        pesticide1["quality"] = "Tốt";
+        pesticide1["quality"] = "Rất Tốt";
         pesticide1["price"] = "150.000 VNĐ";
         pesticide1["weight"] = "100g";
 
@@ -34,7 +34,9 @@ class DiseaseDetail : AppCompatActivity() {
 
         binding.rvPesticidesList.adapter = pesticideAdapter;
 
-        binding.txtDiseaseName.text = "Bệnh vàng lá";
-        binding.txtPlantName.text = "Dưa leo";
+        intent.extras?.apply {
+            binding.txtDiseaseName.text = getString("diseaseName");
+            binding.txtPlantName.text = getString("plantName");
+        }
     }
 }

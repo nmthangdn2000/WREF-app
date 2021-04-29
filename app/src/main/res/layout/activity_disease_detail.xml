@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:text="Disease Name"
             android:textAlignment="center"
-            android:fontFamily="@font/lato"
+            android:fontFamily="@font/lato_semibold"
             android:textStyle="bold"
             android:textColor="@color/cs_danger"
             android:textSize="26sp"
@@ -63,8 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Triệu chứng"
-                    android:fontFamily="@font/lato"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/lato_bold"
                     android:textSize="18sp"
                     android:textColor="@color/cs_dark"
                     android:layout_marginBottom="12dp"/>
@@ -94,8 +93,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Giải pháp đê xuất"
-                    android:fontFamily="@font/lato"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/lato_bold"
                     android:textSize="18sp"
                     android:textColor="@color/cs_dark"
                     android:layout_marginBottom="12dp"/>
