@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorCircle">#DCDCDC</color>
     <color name="green">#0CCA00</color>
-    <color name="blue">#0E469A</color>
+    <color name="blue">#2285E0</color>
     <color name="blue_light">#9EB5D6</color>
     <color name="red">#F30B0B</color>
     <color name="time">#606060</color>
@@ -27,4 +27,13 @@
     <color name="background_weather_location_map_1">#307FE7E7</color>
     <color name="background_weather_location_map_2">#30CCF5F5</color>
     <color name="mtrl_textinput_default_box_stroke_color">#62AEFB</color>
+    <color name="cs_cloud">#B2E2FE</color>
+    <color name="cs_gray">#818181</color>
+    <color name="cs_success">#22E079</color>
+    <color name="cs_light_success">#68F3A8</color>
+    <color name="cs_light_cloud">#E7F6FF</color>
+    <color name="cs_light_blue">#C7EAFF</color>
+    <color name="cs_danger">#E04422</color>
+    <color name="cs_light_danger">#FFE8E3</color>
+    <color name="cs_dark">#0E1405</color>
 </resources>

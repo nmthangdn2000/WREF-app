@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".Main.Prediction.DiseaseDetail">
+    <ImageView
+        android:id="@+id/img_choose_plant"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/img_plant_test"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtDiseaseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Disease Name"
+            android:textAlignment="center"
+            android:fontFamily="@font/lato"
+            android:textStyle="bold"
+            android:textColor="@color/cs_danger"
+            android:textSize="26sp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:id="@+id/txtPlantName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Plant Name"
+            android:textAlignment="center"
+            android:fontFamily="@font/lato_thin"
+            android:textSize="20dp"
+            android:layout_marginBottom="24dp" />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="32dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Triệu chứng"
+                    android:fontFamily="@font/lato"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/cs_dark"
+                    android:layout_marginBottom="12dp"/>
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="1dp"
+                    android:background="@color/cs_dark"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cs_gray"
+                    android:text="Bệnh do loại nấm Rhizoctonia solani gây hại ở giai đoạn trồng cây con, nấm bệnh khiến cây con bị héo tóp thân, rễ cây bị thối..."
+                    android:id="@+id/symptom" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giải pháp đê xuất"
+                    android:fontFamily="@font/lato"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/cs_dark"
+                    android:layout_marginBottom="12dp"/>
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="1dp"
+                    android:background="@color/cs_dark"
+                    android:layout_marginBottom="12dp"/>
+
+                <HorizontalScrollView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="24dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rvPesticidesList" />
+
+
+                </HorizontalScrollView>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cs_gray"
+                    android:text="Cần xử lý đất trồng thật kỹ trước khi gieo trồng cây con, có thể sử dụng các loại thuốc như Anvil, Validacin, Copper-B, Bonanza,  Rovral, Hinosan hoặc Tilt super phun trên đất trồng."
+                    android:id="@+id/recommendMethod" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

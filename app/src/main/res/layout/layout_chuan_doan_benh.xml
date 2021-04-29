@@ -11,83 +11,32 @@
         android:layout_height="300dp"
         android:src="@drawable/img_plant_test"
         android:scaleType="centerCrop" />
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="30dp"
         android:orientation="vertical"
         android:layout_gravity="center">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/txtNameSick"
-                android:gravity="center"
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="32dp" />
+
+            <LinearLayout
+                android:id="@+id/lnlContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="26sp"
-                android:text="Bình thường"
-                android:textColor="#22E079"/>
-            <TextView
-                android:id="@+id/txtNamePlant"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="Bí đao"
-                android:textColor="@color/color_text"
-                android:textFontWeight="100"/>
+                android:orientation="vertical">
+
+                <!--                Item go here-->
+
+            </LinearLayout>
+
         </LinearLayout>
-        <LinearLayout
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_marginVertical="3dp"
-                android:id="@+id/txtDevelopmentStage"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/demo_text_1"
-                android:textColor="@color/color_text"
-                android:drawableLeft="@drawable/ic_outline_circle"
-                android:drawablePadding="10dp"/>
-            <TextView
-                android:layout_marginVertical="3dp"
-                android:id="@+id/txtTypeOfDisease"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="a"
-                android:textColor="@color/color_text"
-                android:drawableLeft="@drawable/ic_baseline_check"
-                android:drawablePadding="10dp"/>
-            <TextView
-                android:layout_marginVertical="3dp"
-                android:id="@+id/txtHarvestTime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="a"
-                android:textColor="@color/color_text"
-                android:drawableLeft="@drawable/ic_baseline_access_time"
-                android:drawablePadding="10dp"/>
-        </LinearLayout>
-        <RelativeLayout
-            android:layout_marginTop="50dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_centerHorizontal="true"
-                android:paddingHorizontal="50dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Lời khuyên"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:background="@drawable/border_card"
-                android:backgroundTint="#2285E0"/>
-        </RelativeLayout>
-    </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>
