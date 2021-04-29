@@ -11,6 +11,19 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 
+import com.github.mikephil.charting.animation.ChartAnimator;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.dataprovider.BarDataProvider;
+import com.github.mikephil.charting.renderer.BarChartRenderer;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -28,6 +41,7 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
     private Toolbar toolbar;
     private String title = "";
     private RecyclerView rcvProcess, rcvProductivityPrediction;
+    private BarChart myBarChart;
 
     private ArrayList<CropYieldModel> cropYieldModelsArr;
     private CropYieldAdapter cropYieldAdapter;
@@ -42,6 +56,7 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
         mappingView();
         addDataProcess();
         addDataPP();
+        addBarChart();
     }
 
     private void setUpToolBar() {
@@ -81,6 +96,7 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
     private void mappingView() {
         rcvProcess = (RecyclerView) findViewById(R.id.rcvProcess);
         rcvProductivityPrediction = (RecyclerView) findViewById(R.id.rcvProductivityPrediction);
+        myBarChart = (BarChart) findViewById(R.id.myBarChart);
     }
 
     @Override
@@ -138,5 +154,75 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
 
         ppAdapter = new PPAdapter(ppModelsArr, this);
         rcvProductivityPrediction.setAdapter(ppAdapter);
+    }
+
+    private void addBarChart(){
+        myBarChart.setDrawBarShadow(false);
+        myBarChart.setDrawValueAboveBar(true);
+        myBarChart.setPinchZoom(false);
+        myBarChart.setDrawGridBackground(false);
+        myBarChart.setScaleEnabled(false);
+        myBarChart.getDescription().setEnabled(false);
+
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+
+        barEntries.add(new BarEntry(0, 40f));
+        barEntries.add(new BarEntry(1, 30f));
+        barEntries.add(new BarEntry(2, 44f));
+        barEntries.add(new BarEntry(3, 105f));
+        barEntries.add(new BarEntry(4, 120f));
+        barEntries.add(new BarEntry(5, 118f));
+        barEntries.add(new BarEntry(6, 109f));
+        barEntries.add(new BarEntry(7, 90f));
+        barEntries.add(new BarEntry(8, 102f));
+        barEntries.add(new BarEntry(9, 95f));
+        barEntries.add(new BarEntry(10, 28f));
+        barEntries.add(new BarEntry(11, 44f));
+
+        Legend legend = myBarChart.getLegend();
+        legend.setEnabled(false);
+
+        String[] months = new String[] {"1","2","3","4","5","6","7","8","9","10","11","12"};
+        XAxis xAxis = myBarChart.getXAxis();
+        xAxis.setAxisMinimum(-0.5f);
+        xAxis.setGranularity(0f);
+        xAxis.setDrawGridLines(false);
+        xAxis.setLabelCount(12);
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(months));
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        YAxis yAxisLeft = myBarChart.getAxisLeft();
+        yAxisLeft.setDrawGridLines(false);
+        yAxisLeft.setAxisMaximum(150f);
+
+        YAxis yAxisRight = myBarChart.getAxisRight();
+        yAxisRight.setEnabled(false);
+
+        BarDataSet barDataSet = new BarDataSet(barEntries, "Data set 1");
+        barDataSet.setColors(new int[] {Color.parseColor("#FFE8E3"),
+                Color.parseColor("#FFE8E3"),
+                Color.parseColor("#FFE8E3"),
+                Color.parseColor("#22E079"),
+                Color.parseColor("#22E079"),
+                Color.parseColor("#22E079"),
+                Color.parseColor("#22E079"),
+                Color.parseColor("#B2E2FE"),
+                Color.parseColor("#B2E2FE"),
+                Color.parseColor("#B2E2FE"),
+                Color.parseColor("#FFE8E3"),
+                Color.parseColor("#FFE8E3")
+        });
+
+        BarData barData = new BarData(barDataSet);
+        barData.setBarWidth(0.9f);
+
+        myBarChart.setData(barData);
+    }
+    private class MyBarChartRenderer extends BarChartRenderer{
+
+        public MyBarChartRenderer(BarDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler) {
+            super(chart, animator, viewPortHandler);
+        }
+
     }
 }
