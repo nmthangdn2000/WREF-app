@@ -3,6 +3,7 @@ package thang.com.wref.Adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import thang.com.wref.R
 import thang.com.wref.databinding.DiseaseItemBinding
@@ -27,18 +28,23 @@ abstract class DiseaseAdapter(
         init {
             if (hasDisease) {
                 binding.cvDiseaseItem
-                        .setCardBackgroundColor(parent.resources
-                                .getColor(R.color.cs_light_danger));
+                        .setCardBackgroundColor(ResourcesCompat
+                                .getColor(parent.resources, R.color.cs_light_danger, null));
 
-                binding.txtDiseaseName.setTextColor(parent.resources
-                        .getColor(R.color.cs_danger));
+                binding.txtDiseaseName.setTextColor(ResourcesCompat
+                        .getColor(parent.resources, R.color.cs_danger, null));
+
+                binding.ivIconStatus.setImageDrawable(ResourcesCompat
+                        .getDrawable(parent.resources, R.drawable.ic_baseline_close, null));
             } else {
-                binding.cvDiseaseItem
-                        .setCardBackgroundColor(parent.resources
-                                .getColor(R.color.cs_light_success));
+                binding.cvDiseaseItem.setCardBackgroundColor(ResourcesCompat
+                        .getColor(parent.resources, R.color.cs_light_success, null));
 
-                binding.txtDiseaseName.setTextColor(parent.resources
-                        .getColor(R.color.cs_success));
+                binding.txtDiseaseName.setTextColor(ResourcesCompat
+                        .getColor(parent.resources, R.color.cs_success, null));
+
+                binding.ivIconStatus.setImageDrawable(ResourcesCompat
+                        .getDrawable(parent.resources, R.drawable.ic_baseline_check, null));
             }
         }
     };

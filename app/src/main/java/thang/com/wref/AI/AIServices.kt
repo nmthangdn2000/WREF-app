@@ -23,25 +23,8 @@ class AIServices(
     private lateinit var imageProcessor: ImageProcessingOptions;
     private val MODEL_NAME: String = "lite-model_disease-classification.tflite";
 
-    private val fakeData: ArrayList<HashMap<String, String>> = ArrayList();
-
     companion object {
         val TAG: String = AIServices::class.java.simpleName;
-    }
-
-    init {
-        fakeData.sortedByDescending {
-            return@sortedByDescending true;
-        }
-    }
-
-    private fun generateFakePrediction(plantName: String, diseaseName: String, score: Int?): HashMap<String, String> {
-        val data = HashMap<String, String>();
-        data["plantName"] = plantName;
-        data["diseaseName"] = diseaseName;
-        data["score"] = "${(Random.nextFloat() * 100).toString()} %";
-
-        return data;
     }
 
     private fun loadImage(bitmap: Bitmap) {
@@ -97,12 +80,21 @@ class AIServices(
         for (category: Category in categories) {
             val diseaseInfo = category.label.split(" ", ignoreCase = true, limit = 2);
 
-            val prediction: HashMap<String, String> = HashMap();
-            prediction["plantName"] = diseaseInfo[0];
-            prediction["diseaseName"] = diseaseInfo[1];
-            prediction["percent"] = (category.score * 100).toString();
+            diseaseInfo.apply {
+                val prediction: HashMap<String, String> = HashMap();
 
-            result.add(prediction);
+                if (size == 1) {
+                    prediction["plantName"] = diseaseInfo[0];
+                    prediction["diseaseName"] = diseaseInfo[0];
+                    prediction["percent"] = (category.score * 100).toString();
+                } else {
+                    prediction["plantName"] = diseaseInfo[0];
+                    prediction["diseaseName"] = diseaseInfo[1];
+                    prediction["percent"] = (category.score * 100).toString();
+                }
+
+                result.add(prediction);
+            }
         }
 
         return result;

@@ -78,8 +78,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/cs_gray"
-                    android:text="Bệnh do loại nấm Rhizoctonia solani gây hại ở giai đoạn trồng cây con, nấm bệnh khiến cây con bị héo tóp thân, rễ cây bị thối..."
-                    android:id="@+id/symptom" />
+                    android:id="@+id/txtSymptom"
+                    android:text="Hiện tại chưa có triệu chứng cho bệnh này."/>
 
             </LinearLayout>
 
@@ -92,7 +92,37 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Giải pháp đê xuất"
+                    android:text="Nguyên nhân"
+                    android:fontFamily="@font/lato_bold"
+                    android:textSize="18sp"
+                    android:textColor="@color/cs_dark"
+                    android:layout_marginBottom="12dp"/>
+
+                <View
+                    android:layout_width="32dp"
+                    android:layout_height="1dp"
+                    android:background="@color/cs_dark"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/cs_gray"
+                    android:id="@+id/txtCause"
+                    android:text="Hiện tại chưa có nguyên nhân cho bệnh này."/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giải pháp đề xuất"
                     android:fontFamily="@font/lato_bold"
                     android:textSize="18sp"
                     android:textColor="@color/cs_dark"
@@ -107,7 +137,7 @@
                 <HorizontalScrollView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp">
+                    android:layout_marginBottom="12dp">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="wrap_content"
@@ -121,8 +151,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="@color/cs_gray"
-                    android:text="Cần xử lý đất trồng thật kỹ trước khi gieo trồng cây con, có thể sử dụng các loại thuốc như Anvil, Validacin, Copper-B, Bonanza,  Rovral, Hinosan hoặc Tilt super phun trên đất trồng."
-                    android:id="@+id/recommendMethod" />
+                    android:id="@+id/txtPrevention"
+                    android:text="Hiện tại chưa có giải pháp cho bệnh này."/>
 
             </LinearLayout>
 
