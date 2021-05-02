@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.animation.ChartAnimator;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
@@ -42,6 +44,7 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
     private String title = "";
     private RecyclerView rcvProcess, rcvProductivityPrediction;
     private BarChart myBarChart;
+    private ImageView imgTitle;
 
     private ArrayList<CropYieldModel> cropYieldModelsArr;
     private CropYieldAdapter cropYieldAdapter;
@@ -52,8 +55,8 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crop_yield);
-        setUpToolBar();
         mappingView();
+        setUpToolBar();
         addDataProcess();
         addDataPP();
         addBarChart();
@@ -62,11 +65,14 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
     private void setUpToolBar() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Log.d(TAG, "setUpToolBar: "+getIntent().getStringExtra("plant"));
         title = getIntent().getStringExtra("plant");
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        if(title.equals("Dưa leo")) imgTitle.setImageResource(R.drawable.img_dua_leo);
+        else if(title.equals("Cà chua")) imgTitle.setImageResource(R.drawable.img_ca_chua);
+
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.CollapsingToolbarLayout);
 
         appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
@@ -97,6 +103,7 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
         rcvProcess = (RecyclerView) findViewById(R.id.rcvProcess);
         rcvProductivityPrediction = (RecyclerView) findViewById(R.id.rcvProductivityPrediction);
         myBarChart = (BarChart) findViewById(R.id.myBarChart);
+        imgTitle = (ImageView) findViewById(R.id.imgTitle);
     }
 
     @Override

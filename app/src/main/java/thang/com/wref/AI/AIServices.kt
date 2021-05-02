@@ -25,7 +25,29 @@ class AIServices(
 
     companion object {
         val TAG: String = AIServices::class.java.simpleName;
+        val translateMap = HashMap<String, String>();
+
+        init {
+            translateMap["Tomato Healthy"] = "Cà chua_Khỏe Mạnh";
+            translateMap["Tomato Septoria Leaf Spot"] = "Cà chua_Đốm lá Septoria";
+            translateMap["Tomato Bacterial Spot"] = "Cà chua_Đốm vi khuẩn";
+            translateMap["Tomato Blight"] = "Cà chua_Nhạt màu";
+            translateMap["Cabbage Healthy"] = "Cải bắp_Khỏe mạnh";
+            translateMap["Tomato Spider Mite"] = "Cà chua_Nhện đỏ";
+            translateMap["Tomato Leaf Mold"] = "Cà chua_Mốc xám";
+            translateMap["Tomato_Yellow Leaf Curl Virus"] = "Cà chua_Xoăn vàng lá";
+            translateMap["Soy_Frogeye_Leaf_Spot"] = "Đậu nành_Đốm lá";
+            translateMap["Soy_Downy_Mildew"] = "Đậu nành_Sương mai";
+            translateMap["Maize_Ravi_Corn_Rust"] = "Ngô_Gỉ ngô";
+            translateMap["Maize_Healthy"] = "Ngô_Khỏe mạnh";
+            translateMap["Maize_Grey_Leaf_Spot"] = "Ngô_Đốm xám";
+            translateMap["Maize_Lethal_Necrosis"] = "Ngô_Hoại tử";
+            translateMap["Soy_Healthy"] = "Đậu nành_Khỏe mạnh";
+            translateMap["Cabbage Black Rot"] = "Cải bắp_Thối đen   ";
+        }
     }
+
+
 
     private fun loadImage(bitmap: Bitmap) {
         Log.d(TAG, "Load bitmap image...");
@@ -78,7 +100,8 @@ class AIServices(
 
         val result: ArrayList<HashMap<String, String>> = ArrayList();
         for (category: Category in categories) {
-            val diseaseInfo = category.label.split(" ", ignoreCase = true, limit = 2);
+            val diseaseInfoMapped = translateMap[category.label];
+            val diseaseInfo = diseaseInfoMapped!!.split("_", ignoreCase = true, limit = 2);
 
             diseaseInfo.apply {
                 val prediction: HashMap<String, String> = HashMap();

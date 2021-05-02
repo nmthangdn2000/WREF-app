@@ -45,10 +45,17 @@ public class MainActivity extends AppCompatActivity {
     private void mapping(){
         bottomNavigation = findViewById(R.id.BottomNavigation);
         viewPager2 = findViewById(R.id.ViewPager2);
-        viewPager2.setUserInputEnabled(false);
+//        viewPager2.setUserInputEnabled(false);
         viewPager2.setOffscreenPageLimit(1);
         viewPagerAdapter = new ViewPagerAdapter(this, bottomNavigation);
         viewPager2.setAdapter(viewPagerAdapter);
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                bottomNavigation.show(position+1, true);
+            }
+        });
     }
 
     private void setBottomNavigation(){

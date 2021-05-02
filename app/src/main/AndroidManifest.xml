@@ -5,14 +5,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="18" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
-
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -33,7 +30,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WREF"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Main.Prediction.DiseaseDetail"></activity>
+        <activity android:name=".Main.More.HarvesthelperActivity"></activity>
+        <activity android:name=".Main.Prediction.DiseaseDetail" />
         <activity android:name=".Main.More.CropYieldActivity" />
         <activity android:name=".Main.MapActivity" />
         <activity android:name=".Main.DetailWeatherFragment" />

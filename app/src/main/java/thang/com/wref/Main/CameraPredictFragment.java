@@ -105,11 +105,12 @@ public class CameraPredictFragment extends Fragment implements View.OnClickListe
             Glide.with(getContext()).load(realPathfile).into(img_choose_plant);
             rltArrowBack.setVisibility(View.VISIBLE);
         } else if(camUtils.getPhotoUri() != null){
-
+            Log.d(TAG, "onResume: "+camUtils.getPhotoUri());
             Bitmap bitmapImg = showImg(camUtils.getPhotoUri());
-            ArrayList<HashMap<String, String>> predictionsList = AI.predict(bitmapImg);
-            addDataPlant(predictionsList);
-
+            if(bitmapImg != null){
+                ArrayList<HashMap<String, String>> predictionsList = AI.predict(bitmapImg);
+                addDataPlant(predictionsList);
+            }
             rltArrowBack.setVisibility(View.VISIBLE);
         }
     }
@@ -183,6 +184,7 @@ public class CameraPredictFragment extends Fragment implements View.OnClickListe
                 break;
             case R.id.rltArrowBack:
                 clickArrowBack();
+                break;
             default:
                 break;
         }
