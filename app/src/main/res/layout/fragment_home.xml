@@ -324,6 +324,7 @@
                     <!--     Row 1           -->
                     <!--     column 1           -->
                     <LinearLayout
+                        android:id="@+id/lnlCaChuaHavestHelper"
                         android:layout_width="0dp"
                         android:layout_height="280dp"
                         android:layout_columnWeight="1"
@@ -371,6 +372,7 @@
                         </LinearLayout>
                     </LinearLayout>
                     <LinearLayout
+                        android:id="@+id/lnlDuaLeoHavestHelper"
                         android:layout_width="0dp"
                         android:layout_height="280dp"
                         android:layout_columnWeight="1"

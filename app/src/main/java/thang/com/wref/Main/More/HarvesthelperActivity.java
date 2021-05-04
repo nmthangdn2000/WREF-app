@@ -1,12 +1,23 @@
 package thang.com.wref.Main.More;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.airbnb.lottie.LottieAnimationView;
+import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.util.ArrayList;
 
@@ -14,6 +25,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import thang.com.wref.Adapter.HarvesthelperAdapter;
 import thang.com.wref.Login.SharedPreferencesManagement;
 import thang.com.wref.Models.CropsModel;
 import thang.com.wref.Models.HarvesthelperModel;
@@ -25,11 +37,20 @@ public class HarvesthelperActivity extends AppCompatActivity {
     private static final String TAG = "HarvesthelperActivity";
 
     private RecyclerView rcvHaverst;
+    private AppBarLayout appBarLayout;
+    private Toolbar toolbar;
+    private ImageView imgTitle;
+    private RelativeLayout loadPage;
+    private CoordinatorLayout cdlMain;
+    private LottieAnimationView lottieLoadingData;
+
+    private HarvesthelperAdapter harvesthelperAdapter;
 
     private NetworkUtil networkUtill;
     private Retrofit retrofit;
     private HarvesthelperRetrofit harvesthelperRetrofit;
     private ArrayList<CropsModel> cropsModelsArr;
+    private String title = "", idPlant = "";
 
     private SharedPreferencesManagement sharedPreferencesManagement;
     @Override
@@ -42,20 +63,62 @@ public class HarvesthelperActivity extends AppCompatActivity {
         retrofit = networkUtill.getRetrofit();
 
         mappingView();
+        setUpToolBar();
         getData();
     }
     private void mappingView(){
         rcvHaverst = (RecyclerView) findViewById(R.id.rcvHaverst);
+        imgTitle = (ImageView) findViewById(R.id.imgTitle);
+        loadPage = (RelativeLayout) findViewById(R.id.loadPage);
+        lottieLoadingData = (LottieAnimationView) findViewById(R.id.lottieLoadingData);
+        cdlMain = (CoordinatorLayout) findViewById(R.id.cdlMain);
 
         rcvHaverst.setHasFixedSize(true);
         LinearLayoutManager  linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rcvHaverst.setLayoutManager(linearLayoutManager);
     }
 
+    private void setUpToolBar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        title = getIntent().getStringExtra("plant");
+        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        if(title.equals("Dưa leo")) idPlant = "6075a83a6f3ae70ce4272392";
+        else if(title.equals("Cà chua")) idPlant = "6075a83e6f3ae70ce4272393";
+
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.CollapsingToolbarLayout);
+
+        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.BaseOnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (Math.abs(verticalOffset)-appBarLayout.getTotalScrollRange() == 0)
+                {
+                    collapsingToolbarLayout.setExpandedTitleColor(Color.BLACK);
+                    toolbar.getNavigationIcon().setTint(Color.BLACK);
+                }
+                else
+                {
+                    collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
+                    toolbar.getNavigationIcon().setTint(Color.WHITE);
+                }
+            }
+        });
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
     private void getData(){
         cropsModelsArr = new ArrayList<>();
         harvesthelperRetrofit = retrofit.create(HarvesthelperRetrofit.class);
-        Call<HarvesthelperModel> call = harvesthelperRetrofit.getByID(sharedPreferencesManagement.getTOKEN(), "606dd3e866d02b35584acb95");
+        Call<HarvesthelperModel> call = harvesthelperRetrofit.getByID(sharedPreferencesManagement.getTOKEN(), idPlant);
         call.enqueue(new Callback<HarvesthelperModel>() {
             @Override
             public void onResponse(Call<HarvesthelperModel> call, Response<HarvesthelperModel> response) {
@@ -66,22 +129,24 @@ public class HarvesthelperActivity extends AppCompatActivity {
                     HarvesthelperModel harvesthelperModel = response.body();
                     cropsModelsArr.add(new CropsModel("Loại cây trồng", harvesthelperModel.getName()));
                     cropsModelsArr.add(new CropsModel("Sơ lược về cây trồng", harvesthelperModel.getDescription()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
-                    cropsModelsArr.add(new CropsModel("name", harvesthelperModel.getName()));
+                    cropsModelsArr.add(new CropsModel("Mặt trời", harvesthelperModel.getOptimalSun()));
+                    cropsModelsArr.add(new CropsModel("Đất", harvesthelperModel.getOptimalSoil()));
+                    cropsModelsArr.add(new CropsModel("Những lưu ý khi trồng", harvesthelperModel.getPlantingConsiderations()));
+                    cropsModelsArr.add(new CropsModel("Nên trồng khi nào?", harvesthelperModel.getWhenToPlant()));
+                    cropsModelsArr.add(new CropsModel("Cách gieo hạt", harvesthelperModel.getGrowingFromSeed()));
+                    cropsModelsArr.add(new CropsModel("Cấy", harvesthelperModel.getTransplanting()));
+                    cropsModelsArr.add(new CropsModel("Khoảng cách", harvesthelperModel.getSpacing()));
+                    cropsModelsArr.add(new CropsModel("Tưới nước", harvesthelperModel.getWatering()));
+                    cropsModelsArr.add(new CropsModel("Thu hoạch", harvesthelperModel.getHarvesting()));
 
+                    Glide.with(HarvesthelperActivity.this).load(
+                            "https://res-5.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/"+harvesthelperModel.getImageUrl()
+                    ).into(imgTitle);
+                    loadPage.setVisibility(View.GONE);
+                    lottieLoadingData.clearAnimation();
+                    cdlMain.setVisibility(View.VISIBLE);
                 }
+                harvesthelperAdapter.notifyDataSetChanged();
                 call.cancel();
             }
 
@@ -91,5 +156,7 @@ public class HarvesthelperActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
+        harvesthelperAdapter = new HarvesthelperAdapter(cropsModelsArr, this);
+        rcvHaverst.setAdapter(harvesthelperAdapter);
     }
 }

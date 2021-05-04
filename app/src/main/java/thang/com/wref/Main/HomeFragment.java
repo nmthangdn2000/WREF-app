@@ -41,6 +41,7 @@ import java.util.List;
 import thang.com.wref.Login.LoginActivity;
 import thang.com.wref.Login.SharedPreferencesManagement;
 import thang.com.wref.Main.More.CropYieldActivity;
+import thang.com.wref.Main.More.HarvesthelperActivity;
 import thang.com.wref.R;
 
 /**
@@ -54,7 +55,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
     private GoogleMap map;
     private View view, gradientMap;
     private RelativeLayout rltWeather;
-    private LinearLayout lnlTrackProgress, lnlTrackProgress2;
+    private LinearLayout lnlTrackProgress, lnlTrackProgress2, lnlCaChuaHavestHelper, lnlDuaLeoHavestHelper;
     private Task<Location> task;
     private FusedLocationProviderClient client;
     private SharedPreferencesManagement sharedPreferencesManagement;
@@ -110,11 +111,15 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
         rltWeather = (RelativeLayout) view.findViewById(R.id.rltWeather);
         lnlTrackProgress = (LinearLayout) view.findViewById(R.id.lnlTrackProgress);
         lnlTrackProgress2 = (LinearLayout) view.findViewById(R.id.lnlTrackProgress2);
+        lnlCaChuaHavestHelper = (LinearLayout) view.findViewById(R.id.lnlCaChuaHavestHelper);
+        lnlDuaLeoHavestHelper = (LinearLayout) view.findViewById(R.id.lnlDuaLeoHavestHelper);
 
         rltWeather.setOnClickListener(this);
         gradientMap.setOnClickListener(this);
         lnlTrackProgress.setOnClickListener(this);
         lnlTrackProgress2.setOnClickListener(this);
+        lnlCaChuaHavestHelper.setOnClickListener(this);
+        lnlDuaLeoHavestHelper.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
@@ -131,9 +136,25 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
             case R.id.lnlTrackProgress2:
                 clickTrackProgress2();
                 break;
+            case R.id.lnlCaChuaHavestHelper:
+                clickCaChuaHavestHelper();
+                break;
+            case R.id.lnlDuaLeoHavestHelper:
+                clickDuaLeoHavestHelper();
+                break;
             default:
                 break;
         }
+    }
+    private void clickCaChuaHavestHelper(){
+        Intent intent = new Intent(getContext(), HarvesthelperActivity.class);
+        intent.putExtra("plant", "Cà chua");
+        getActivity().startActivity(intent);
+    }
+    private void clickDuaLeoHavestHelper(){
+        Intent intent = new Intent(getContext(), HarvesthelperActivity.class);
+        intent.putExtra("plant", "Dưa leo");
+        getActivity().startActivity(intent);
     }
     private void clickMapView(){
         Intent intent = new Intent(getContext(), MapActivity.class);
