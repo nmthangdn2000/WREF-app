@@ -1,15 +1,12 @@
-const translate = require("translation-google");
 const fetch = require("node-fetch");
 const crops = require("../models/crops");
+const translate = require("translate-google");
 
 // When you have your own Client ID and secret, put down their values here:
 const translateText = async (doc) => {
-  return translate(doc, { to: "vi" })
+  return translate("I speak Chinese", { to: "vi" })
     .then((res) => {
-      return res.text;
-      //   //=> 这是Google翻译
-      //   console.log(res.from.language.iso);
-      //=> en
+      return res;
     })
     .catch((err) => {
       console.error(err);
@@ -20,7 +17,7 @@ fetch(
 )
   .then((response) => response.json())
   .then(async (data) => {
-    for (let i = 10; i < 20; i++) {
+    for (let i = 10; i < 11; i++) {
       const nameCrops = await translateText(data[i].name);
       console.log(nameCrops);
       //   const description = await translateText(data[i].description);

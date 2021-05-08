@@ -5,7 +5,7 @@ const app = express();
 const bodyParser = require("body-parser");
 var path = require("path");
 
-require("./service/crawlData");
+// require("./service/crawlData");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,6 +22,7 @@ const apiLocation = require("./router/api/location.api");
 const apiStories = require("./router/api/stories.api");
 const apiWeather = require("./router/api/weather.api");
 const apiInforAgri = require("./router/api/inforAgri.api");
+const apiHarvesthelper = require("./router/api/harvesthelper.api");
 
 // router api passport.authenticate('jwt', { session: false })
 app.use("/api", apiLogin);
@@ -32,5 +33,10 @@ app.use("/api", passport.authenticate("jwt", { session: false }), apiComment);
 app.use("/api", passport.authenticate("jwt", { session: false }), apiLocation);
 app.use("/api", passport.authenticate("jwt", { session: false }), apiStories);
 app.use("/api", passport.authenticate("jwt", { session: false }), apiWeather);
+app.use(
+  "/api",
+  passport.authenticate("jwt", { session: false }),
+  apiHarvesthelper
+);
 
 module.exports = app;
