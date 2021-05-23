@@ -8,6 +8,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import thang.com.wref.Adapter.AgriAdapter;
+import thang.com.wref.Adapter.AllHavestHelperAdapter;
 import thang.com.wref.Adapter.ItemThemeAgriAdapter;
 import thang.com.wref.Adapter.StoriesAdapter;
 
@@ -50,6 +51,10 @@ public class RecyclerViewAnimation {
                                 final ItemThemeAgriAdapter.ViewHodler holder = (ItemThemeAgriAdapter.ViewHodler) view.getChildViewHolder(view.getChildAt(i));
                                 holder.translationY.cancel();
                                 holder.itemView.setTranslationY(holder.itemView.getTranslationY() + translationYDelta);
+                            }else if (adaper.equals("AllHavestHelperActivity")) {
+                                final AllHavestHelperAdapter.ViewHodler holder = (AllHavestHelperAdapter.ViewHodler) view.getChildViewHolder(view.getChildAt(i));
+                                holder.translationY.cancel();
+                                holder.itemView.setTranslationY(holder.itemView.getTranslationY() + translationYDelta);
                             }
                         }
                     }
@@ -63,6 +68,10 @@ public class RecyclerViewAnimation {
                                 holder.translationY.start();
                             }else if (adaper.equals("ItemThemeAgriActivity")){
                                 final ItemThemeAgriAdapter.ViewHodler holder = (ItemThemeAgriAdapter.ViewHodler) view.getChildViewHolder(view.getChildAt(i));
+                                holder.translationY.start();
+                            }
+                            else if (adaper.equals("AllHavestHelperActivity")){
+                                final AllHavestHelperAdapter.ViewHodler holder = (AllHavestHelperAdapter.ViewHodler) view.getChildViewHolder(view.getChildAt(i));
                                 holder.translationY.start();
                             }
                         }

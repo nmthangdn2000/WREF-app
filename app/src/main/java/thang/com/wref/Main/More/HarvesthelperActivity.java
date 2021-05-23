@@ -86,8 +86,8 @@ public class HarvesthelperActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        if(title.equals("Dưa leo")) idPlant = "6075a83a6f3ae70ce4272392";
-        else if(title.equals("Cà chua")) idPlant = "6075a83e6f3ae70ce4272393";
+        if(title.equals("Dưa leo")) idPlant = "60965426585c4e179ce5bbb7";
+        else if(title.equals("Cà chua")) idPlant = "609653d1585c4e179ce5bbb6";
 
         CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.CollapsingToolbarLayout);
 
@@ -156,7 +156,7 @@ public class HarvesthelperActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
-        harvesthelperAdapter = new HarvesthelperAdapter(cropsModelsArr, this);
+        harvesthelperAdapter = new HarvesthelperAdapter(cropsModelsArr, this, 0);
         rcvHaverst.setAdapter(harvesthelperAdapter);
     }
 }

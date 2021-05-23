@@ -45,17 +45,17 @@ public class MainActivity extends AppCompatActivity {
     private void mapping(){
         bottomNavigation = findViewById(R.id.BottomNavigation);
         viewPager2 = findViewById(R.id.ViewPager2);
-//        viewPager2.setUserInputEnabled(false);
+        viewPager2.setUserInputEnabled(false);
         viewPager2.setOffscreenPageLimit(1);
         viewPagerAdapter = new ViewPagerAdapter(this, bottomNavigation);
         viewPager2.setAdapter(viewPagerAdapter);
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                bottomNavigation.show(position+1, true);
-            }
-        });
+//        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+//            @Override
+//            public void onPageSelected(int position) {
+//                super.onPageSelected(position);
+//                bottomNavigation.show(position+1, true);
+//            }
+//        });
     }
 
     private void setBottomNavigation(){
@@ -73,12 +73,12 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getId()){
                     case 1:
                         Log.d(TAG, " a1 "+ item.getId());
-                        NumberPageCurr = item.getId();
+//                        NumberPageCurr = item.getId();
                         viewPager2.setCurrentItem(0);
                         break;
                     case 2:
                         Log.d(TAG, " a2 "+ item.getId());
-                        NumberPageCurr = item.getId();
+//                        NumberPageCurr = item.getId();
                         bottomNavigation.clearCount(2);
                         viewPager2.setCurrentItem(1);
                         break;
@@ -89,12 +89,12 @@ public class MainActivity extends AppCompatActivity {
 //                        break;
                     case 3:
                         Log.d(TAG, " a3 "+ item.getId());
-                        NumberPageCurr = item.getId();
+//                        NumberPageCurr = item.getId();
                         viewPager2.setCurrentItem(2);
                         break;
                     default:
                         viewPager2.setCurrentItem(0);
-                        NumberPageCurr = item.getId();
+//                        NumberPageCurr = item.getId();
                         break;
                 }
             }

@@ -25,7 +25,6 @@ import static thang.com.wref.util.Constants.BASE_URL;
 public class ItemThemeAgriAdapter extends RecyclerView.Adapter<ItemThemeAgriAdapter.ViewHodler>{
     private ArrayList<InforAgriModel> inforAgriModels;
     private Context context;
-    private TimeCaculater timeCaculater = new TimeCaculater();
 
     public ItemThemeAgriAdapter(ArrayList<InforAgriModel> inforAgriModels, Context context) {
         this.inforAgriModels = inforAgriModels;
@@ -44,7 +43,6 @@ public class ItemThemeAgriAdapter extends RecyclerView.Adapter<ItemThemeAgriAdap
     public void onBindViewHolder(@NonNull ItemThemeAgriAdapter.ViewHodler holder, int position) {
         Glide.with(context).load(BASE_URL+"uploads/"+inforAgriModels.get(position).getImage()).centerCrop().fitCenter().into(holder.imgAgri);
         holder.txtTitleAgri.setText(inforAgriModels.get(position).getTitle());
-        holder.txtTime.setText(timeCaculater.day(inforAgriModels.get(position).getCreated_at()));
     }
 
     @Override

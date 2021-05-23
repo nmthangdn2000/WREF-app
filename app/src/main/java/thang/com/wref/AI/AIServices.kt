@@ -13,7 +13,6 @@ import org.tensorflow.lite.task.vision.classifier.ImageClassifier
 import org.tensorflow.lite.task.vision.classifier.ImageClassifier.ImageClassifierOptions
 import java.nio.MappedByteBuffer
 import kotlin.math.*
-import kotlin.random.Random
 
 class AIServices(
         private val app: Context

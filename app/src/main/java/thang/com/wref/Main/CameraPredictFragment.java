@@ -8,18 +8,15 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.res.ResourcesCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,38 +24,32 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.util.ArrayMap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 
-import thang.com.wref.AI.AIServices;
-import thang.com.wref.Adapter.DiseaseAdapter;
-import thang.com.wref.Main.Prediction.DiseaseDetail;
-import thang.com.wref.camera.CameraUtilities;
 import thang.com.wref.Login.LoginActivity;
 import thang.com.wref.Login.SharedPreferencesManagement;
+import thang.com.wref.Main.More.DiseaseDetailActivity;
 import thang.com.wref.R;
 
 import static android.app.Activity.RESULT_OK;
@@ -72,47 +63,13 @@ public class CameraPredictFragment extends Fragment implements View.OnClickListe
 
     private View view;
     private List<Uri> mSelected;
-    private LinearLayout layout_chuan_doan_benh;
     private RelativeLayout layout_choose_img_plant;
-    private ImageView img_choose_plant;
     private RelativeLayout rltChooseImage, rltCamera, rltArrowBack;
-    private RecyclerView rvDiseasesList;
     private SharedPreferencesManagement sharedPreferencesManagement;
     private String realPathfile="";
-    private CameraUtilities camUtils;
-    private AIServices AI;
-
-    private DiseaseAdapter diseaseAdapter;
 
     public CameraPredictFragment() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // lấy ảnh khi ứng hoạt động trở lại
-        if(!realPathfile.equals("")){
-            if(layout_chuan_doan_benh.getVisibility() != View.VISIBLE){
-                layout_chuan_doan_benh.setVisibility(View.VISIBLE);
-                layout_choose_img_plant.setVisibility(View.INVISIBLE);
-            }
-            Glide.with(getContext()).load(realPathfile).into(img_choose_plant);
-            rltArrowBack.setVisibility(View.VISIBLE);
-        } else if(camUtils.getPhotoUri() != null){
-            Log.d(TAG, "onResume: "+camUtils.getPhotoUri());
-            Bitmap bitmapImg = showImg(camUtils.getPhotoUri());
-            if(bitmapImg != null){
-                ArrayList<HashMap<String, String>> predictionsList = AI.predict(bitmapImg);
-                addDataPlant(predictionsList);
-            }
-            rltArrowBack.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
@@ -133,44 +90,25 @@ public class CameraPredictFragment extends Fragment implements View.OnClickListe
         view = inflater.inflate(R.layout.fragment_camera_predict, container, false);
 
         mappingView();
-        this.camUtils = new CameraUtilities(this.getActivity());
-        this.AI = new AIServices(this.getActivity());
 
         if (savedInstanceState != null) {
-            String imageUriString = savedInstanceState.getString("imgUri");
-            camUtils.setPhotoUri(Uri.parse(imageUriString));
-        }
-
-        diseaseAdapter = new DiseaseAdapter() {
-            @Override
-            public void handleItemClick(@NotNull String diseaseName, @NotNull String plantName) {
-                Intent detailIntent = new Intent(getContext(), DiseaseDetail.class);
-                detailIntent.putExtra("diseaseName", diseaseName);
-                detailIntent.putExtra("plantName", plantName);
-                startActivity(detailIntent);
+            String imageUriString = savedInstanceState.getString("imgFromCamera");
+            if(!imageUriString.equals("")){
+                intentDiseaseDetail(imageUriString);
             }
-        };
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-        rvDiseasesList.setLayoutManager(layoutManager);
-
-        rvDiseasesList.setAdapter(diseaseAdapter);
+        }
 
         return view;
     }
 
     private void mappingView() {
         rltChooseImage = (RelativeLayout) view.findViewById(R.id.rltChooseImage);
-        layout_chuan_doan_benh = (LinearLayout) view.findViewById(R.id.layout_chuan_doan_benh);
         layout_choose_img_plant = (RelativeLayout) view.findViewById(R.id.layout_choose_img_plant);
-        img_choose_plant = (ImageView) view.findViewById(R.id.img_choose_plant);
         rltCamera = (RelativeLayout) view.findViewById(R.id.rltCamera);
         rltArrowBack = (RelativeLayout) view.findViewById(R.id.rltArrowBack);
-        rvDiseasesList = (RecyclerView) view.findViewById(R.id.rvDiseasesList);
 
         rltChooseImage.setOnClickListener(this);
         rltCamera.setOnClickListener(this);
-        rltArrowBack.setOnClickListener(this);
     }
 
     @Override
@@ -180,24 +118,17 @@ public class CameraPredictFragment extends Fragment implements View.OnClickListe
                 getImage();
                 break;
             case R.id.rltCamera:
-                camUtils.dispatchTakePictureIntent();
-                break;
-            case R.id.rltArrowBack:
-                clickArrowBack();
+                getfileCamera();
                 break;
             default:
                 break;
         }
     }
 
-    private void clickArrowBack() {
-        realPathfile = "";
-        camUtils.setPhotoUri(null);
-        if(layout_chuan_doan_benh.getVisibility() == View.VISIBLE){
-            layout_chuan_doan_benh.setVisibility(View.INVISIBLE);
-            layout_choose_img_plant.setVisibility(View.VISIBLE);
-            rltArrowBack.setVisibility(View.INVISIBLE);
-        }
+    private void intentDiseaseDetail(String imageUriString){
+        Intent intent = new Intent(getContext(), DiseaseDetailActivity.class);
+        intent.putExtra("pathImage", imageUriString);
+        getActivity().startActivity(intent);
     }
 
     @Override
@@ -206,47 +137,18 @@ public class CameraPredictFragment extends Fragment implements View.OnClickListe
         Log.d(TAG, "onSaveInstanceState: "+realPathfile);
         outState.putString("imgFromCamera", realPathfile);
 
-        if (camUtils.getPhotoUri() != null)
-            outState.putString("imgUri", camUtils.getPhotoUri().toString());
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG, "" + requestCode);
         if (resultCode == RESULT_OK && data != null){
             if(requestCode == IMAGE_PICK_CODE){
-                mSelected = new ArrayList<>();
                 mSelected = Matisse.obtainResult(data);
-                Bitmap bitmapImg = showImg(mSelected.get(0));
-                ArrayList<HashMap<String, String>> predictionsList = AI.predict(bitmapImg);
-                addDataPlant(predictionsList);
+                realPathfile = getPathFromURI(getContext(), mSelected.get(0));
+                intentDiseaseDetail(realPathfile);
             }
         }
-    }
-
-    private Bitmap showImg(Uri uriImg) {
-        Log.d(TAG, "Show img: " + uriImg.getPath());
-
-        if(layout_chuan_doan_benh.getVisibility() != View.VISIBLE){
-            layout_chuan_doan_benh.setVisibility(View.VISIBLE);
-            layout_choose_img_plant.setVisibility(View.INVISIBLE);
-        }
-
-        rltArrowBack.setVisibility(View.VISIBLE);
-
-        camUtils.setPhotoUri(uriImg);
-        Bitmap bitmapImg = camUtils.loadBitmap();
-
-        img_choose_plant.setImageBitmap(bitmapImg);
-
-        return bitmapImg;
-    }
-    private void addDataPlant(ArrayList<HashMap<String, String>> predictionsList){
-        // Remove all old views
-        diseaseAdapter.clear();
-
-        diseaseAdapter.replaceList(predictionsList);
     }
 
     private void getImage(){
@@ -273,6 +175,48 @@ public class CameraPredictFragment extends Fragment implements View.OnClickListe
                 .imageEngine(new GlideEngine())
                 .showPreview(false) // Default is `true`
                 .forResult(IMAGE_PICK_CODE);
+    }
+    private void getfileCamera(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(ContextCompat.checkSelfPermission(
+                    getContext(), Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_DENIED
+                    || ContextCompat.checkSelfPermission(
+                            getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_DENIED){
+                String[] permission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                requestPermissions(permission, PERMISSION_CODE);
+            }
+            else{
+                openFileCamera();
+            }
+        }else{
+            openFileCamera();
+        }
+    }
+    private void openFileCamera(){
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(intent.resolveActivity(getContext().getPackageManager()) != null){
+            File photoFile = createPhotoFile();
+            if(photoFile!=null){
+                realPathfile = photoFile.getAbsolutePath();
+                Uri photoUri = FileProvider.getUriForFile(getContext(),"thang.com.wref.fileprovider", photoFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                startActivityForResult(intent, CAMERA_PERM_CODE);
+            }
+        }
+    }
+
+    private File createPhotoFile(){
+        String name = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = null;
+        try {
+            image = File.createTempFile(name, ".jpg", storageDir);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
     }
 
     private void logOut(){
