@@ -390,6 +390,11 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 getFragmentManager().beginTransaction().add(R.id.fragmentCommnet, commentFragment, "commentFragment").commit();
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
             }
+
+            @Override
+            public void onClickLike(int position, LinearLayout btnLike) {
+                likePost();
+            }
         };
     }
     private void clearFragment(){
@@ -401,5 +406,8 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 getFragmentManager().beginTransaction().remove(fragment).commit();
             }
         }
+    }
+    private void likePost(){
+
     }
 }

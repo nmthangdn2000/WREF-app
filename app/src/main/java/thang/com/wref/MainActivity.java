@@ -3,17 +3,14 @@ package thang.com.wref;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.WindowManager;
 
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 
 import thang.com.wref.Main.ViewPagerAdapter;
-
-
+import thang.com.wref.util.SocketIO;
 
 public class MainActivity extends AppCompatActivity {
     private final String TAG = "MainActivity";
@@ -22,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private MeowBottomNavigation bottomNavigation;
     private ViewPager2 viewPager2;
     private ViewPagerAdapter viewPagerAdapter;
+    private SocketIO socketIO;
 
     @Override
     protected void onPause() {
@@ -39,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        socketIO = new SocketIO();
+        socketIO.ConnectSocket();
+
         mapping();
         setBottomNavigation();
     }

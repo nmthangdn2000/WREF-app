@@ -77,6 +77,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
             txtContent = (TextView) itemView.findViewById(R.id.txtContent);
 
             btnComment.setOnClickListener(this);
+            btnLike.setOnClickListener(this);
         }
 
         @Override
@@ -86,6 +87,9 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
                     Log.d(TAG, "onClick: "+getAdapterPosition());
                     mListner.onClickComment(getAdapterPosition(), btnComment);
                     break;
+                case R.id.btnLike:
+                    mListner.onClickComment(getAdapterPosition(), btnLike);
+                    break;
                 default:
                     break;
             }
@@ -93,5 +97,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHodler> {
     }
     public interface onClickRecyclerNews{
         void onClickComment(int position, LinearLayout btnComment);
+        void onClickLike(int position, LinearLayout btnLike);
     }
 }
