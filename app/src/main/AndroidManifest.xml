@@ -33,7 +33,6 @@
         <activity android:name=".Main.More.AllHavestHelperActivity"></activity>
         <activity android:name=".Main.More.DiseaseDetailActivity" />
         <activity android:name=".Main.More.HarvesthelperActivity" />
-        <activity android:name=".Main.Prediction.DiseaseDetail" />
         <activity android:name=".Main.More.CropYieldActivity" />
         <activity android:name=".Main.MapActivity" />
         <activity android:name=".Main.DetailWeatherFragment" />

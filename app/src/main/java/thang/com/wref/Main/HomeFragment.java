@@ -56,7 +56,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private GoogleMap map;
     private View view, gradientMap;
-    private RelativeLayout rltWeather;
+    private RelativeLayout rltWeather, rlvLogOut;
     private TextView btnShownAllHarvestHelper;
     private LinearLayout lnlTrackProgress, lnlTrackProgress2, lnlCaChuaHavestHelper, lnlDuaLeoHavestHelper;
     private Task<Location> task;
@@ -117,6 +117,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
         lnlCaChuaHavestHelper = (LinearLayout) view.findViewById(R.id.lnlCaChuaHavestHelper);
         lnlDuaLeoHavestHelper = (LinearLayout) view.findViewById(R.id.lnlDuaLeoHavestHelper);
         btnShownAllHarvestHelper = (TextView) view.findViewById(R.id.btnShownAllHarvestHelper);
+        rlvLogOut = (RelativeLayout) view.findViewById(R.id.rlvLogOut);
 
         rltWeather.setOnClickListener(this);
         gradientMap.setOnClickListener(this);
@@ -149,6 +150,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
                 break;
             case R.id.btnShownAllHarvestHelper:
                 clickShownAllHavestHelper();
+                break;
+            case R.id.rlvLogOut:
+                sharedPreferencesManagement.clearData();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                getActivity().startActivity(intent);
+                getActivity().finish();
                 break;
             default:
                 break;
