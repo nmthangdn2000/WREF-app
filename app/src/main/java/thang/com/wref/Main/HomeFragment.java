@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -40,6 +41,7 @@ import java.util.List;
 
 import thang.com.wref.Login.LoginActivity;
 import thang.com.wref.Login.SharedPreferencesManagement;
+import thang.com.wref.Main.More.AllHavestHelperActivity;
 import thang.com.wref.Main.More.CropYieldActivity;
 import thang.com.wref.Main.More.HarvesthelperActivity;
 import thang.com.wref.R;
@@ -54,7 +56,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private GoogleMap map;
     private View view, gradientMap;
-    private RelativeLayout rltWeather;
+    private RelativeLayout rltWeather, rlvLogOut;
+    private TextView btnShownAllHarvestHelper;
     private LinearLayout lnlTrackProgress, lnlTrackProgress2, lnlCaChuaHavestHelper, lnlDuaLeoHavestHelper;
     private Task<Location> task;
     private FusedLocationProviderClient client;
@@ -113,6 +116,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
         lnlTrackProgress2 = (LinearLayout) view.findViewById(R.id.lnlTrackProgress2);
         lnlCaChuaHavestHelper = (LinearLayout) view.findViewById(R.id.lnlCaChuaHavestHelper);
         lnlDuaLeoHavestHelper = (LinearLayout) view.findViewById(R.id.lnlDuaLeoHavestHelper);
+        btnShownAllHarvestHelper = (TextView) view.findViewById(R.id.btnShownAllHarvestHelper);
+        rlvLogOut = (RelativeLayout) view.findViewById(R.id.rlvLogOut);
 
         rltWeather.setOnClickListener(this);
         gradientMap.setOnClickListener(this);
@@ -120,6 +125,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
         lnlTrackProgress2.setOnClickListener(this);
         lnlCaChuaHavestHelper.setOnClickListener(this);
         lnlDuaLeoHavestHelper.setOnClickListener(this);
+        btnShownAllHarvestHelper.setOnClickListener(this);
     }
     @Override
     public void onClick(View v) {
@@ -142,10 +148,24 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
             case R.id.lnlDuaLeoHavestHelper:
                 clickDuaLeoHavestHelper();
                 break;
+            case R.id.btnShownAllHarvestHelper:
+                clickShownAllHavestHelper();
+                break;
+            case R.id.rlvLogOut:
+                sharedPreferencesManagement.clearData();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                getActivity().startActivity(intent);
+                getActivity().finish();
+                break;
             default:
                 break;
         }
     }
+    private void clickShownAllHavestHelper(){
+        Intent intent = new Intent(getContext(), AllHavestHelperActivity.class);
+        getActivity().startActivity(intent);
+    }
+
     private void clickCaChuaHavestHelper(){
         Intent intent = new Intent(getContext(), HarvesthelperActivity.class);
         intent.putExtra("plant", "Cà chua");

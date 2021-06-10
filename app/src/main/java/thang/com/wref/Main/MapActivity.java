@@ -272,7 +272,10 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         TileProvider tileProvider = new UrlTileProvider(256, 256) {
             @Override
             public URL getTileUrl(int x, int y, int zoom) {
-                String s = String.format("https://tile.openweathermap.org/map/%s/%d/%d/%d.png?appid=33e61186254ecc50e7d4298f5fb97f4d", mapName, zoom, x, y);
+                String s = String.format(
+                        "https://tile.openweathermap.org/map/%s/%d/%d/%d.png?appid=33e61186254ecc50e7d4298f5fb97f4d",
+                        mapName, zoom, x, y);
+                Log.d(TAG, "getTileUrl: "+s);
                 if (!checkTileExists(x, y, zoom)) {
                     return null;
                 }

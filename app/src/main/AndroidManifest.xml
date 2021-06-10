@@ -30,7 +30,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WREF"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Main.More.HarvesthelperActivity"></activity>
+        <activity android:name=".Main.More.AllHavestHelperActivity"/>
+        <activity android:name=".Main.More.HarvesthelperActivity"/>
         <activity android:name=".Main.Prediction.DiseaseDetail" />
         <activity android:name=".Main.More.CropYieldActivity" />
         <activity android:name=".Main.MapActivity" />

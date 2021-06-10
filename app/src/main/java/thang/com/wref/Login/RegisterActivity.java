@@ -39,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         networkUtil = new NetworkUtil();
         retrofit = networkUtil.getRetrofit();
         mappingView();
+        checkSignup();
     }
 
     private void mappingView() {
