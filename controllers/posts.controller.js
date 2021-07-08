@@ -5,6 +5,7 @@ const getPosts = async (req, res) => {
   await Posts.find()
     .populate("idUser", "userName avata")
     .populate("idLocation")
+    // .populate("Like.iduserLike", "userName avata")
     .then((data) => res.send(data))
     .catch((err) =>
       res.json({
