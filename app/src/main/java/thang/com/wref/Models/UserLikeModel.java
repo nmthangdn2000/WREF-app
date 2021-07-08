@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class UserLikeModel {
     @SerializedName("iduserLike")
-    private UsersModel iduserLike;
+    private String iduserLike;
 
-    public UserLikeModel(UsersModel iduserLike) {
+    public UserLikeModel(String iduserLike) {
         this.iduserLike = iduserLike;
     }
 
@@ -17,11 +17,11 @@ public class UserLikeModel {
                 '}';
     }
 
-    public UsersModel getIduserLike() {
+    public String getIduserLike() {
         return iduserLike;
     }
 
-    public void setIduserLike(UsersModel iduserLike) {
+    public void setIduserLike(String iduserLike) {
         this.iduserLike = iduserLike;
     }
 }

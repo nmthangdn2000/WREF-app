@@ -21,11 +21,36 @@
             android:layout_alignParentBottom="true"
             android:id="@+id/rltEdittextComment"
             android:layout_width="match_parent"
-            android:layout_height="60dp">
-            <EditText
+            android:layout_height="60dp"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="3dp">
+            <LinearLayout
+                android:background="@drawable/edittext_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:hint="Viết bình luận ..."/>
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingHorizontal="10dp">
+                <ImageView
+                    android:layout_weight="4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_upload_camera"/>
+                <EditText
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_transparent"
+                    android:paddingHorizontal="15dp"
+                    android:drawablePadding="10dp"
+                    android:hint="Viết bình luận ..."/>
+                <ImageView
+                    android:id="@+id/btnSendComment"
+                    android:layout_weight="4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_send_24"/>
+            </LinearLayout>
         </RelativeLayout>
     </RelativeLayout>
 

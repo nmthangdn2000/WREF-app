@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -22,10 +24,14 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
@@ -33,6 +39,7 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.socket.emitter.Emitter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,6 +58,8 @@ import thang.com.wref.R;
 import thang.com.wref.Retrofits.NewsRetrofit;
 import thang.com.wref.Retrofits.StoriesRetrofit;
 import thang.com.wref.fragment.CommentFragment;
+
+import static thang.com.wref.util.SocketIO.socket;
 
 public class SocialNetworkFragment extends Fragment implements View.OnClickListener, View.OnTouchListener{
     private static final String TAG = "SocialNetworkFragment";
@@ -285,6 +294,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                     for(NewsModels post : news){
                         newsArr.add(post);
                     }
+                    Log.d(TAG, "onResponse: "+newsArr.size());
 //                    Collections.reverse(arrayPosts);
                     newsAdapter.notifyDataSetChanged();
                 }
@@ -298,7 +308,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 call.cancel();
             }
         });
-        newsAdapter = new NewsAdapter(newsArr, getContext().getApplicationContext(), mListenerNews);
+        newsAdapter = new NewsAdapter(newsArr, getContext().getApplicationContext(), sharedPreferencesManagement.getID(), mListenerNews);
         rcvNews.setAdapter(newsAdapter);
     }
     private void setUpStories(int position){
@@ -386,14 +396,13 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_down);
                 meowBottomNavigation.startAnimation(animation);
                 meowBottomNavigation.setVisibility(View.GONE);
-                CommentFragment commentFragment = new CommentFragment();
+                CommentFragment commentFragment = new CommentFragment(newsArr.get(position).getId());
                 getFragmentManager().beginTransaction().add(R.id.fragmentCommnet, commentFragment, "commentFragment").commit();
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
             }
-
             @Override
-            public void onClickLike(int position, LinearLayout btnLike) {
-                likePost();
+            public void onClickLike(int position, LinearLayout btnLike, RelativeLayout evaluatePosts, TextView txtNumberLike, TextView txtNumberComment, View hrPosts, ImageView iconLike, ImageView imgLike) {
+                likePost(position, btnLike, evaluatePosts, txtNumberLike, txtNumberComment, hrPosts, iconLike, imgLike);
             }
         };
     }
@@ -407,7 +416,43 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
             }
         }
     }
-    private void likePost(){
-
+    private void likePost(int position, LinearLayout btnLike, RelativeLayout evaluatePosts, TextView txtNumberLike, TextView txtNumberComment, View hrPosts, ImageView iconLike, ImageView imgLike){
+        Log.d(TAG, "likePost: "+btnLike.getTag());
+        if(btnLike.getTag().equals("disLike")){
+            socket.emit("like", newsArr.get(position).getId(), sharedPreferencesManagement.getID(), true);
+            Glide.with(getContext()).load(R.drawable.ic_like_blur).into(imgLike);
+            btnLike.setTag("like");
+        }else{
+            socket.emit("like", newsArr.get(position).getId(), sharedPreferencesManagement.getID(), false);
+            Glide.with(getContext()).load(R.drawable.ic_like).into(imgLike);
+            btnLike.setTag("disLike");
+        }
+        socket.on("like", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                Handler mHandler = new Handler(Looper.getMainLooper());
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        String number = Integer.toString((Integer) args[0]);
+                        if(!number.equals(null)){
+                            if(Integer.parseInt(number) > 0){
+                                evaluatePosts.setVisibility(View.VISIBLE);
+                                hrPosts.setVisibility(View.VISIBLE);
+                                iconLike.setVisibility(View.VISIBLE);
+                                txtNumberLike.setText(number);
+                            }else{
+                                if (Integer.parseInt(String.valueOf(txtNumberComment.getText()).split(" ")[0]) < 1){
+                                    evaluatePosts.setVisibility(View.GONE);
+                                    hrPosts.setVisibility(View.GONE);
+                                }
+                                txtNumberLike.setText("");
+                                iconLike.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                });
+            }
+        });
     }
 }

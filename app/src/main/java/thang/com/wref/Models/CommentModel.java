@@ -10,9 +10,7 @@ public class CommentModel {
     @SerializedName("idUser")
     private UsersModel idUser;
     @SerializedName("idPosts")
-    private NewsModels idPosts;
-    @SerializedName("_id")
-    private CommentModel idComment;
+    private String idPosts;
     @SerializedName("content")
     private String content;
     @SerializedName("media")
@@ -20,15 +18,14 @@ public class CommentModel {
     @SerializedName("Like")
     private UserLikeModel[] Like;
     @SerializedName("create_at")
-    private int create_at;
+    private long create_at;
     @SerializedName("update_at")
-    private int update_at;
+    private long update_at;
 
-    public CommentModel(String id, UsersModel idUser, NewsModels idPosts, CommentModel idComment, String content, String media, UserLikeModel[] like, int create_at, int update_at) {
+    public CommentModel(String id, UsersModel idUser, String idPosts, String content, String media, UserLikeModel[] like, long create_at, long update_at) {
         this.id = id;
         this.idUser = idUser;
         this.idPosts = idPosts;
-        this.idComment = idComment;
         this.content = content;
         this.media = media;
         Like = like;
@@ -42,7 +39,6 @@ public class CommentModel {
                 "id='" + id + '\'' +
                 ", idUser=" + idUser +
                 ", idPosts=" + idPosts +
-                ", idComment=" + idComment +
                 ", content='" + content + '\'' +
                 ", media='" + media + '\'' +
                 ", Like=" + Arrays.toString(Like) +
@@ -67,20 +63,12 @@ public class CommentModel {
         this.idUser = idUser;
     }
 
-    public NewsModels getIdPosts() {
+    public String getIdPosts() {
         return idPosts;
     }
 
-    public void setIdPosts(NewsModels idPosts) {
+    public void setIdPosts(String idPosts) {
         this.idPosts = idPosts;
-    }
-
-    public CommentModel getIdComment() {
-        return idComment;
-    }
-
-    public void setIdComment(CommentModel idComment) {
-        this.idComment = idComment;
     }
 
     public String getContent() {
@@ -107,19 +95,19 @@ public class CommentModel {
         Like = like;
     }
 
-    public int getCreate_at() {
+    public long getCreate_at() {
         return create_at;
     }
 
-    public void setCreate_at(int create_at) {
+    public void setCreate_at(long create_at) {
         this.create_at = create_at;
     }
 
-    public int getUpdate_at() {
+    public long getUpdate_at() {
         return update_at;
     }
 
-    public void setUpdate_at(int update_at) {
+    public void setUpdate_at(long update_at) {
         this.update_at = update_at;
     }
 }

@@ -131,8 +131,6 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
         lottieLoadingData.playAnimation();
         splashWeather.setVisibility(View.VISIBLE);
         layoutRltWeather.setVisibility(View.INVISIBLE);
-
-        cal = Calendar.getInstance();
     }
     private void setupToolbar(){
         toolbar = (Toolbar) findViewById(R.id.toolbarInfor);
@@ -226,7 +224,6 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
                     Toast.makeText(DetailWeatherFragment.this, "Lỗi mạng", Toast.LENGTH_SHORT).show();
                 }else{
                     detailWeatherModel = response.body();
-                    Log.d(TAG, "onResponse: "+detailWeatherModel.getCurrent().getWeather()[0].getDescription());
                     for (int i = 0; i < detailWeatherModel.getDaily().length; i++){
                         dailyWeathers.add(detailWeatherModel.getDaily()[i]);
                     }
@@ -258,11 +255,10 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
                     detailWeatherModel = response.body();
                     entries.add(new Entry(0, detailWeatherModel.getCurrent().getFeels_like()-273, "°C"));
                     sDay.add("Bây giờ");
-
+                    cal = Calendar.getInstance();
                     for (int i = 0; i < detailWeatherModel.getHourly().length-24; i++){
-                        cal.setTime(new Date(detailWeatherModel.getHourly()[i].getDt()));
-                        oneHourBack = cal.get(Calendar.HOUR_OF_DAY);
-                        Log.d(TAG, "onResponse: "+oneHourBack);
+                        cal.setTimeInMillis(detailWeatherModel.getHourly()[i].getDt()*1000);
+                        oneHourBack = cal.get(Calendar.HOUR);
                         entries.add(new Entry(i+1, detailWeatherModel.getHourly()[i].getTemp()-273, "°C"));
                         if(oneHourBack > 9 )
                             sDay.add(oneHourBack+":00");
@@ -286,7 +282,6 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
     private void showData(){
         float f = detailWeatherModel.getCurrent().getTemp();
         float c = f - 273;
-        Log.d(TAG, "onClick: "+c);
         String val = "";
         if(detailWeatherModel.getCurrent().getWeather()[0].getDescription().equals("light rain"))
             val = "Mưa nhỏ";
@@ -347,7 +342,6 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
 //        else if(img == 2)
             imgSunWeather.setImageResource(img);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Log.d(TAG, "animationWeather: "+ imgSunWeather.getX() +" "+imgSunWeather.getY());
             path = new Path();
             path.arcTo(0f-dpToPx(170), 0f, rltSunWeather.getRight(), rltSunWeather.getBottom()+dpToPx(300), 180f, 110f, true);
 
