@@ -29,6 +29,15 @@ public interface NewsRetrofit {
     );
 
     @Multipart
+    @POST("api/posts/{id}/comment")
+    Call<ErrModel> postComments (
+            @Header("Authorization") String auth,
+            @Path("id") String idPosts,
+            @Part("content") RequestBody document,
+            @Part MultipartBody.Part image
+    );
+
+    @Multipart
     @POST("api/posts")
     Call<ErrModel> postPossts(
             @Header("Authorization") String auth,

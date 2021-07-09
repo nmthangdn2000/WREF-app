@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.CommentFragment">
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,32 +12,70 @@
             android:id="@+id/rltComment"
             android:layout_above="@+id/rltEdittextComment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:paddingRight="10dp">
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginBottom="10dp"
                 android:id="@+id/rcvComment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </RelativeLayout>
         <RelativeLayout
+            android:layout_marginBottom="2dp"
+            android:padding="2dp"
+            android:layout_marginLeft="10dp"
+            android:layout_above="@+id/rltEdittextComment"
+            android:id="@+id/rltImgUpload"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_card">
+            <RelativeLayout
+                android:id="@+id/rltOneImg"
+                android:visibility="visible"
+                android:layout_width="125dp"
+                android:layout_height="185dp">
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/imdUpload"
+                    android:layout_width="120dp"
+                    android:layout_height="180dp"
+                    app:riv_corner_radius_bottom_left="4dp"
+                    app:riv_corner_radius_bottom_right="4dp"
+                    app:riv_corner_radius_top_left="4dp"
+                    app:riv_corner_radius_top_right="4dp"
+                    android:scaleType="centerCrop"/>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/btnCloseImg"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_baseline_close_24"
+                    android:background="@drawable/border_card"
+                    android:backgroundTint="#60000000"/>
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
             android:layout_alignParentBottom="true"
             android:id="@+id/rltEdittextComment"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
             android:paddingBottom="3dp">
             <LinearLayout
                 android:background="@drawable/edittext_search"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="60dp"
                 android:orientation="horizontal"
                 android:gravity="center"
                 android:paddingHorizontal="10dp">
                 <ImageView
+                    android:id="@+id/btnChooseImgUpload"
                     android:layout_weight="4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_upload_camera"/>
                 <EditText
+                    android:id="@+id/edtComment"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

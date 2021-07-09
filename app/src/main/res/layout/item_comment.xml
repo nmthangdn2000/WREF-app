@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:paddingVertical="10dp">
     <de.hdodenhof.circleimageview.CircleImageView
@@ -43,6 +44,24 @@
                 android:fontFamily="@font/lato_medium"
                 android:textColor="@color/color_text"
                 android:textSize="14sp"/>
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="invisible"
+            android:id="@+id/lnlImgComment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/imgComment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
+                android:maxHeight="180dp"
+                android:adjustViewBounds="true"
+                app:riv_corner_radius_bottom_left="4dp"
+                app:riv_corner_radius_bottom_right="4dp"
+                app:riv_corner_radius_top_left="4dp"
+                app:riv_corner_radius_top_right="4dp"
+                />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
