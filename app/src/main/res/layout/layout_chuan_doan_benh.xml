@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_chuan_doan_benh"
     android:orientation="vertical"
-    android:visibility="invisible">
+    android:visibility="invisible"
+    android:background="#F5F7F8">
     <ImageView
         android:id="@+id/img_choose_plant"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:src="@drawable/img_plant_test"
         android:scaleType="centerCrop" />
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <LinearLayout
@@ -37,4 +39,5 @@
         </LinearLayout>
 
     </ScrollView>
+
 </LinearLayout>

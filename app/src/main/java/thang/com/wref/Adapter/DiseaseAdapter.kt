@@ -34,8 +34,8 @@ abstract class DiseaseAdapter(
                 binding.txtDiseaseName.setTextColor(ResourcesCompat
                         .getColor(parent.resources, R.color.cs_danger, null));
 
-                binding.ivIconStatus.setImageDrawable(ResourcesCompat
-                        .getDrawable(parent.resources, R.drawable.ic_baseline_close, null));
+                binding.txtPercent.setTextColor(ResourcesCompat
+                        .getColor(parent.resources, R.color.cs_danger, null));
             } else {
                 binding.cvDiseaseItem.setCardBackgroundColor(ResourcesCompat
                         .getColor(parent.resources, R.color.cs_light_success, null));
@@ -43,8 +43,8 @@ abstract class DiseaseAdapter(
                 binding.txtDiseaseName.setTextColor(ResourcesCompat
                         .getColor(parent.resources, R.color.cs_success, null));
 
-                binding.ivIconStatus.setImageDrawable(ResourcesCompat
-                        .getDrawable(parent.resources, R.drawable.ic_baseline_check, null));
+                binding.txtPercent.setTextColor(ResourcesCompat
+                        .getColor(parent.resources, R.color.cs_success, null));
             }
         }
     };
@@ -84,7 +84,7 @@ abstract class DiseaseAdapter(
     override fun getItemViewType(position: Int): Int {
         super.getItemViewType(position);
 
-        return when(diseasesList[position]["diseaseName"]?.contains("healthy", ignoreCase = true)) {
+        return when(diseasesList[position]["diseaseName"]?.contains("khỏe mạnh", ignoreCase = true)) {
             true -> 0
             false -> 1
             else -> 1

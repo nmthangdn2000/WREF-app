@@ -16,7 +16,8 @@
             android:paddingEnd="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="50dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="#F5F7F8">
             <RelativeLayout
                 android:id="@+id/rlvLogOut"
                 android:layout_width="match_parent"
@@ -34,30 +35,32 @@
                         android:src="@drawable/ic_logout"
                         android:layout_centerVertical="true"/>
                 </RelativeLayout>
+
                 <TextView
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="15dp"
-                    android:paddingHorizontal="20dp"
-                    android:text="Hôm nay có một chút mây"
                     android:layout_alignParentEnd="true"
-                    android:textSize="12dp"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/effect_button"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="15dp"
+                    android:text="Hôm nay có một chút mây"
                     android:textColor="#F6F9FB"
-                    android:background="@drawable/effect_button"/>
+                    android:textSize="12dp"
+                    android:fontFamily="@font/lato_medium"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_marginVertical="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_medium"
-                    android:textColor="#0E1405"
+                    android:fontFamily="@font/lato_semibold"
                     android:text="WREF"
-                    android:textSize="26dp"
-                    />
+                    android:textColor="#0E1405"
+                    android:textSize="26dp" />
             </RelativeLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -76,35 +79,37 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
+
                         <TextView
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
                             android:drawableLeft="@drawable/ic_carbon_temperature_hot"
-                            android:text="15℃"
                             android:drawablePadding="5dp"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/lato_medium"
+                            android:gravity="center"
+                            android:text="15℃"
                             android:textColor="#2285E0"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp" />
                         <View
                             android:layout_width="1dp"
                             android:layout_marginVertical="6dp"
                             android:layout_centerHorizontal="true"
                             android:layout_height="match_parent"
                             android:background="#502285E0"/>
+
                         <TextView
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentEnd="true"
-                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="24dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
                             android:drawableLeft="@drawable/ic_air_humidity"
-                            android:text="80%"
                             android:drawablePadding="5dp"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/lato_medium"
+                            android:gravity="center"
+                            android:text="80%"
                             android:textColor="#2285E0"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp" />
                     </RelativeLayout>
 
                 </RelativeLayout>
@@ -115,17 +120,18 @@
                     android:layout_marginLeft="5dp"
                     android:background="@drawable/circle_transparent"
                     android:backgroundTint="#20E04422">
+
                     <TextView
-                        android:layout_centerInParent="true"
-                        android:gravity="center"
                         android:layout_width="wrap_content"
                         android:layout_height="24dp"
+                        android:layout_centerInParent="true"
                         android:drawableLeft="@drawable/ic_severe_weather"
-                        android:text="Thiên tai"
                         android:drawablePadding="5dp"
-                        android:fontFamily="@font/roboto_medium"
+                        android:fontFamily="@font/lato_medium"
+                        android:gravity="center"
+                        android:text="Thiên tai"
                         android:textColor="#E04422"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
                 </RelativeLayout>
             </LinearLayout>
             <androidx.cardview.widget.CardView
@@ -147,32 +153,35 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/gradient_view_googlemap"/>
+
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginStart="20dp">
+                        android:layout_marginStart="20dp"
+                        android:layout_marginBottom="20dp">
+
                         <TextView
                             android:id="@+id/txtCity"
-                            android:layout_above="@+id/txtCommune"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_medium"
-                            android:textFontWeight="500"
-                            android:textSize="10sp"
+                            android:layout_above="@+id/txtCommune"
+                            android:fontFamily="@font/lato_medium"
+                            android:text="Đà Nẵng"
                             android:textColor="@color/white"
-                            android:text="Đà Nẵng"/>
+                            android:textFontWeight="500"
+                            android:textSize="10sp" />
+
                         <TextView
                             android:id="@+id/txtCommune"
-                            android:layout_alignParentBottom="true"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_medium"
+                            android:layout_alignParentBottom="true"
+                            android:fontFamily="@font/lato_regular"
+                            android:text="Túy Loan"
+                            android:textColor="@color/white"
                             android:textFontWeight="500"
                             android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/white"
-                            android:text="Túy Loan"/>
+                            android:textStyle="bold" />
                     </RelativeLayout>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -186,47 +195,44 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Theo dõi tiến độ"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/lato_bold"
                     android:textColor="@color/black"
-                    android:textSize="20dp"
+                    android:textSize="24dp"
                     android:textStyle="bold"
-                    />
+                    android:layout_marginBottom="8dp"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginBottom="16dp">
                     <LinearLayout
                         android:id="@+id/lnlTrackProgress"
                         android:paddingVertical="5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3">
-                            <com.makeramen.roundedimageview.RoundedImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                app:riv_corner_radius_bottom_right="8dp"
-                                app:riv_corner_radius_bottom_left="8dp"
-                                app:riv_corner_radius_top_left="8dp"
-                                app:riv_corner_radius_top_right="8dp"
-                                android:src="@drawable/img_dua_leo"
-                                android:scaleType="centerCrop"
-                                android:elevation="20dp"/>
-                        </LinearLayout>
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            app:riv_corner_radius_bottom_right="8dp"
+                            app:riv_corner_radius_bottom_left="8dp"
+                            app:riv_corner_radius_top_left="8dp"
+                            app:riv_corner_radius_top_right="8dp"
+                            android:src="@drawable/img_dua_leo"
+                            android:scaleType="centerCrop"
+                            android:elevation="20dp"/>
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:layout_marginLeft="16dp"
                             android:orientation="vertical">
                             <TextView
                                 android:layout_marginVertical="5dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
-                                android:fontFamily="@font/roboto_medium"
+                                android:fontFamily="@font/lato_regular"
                                 android:textSize="16sp"
                                 android:text="Dưa leo"/>
                             <TextView
@@ -234,7 +240,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="#2285E0"
                                 android:textSize="10sp"
-                                android:fontFamily="@font/roboto_medium"
+                                android:fontFamily="@font/lato_medium"
                                 android:text="20 ngày cho đến lúc thu hoạch"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -244,32 +250,30 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="3">
-                            <com.makeramen.roundedimageview.RoundedImageView
-                                android:layout_width="70dp"
-                                android:layout_height="70dp"
-                                app:riv_corner_radius_bottom_right="8dp"
-                                app:riv_corner_radius_bottom_left="8dp"
-                                app:riv_corner_radius_top_left="8dp"
-                                app:riv_corner_radius_top_right="8dp"
-                                android:src="@drawable/img_ca_chua"
-                                android:scaleType="centerCrop"
-                                android:elevation="20dp"/>
-                        </LinearLayout>
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            app:riv_corner_radius_bottom_right="8dp"
+                            app:riv_corner_radius_bottom_left="8dp"
+                            app:riv_corner_radius_top_left="8dp"
+                            app:riv_corner_radius_top_right="8dp"
+                            android:src="@drawable/img_ca_chua"
+                            android:scaleType="centerCrop"
+                            android:elevation="20dp"/>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:layout_marginLeft="16dp"
                             android:orientation="vertical">
                             <TextView
                                 android:layout_marginVertical="5dp"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/black"
-                                android:fontFamily="@font/roboto_medium"
+                                android:fontFamily="@font/lato_regular"
                                 android:textSize="16sp"
                                 android:text="Cà chua"/>
                             <TextView
@@ -277,7 +281,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="#2285E0"
                                 android:textSize="10sp"
-                                android:fontFamily="@font/roboto_medium"
+                                android:fontFamily="@font/lato_medium"
                                 android:text="30 ngày cho đến lúc thu hoạch"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -289,17 +293,18 @@
                 android:orientation="vertical">
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+
                     <TextView
-                        android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/lato_bold"
                         android:text="Giải pháp đề xuất"
-                        android:fontFamily="@font/roboto_medium"
                         android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        />
+                        android:textSize="24dp"
+                        android:textStyle="bold" />
                     <TextView
                         android:id="@+id/btnShownAllHarvestHelper"
                         android:layout_alignParentRight="true"
@@ -308,12 +313,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Xem thêm "
-                        android:fontFamily="@font/roboto_medium"
+                        android:fontFamily="@font/lato_medium"
                         android:textColor="#2285E0"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         />
                 </RelativeLayout>
+
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -348,27 +354,26 @@
                                 app:riv_corner_radius_bottom_left="8dp"
                                 app:riv_corner_radius_bottom_right="8dp"
                                 android:src="@drawable/img_ca_chua_2"
-                                android:scaleType="centerCrop"/>
+                                android:scaleType="centerCrop"
+                                android:layout_marginBottom="4dp"/>
                             <LinearLayout
                                 android:layout_alignParentBottom="true"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:paddingTop="5dp">
+                                android:orientation="vertical">
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Nông nghiệp - Đà Nẵng"
-                                    android:fontFamily="@font/roboto_medium"
+                                    android:fontFamily="@font/lato_medium"
                                     android:textColor="@color/black"
                                     android:textSize="10sp"/>
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="40dp"
                                     android:text="Quy trình thực hiện - cà chua"
-                                    android:fontFamily="@font/roboto_medium"
+                                    android:fontFamily="@font/lato_bold"
                                     android:textColor="@color/black"
-                                    android:textStyle="bold"
                                     android:textSize="16sp"/>
                             </LinearLayout>
                         </LinearLayout>
@@ -381,22 +386,28 @@
                         android:layout_rowWeight="1"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
-                        android:layout_marginBottom="10dp">
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            android:layout_row="0"
+                            android:layout_marginBottom="4dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_dua_leo_2"
+                            app:riv_corner_radius_bottom_left="8dp"
+                            app:riv_corner_radius_bottom_right="8dp"
+                            app:riv_corner_radius_top_left="8dp"
+                            app:riv_corner_radius_top_right="8dp" />
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:gravity="center"
                             android:orientation="vertical">
-                            <com.makeramen.roundedimageview.RoundedImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="220dp"
-                                app:riv_corner_radius_top_left="8dp"
-                                app:riv_corner_radius_top_right="8dp"
-                                app:riv_corner_radius_bottom_left="8dp"
-                                app:riv_corner_radius_bottom_right="8dp"
-                                android:src="@drawable/img_dua_leo_2"
-                                android:scaleType="centerCrop"/>
+
                             <LinearLayout
                                 android:layout_alignParentBottom="true"
                                 android:layout_width="match_parent"
@@ -407,16 +418,15 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Nông nghiệp - Đà Nẵng"
-                                    android:fontFamily="@font/roboto_medium"
+                                    android:fontFamily="@font/lato_medium"
                                     android:textColor="@color/black"
                                     android:textSize="10sp"/>
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="40dp"
                                     android:text="Quy trình thực hiện - dưa leo"
-                                    android:fontFamily="@font/roboto_medium"
+                                    android:fontFamily="@font/lato_bold"
                                     android:textColor="@color/black"
-                                    android:textStyle="bold"
                                     android:textSize="16sp"/>
 
                             </LinearLayout>
@@ -445,7 +455,8 @@
                                 app:riv_corner_radius_bottom_left="8dp"
                                 app:riv_corner_radius_bottom_right="8dp"
                                 android:src="@drawable/img_thuoc_tru_sau"
-                                android:scaleType="centerCrop"/>
+                                android:scaleType="centerCrop"
+                                android:layout_marginBottom="4dp"/>
                             <LinearLayout
                                 android:layout_alignParentBottom="true"
                                 android:layout_width="match_parent"
@@ -456,16 +467,15 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Nông nghiệp - Đà Nẵng"
-                                    android:fontFamily="@font/roboto_medium"
+                                    android:fontFamily="@font/lato_medium"
                                     android:textColor="@color/black"
                                     android:textSize="10sp"/>
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="40dp"
                                     android:text="Đề xuất sản phẩm"
-                                    android:fontFamily="@font/roboto_medium"
+                                    android:fontFamily="@font/lato_bold"
                                     android:textColor="@color/black"
-                                    android:textStyle="bold"
                                     android:textSize="16sp"/>
 
                             </LinearLayout>
@@ -487,13 +497,14 @@
                             android:orientation="vertical">
                             <com.makeramen.roundedimageview.RoundedImageView
                                 android:layout_width="match_parent"
-                                android:layout_height="230dp"
+                                android:layout_height="220dp"
                                 app:riv_corner_radius_top_left="8dp"
                                 app:riv_corner_radius_top_right="8dp"
                                 app:riv_corner_radius_bottom_left="8dp"
                                 app:riv_corner_radius_bottom_right="8dp"
                                 android:src="@drawable/img_phan_bon"
-                                android:scaleType="centerCrop"/>
+                                android:scaleType="centerCrop"
+                                android:layout_marginBottom="4dp"/>
                             <LinearLayout
                                 android:layout_alignParentBottom="true"
                                 android:layout_width="match_parent"
@@ -504,21 +515,22 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:text="Nông nghiệp - Đà Nẵng"
-                                    android:fontFamily="@font/roboto_medium"
+                                    android:fontFamily="@font/lato_medium"
                                     android:textColor="@color/black"
                                     android:textSize="10sp"/>
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="40dp"
                                     android:text="Đề xuất phân bón"
-                                    android:fontFamily="@font/roboto_medium"
+                                    android:fontFamily="@font/lato_bold"
                                     android:textColor="@color/black"
-                                    android:textStyle="bold"
                                     android:textSize="16sp"/>
 
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
+
+
                 </GridLayout>
             </LinearLayout>
             <LinearLayout
@@ -527,17 +539,18 @@
                 android:orientation="vertical">
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp">
+
                     <TextView
-                        android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/lato_bold"
                         android:text="Đối tác"
-                        android:fontFamily="@font/roboto_medium"
                         android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:textStyle="bold"
-                        />
+                        android:textSize="24dp"
+                        android:textStyle="bold" />
                     <TextView
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
@@ -545,7 +558,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Xem tất cả "
-                        android:fontFamily="@font/roboto_medium"
+                        android:fontFamily="@font/lato_medium"
                         android:textColor="#2285E0"
                         android:textSize="12sp"
                         android:textStyle="bold"
@@ -584,9 +597,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/lato_bold"
                             android:textSize="16sp"
-                            android:textStyle="bold"
                             android:text="Hiệu thuốc-cô Sáu"/>
                         <View
                             android:layout_width="100dp"
@@ -598,22 +610,21 @@
                             android:layout_height="wrap_content"
                             android:textColor="#ADADAC"
                             android:textSize="10sp"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/lato_medium"
                             android:text="Nông sản"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="#2285E0"
                             android:textSize="12sp"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/lato_bold"
                             android:text="Thuốc bảo vệ thực vật"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="#62AEFB"
                             android:textSize="12sp"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/lato_medium"
                             android:text="KLC"/>
                     </LinearLayout>
                 </LinearLayout>
@@ -650,9 +661,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="@color/black"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/lato_bold"
                             android:textSize="16sp"
-                            android:textStyle="bold"
                             android:text="Phân bón anh Bảy"/>
                         <View
                             android:layout_width="100dp"
@@ -664,7 +674,7 @@
                             android:layout_height="wrap_content"
                             android:textColor="#ADADAC"
                             android:textSize="10sp"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/lato_medium"
                             android:text="Nông sản"/>
                         <TextView
                             android:layout_width="match_parent"
@@ -672,14 +682,14 @@
                             android:textColor="#2285E0"
                             android:textSize="12sp"
                             android:textStyle="bold"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/lato_medium"
                             android:text="Phân bón cây trồng"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="#62AEFB"
                             android:textSize="12sp"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/lato_medium"
                             android:text="Phân hữ cơ, vô cơ, ..."/>
                     </LinearLayout>
                 </LinearLayout>

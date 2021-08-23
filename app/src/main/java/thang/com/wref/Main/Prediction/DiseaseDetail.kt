@@ -1,9 +1,12 @@
 package thang.com.wref.Main.Prediction
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.beust.klaxon.Klaxon
+import com.beust.klaxon.PathMatcher
+import com.bumptech.glide.Glide
 import thang.com.wref.Adapter.PesticideAdapter
 import thang.com.wref.databinding.ActivityDiseaseDetailBinding
 import java.lang.Math
@@ -13,15 +16,33 @@ class DiseaseDetail : AppCompatActivity() {
     private lateinit var binding: ActivityDiseaseDetailBinding;
     private lateinit var pesticideAdapter: PesticideAdapter;
 
+    companion object {
+        val TAG: String = DiseaseDetail::class.java.simpleName;
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onCreate(savedInstanceState);
 
         binding = ActivityDiseaseDetailBinding.inflate(layoutInflater);
         setContentView(binding.root);
 
+        var diseaseData: DiseaseJson? = null;
+
+        // Header
+        intent.extras?.apply {
+
+            val plantName = getString("plantName");
+            val diseaseName = getString("diseaseName");
+
+            binding.txtDiseaseName.text = diseaseName;
+            binding.txtPlantName.text = plantName;
+
+            diseaseData = getDiseaseData("${plantName}_${diseaseName}");
+        }
+
         // Pesticides Recycle View
-        val pesticidesList = getPesticidesData();
-        pesticideAdapter = PesticideAdapter(pesticidesList);
+        val pesticidesList = parsePesticidesData(diseaseData?.pesticide!!);
+        pesticideAdapter = PesticideAdapter(pesticidesList, baseContext);
 
         val layoutManager = LinearLayoutManager(this);
         layoutManager.orientation = LinearLayoutManager.HORIZONTAL;
@@ -29,39 +50,25 @@ class DiseaseDetail : AppCompatActivity() {
 
         binding.rvPesticidesList.adapter = pesticideAdapter;
 
-        // Header
-        intent.extras?.apply {
-            binding.txtDiseaseName.text = getString("diseaseName");
-            binding.txtPlantName.text = getString("plantName");
-
-            getDiseaseData(getString("plantName")!!)
+        // Back Button
+        binding.rltBack.setOnClickListener {
+            Log.d("Detail", "123");
+            finish();
         }
     }
 
-    private fun getPesticidesData() : ArrayList<HashMap<String, String>> {
-        class PesticideJson(
-                val name: String,
-                val quality: String,
-                val weight: String,
-                val price: String,
-                val label: String
-        )
+    private fun parsePesticidesData(pesticide: Array<Pesticide>) : ArrayList<HashMap<String, String>> {
 
-        val data = Klaxon()
-                .parseArray<PesticideJson>(assets.open("pesticides.json"));
+        val result: ArrayList<HashMap<String, String>> = ArrayList<HashMap<String, String>>();
 
-        val result = ArrayList<HashMap<String, String>>();
-
-        data?.filter {
-            Math.random() > 0.5;
-        }?.forEach {
+        pesticide.forEach {
             val pesticide = HashMap<String, String>();
 
             pesticide["name"] = it.name;
             pesticide["quality"] = it.quality;
             pesticide["price"] = it.price;
             pesticide["weight"] = it.weight;
-            pesticide["label"] = it.label;
+            pesticide["image"] = it.image;
 
             result.add(pesticide);
         }
@@ -69,24 +76,44 @@ class DiseaseDetail : AppCompatActivity() {
         return result;
     }
 
-    private fun getDiseaseData(plantName: String) {
-        class DiseaseJson(
-                val diseaseName: String,
-                val cause: String,
-                val symptom: String,
-                val prevention: String,
-                val cycle: String
-        );
+    class Pesticide (
+        val name: String,
+        val quality: String,
+        val weight: String,
+        val price: String,
+        val image: String
+    )
+
+    class DiseaseJson(
+        val diseaseId: String,
+        val diseaseName: String,
+        val cause: String,
+        val symptom: String,
+        val prevention: String,
+        val image: String,
+        val pesticide: Array<Pesticide>
+    );
+
+    private fun getDiseaseData(diseaseId: String): DiseaseJson {
 
         val data = Klaxon()
-                .parseArray<DiseaseJson>(assets.open("corn.json"));
+                .parseArray<DiseaseJson>(assets.open("disease.json"));
 
-        data?.let {
-            val disease: DiseaseJson = it.random();
+        var result: DiseaseJson? = null;
+
+        data?.let { diseaseData ->
+            val disease: DiseaseJson = diseaseData.find{
+                it.diseaseId == diseaseId;
+            }!!;
+
+            result = disease;
 
             binding.txtSymptom.text = disease.symptom;
             binding.txtPrevention.text = disease.prevention;
             binding.txtCause.text = disease.cause;
+            Glide.with(baseContext).load(disease.image).into(binding.imgDisease);
         }
+
+        return result!!;
     }
 }

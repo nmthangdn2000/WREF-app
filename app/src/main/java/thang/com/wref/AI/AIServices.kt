@@ -29,21 +29,21 @@ class AIServices(
 
         init {
             translateMap["Tomato Healthy"] = "Cà chua_Khỏe Mạnh";
-            translateMap["Tomato Septoria Leaf Spot"] = "Cà chua_Đốm lá Septoria";
+            translateMap["Tomato Septoria Leaf Spot"] = "Cà chua_Đốm lá";
             translateMap["Tomato Bacterial Spot"] = "Cà chua_Đốm vi khuẩn";
-            translateMap["Tomato Blight"] = "Cà chua_Nhạt màu";
+            translateMap["Tomato Blight"] = "Cà chua_Úa sớm";
             translateMap["Cabbage Healthy"] = "Cải bắp_Khỏe mạnh";
             translateMap["Tomato Spider Mite"] = "Cà chua_Nhện đỏ";
             translateMap["Tomato Leaf Mold"] = "Cà chua_Mốc xám";
             translateMap["Tomato_Yellow Leaf Curl Virus"] = "Cà chua_Xoăn vàng lá";
-            translateMap["Soy_Frogeye_Leaf_Spot"] = "Đậu nành_Đốm lá";
-            translateMap["Soy_Downy_Mildew"] = "Đậu nành_Sương mai";
+            translateMap["Soy_Frogeye_Leaf_Spot"] = "Đậu nành_Đốm mắt ếch";
+            translateMap["Soy_Downy_Mildew"] = "Đậu nành_Đốm Phấn";
             translateMap["Maize_Ravi_Corn_Rust"] = "Ngô_Gỉ ngô";
             translateMap["Maize_Healthy"] = "Ngô_Khỏe mạnh";
-            translateMap["Maize_Grey_Leaf_Spot"] = "Ngô_Đốm xám";
-            translateMap["Maize_Lethal_Necrosis"] = "Ngô_Hoại tử";
+            translateMap["Maize_Grey_Leaf_Spot"] = "Ngô_Đốm lá";
+            translateMap["Maize_Lethal_Necrosis"] = "Ngô_Sọc lá";
             translateMap["Soy_Healthy"] = "Đậu nành_Khỏe mạnh";
-            translateMap["Cabbage Black Rot"] = "Cải bắp_Thối đen   ";
+            translateMap["Cabbage Black Rot"] = "Cải bắp_Thối đen";
         }
     }
 
@@ -99,7 +99,12 @@ class AIServices(
         Log.d(TAG, "Predict done!");
 
         val result: ArrayList<HashMap<String, String>> = ArrayList();
+
         for (category: Category in categories) {
+
+            val score = category.score * 100;
+            if (score == 0.toFloat()) continue;
+
             val diseaseInfoMapped = translateMap[category.label];
             val diseaseInfo = diseaseInfoMapped!!.split("_", ignoreCase = true, limit = 2);
 
@@ -109,11 +114,11 @@ class AIServices(
                 if (size == 1) {
                     prediction["plantName"] = diseaseInfo[0];
                     prediction["diseaseName"] = diseaseInfo[0];
-                    prediction["percent"] = (category.score * 100).toString();
+                    prediction["percent"] = "%.2f".format(score);
                 } else {
                     prediction["plantName"] = diseaseInfo[0];
                     prediction["diseaseName"] = diseaseInfo[1];
-                    prediction["percent"] = (category.score * 100).toString();
+                    prediction["percent"] = "%.2f".format(score);
                 }
 
                 result.add(prediction);

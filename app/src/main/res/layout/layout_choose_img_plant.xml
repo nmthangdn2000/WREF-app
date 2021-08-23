@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/layout_choose_img_plant"
-    android:paddingHorizontal="20dp">
+    android:paddingHorizontal="20dp"
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
