@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -28,6 +31,8 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
 
@@ -45,6 +50,9 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
     private RecyclerView rcvProcess, rcvProductivityPrediction;
     private BarChart myBarChart;
     private ImageView imgTitle;
+    private AutoCompleteTextView dropdownDistrict, dropdownSoil, dropdownTree;
+    private TextInputEditText inputLandArea;
+    private Button btnGuess;
 
     private ArrayList<CropYieldModel> cropYieldModelsArr;
     private CropYieldAdapter cropYieldAdapter;
@@ -58,6 +66,7 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
         mappingView();
         setUpToolBar();
         addDataProcess();
+        setUpDropdown();
         addDataPP();
         addBarChart();
     }
@@ -104,11 +113,35 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
         rcvProductivityPrediction = (RecyclerView) findViewById(R.id.rcvProductivityPrediction);
         myBarChart = (BarChart) findViewById(R.id.myBarChart);
         imgTitle = (ImageView) findViewById(R.id.imgTitle);
+        dropdownDistrict = (AutoCompleteTextView) findViewById(R.id.dropdownDistrict);
+        dropdownTree = (AutoCompleteTextView) findViewById(R.id.dropdownTree);
+        dropdownSoil = (AutoCompleteTextView) findViewById(R.id.dropdownSoil);
+        inputLandArea = (TextInputEditText) findViewById(R.id.inputLandArea);
+        btnGuess = (Button) findViewById(R.id.btnGuess);
+
+        btnGuess.setOnClickListener(this);
+        inputLandArea.setHint("Nhập diện tích");
+        inputLandArea.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Log.d(TAG, "onFocusChange: " + hasFocus);
+                if (hasFocus)
+                    inputLandArea.setHint("");
+                else
+                    inputLandArea.setHint("Nhập diện tích");
+            }
+        });
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.btnGuess:
+                showDialog();
+                break;
+            default:
+                break;
+        }
     }
     private void addDataProcess() {
         rcvProcess.setHasFixedSize(true);
@@ -230,6 +263,35 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
         public MyBarChartRenderer(BarDataProvider chart, ChartAnimator animator, ViewPortHandler viewPortHandler) {
             super(chart, animator, viewPortHandler);
         }
+
+    }
+
+    private void setUpDropdown() {
+        String[] district = getResources().getStringArray(R.array.district);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter(getApplicationContext(), R.layout.dropdown_item_district, district);
+        dropdownDistrict.setAdapter(arrayAdapter);
+
+        String[] tree = getResources().getStringArray(R.array.tree);
+        ArrayAdapter<String> arrayAdapterTree = new ArrayAdapter(getApplicationContext(), R.layout.dropdown_item_district, tree);
+        dropdownTree.setAdapter(arrayAdapterTree);
+
+        String[] soil = getResources().getStringArray(R.array.soil);
+        ArrayAdapter<String> arrayAdapterSoil = new ArrayAdapter(getApplicationContext(), R.layout.dropdown_item_district, soil);
+        dropdownSoil.setAdapter(arrayAdapterSoil);
+    }
+
+    private void showDialog() {
+        String district, tree, soil, andArea;
+        district = dropdownDistrict.getText().toString();
+        tree = dropdownTree.getText().toString();
+        soil = dropdownSoil.getText().toString();
+        andArea = inputLandArea.getText().toString();
+        Log.d(TAG, "showDialog: "+ district + " "+ tree + " "+ soil + " "+ andArea + " ");
+        new MaterialAlertDialogBuilder(this)
+                .setTitle("Kết quả dự đoán")
+                .setMessage("10000 tấn")
+                .setPositiveButton("Ok", null)
+                .show();
 
     }
 }

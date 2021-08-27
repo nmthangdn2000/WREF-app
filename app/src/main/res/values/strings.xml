@@ -16,4 +16,29 @@
 
     <string name="demo_text_1">Trong gia đoạn <b>Tiền thu hoạch</b></string>
     <string name="demo_text_2"><![CDATA[EMOTION Driver5- UNCERTAINTY/VARIETY (Surprise, Diversity, Challenge,<font color="yellow">Không phát hiện </font>bệnh cây, Wild]]></string>
+
+    <string-array name="district">
+        <item>Quận Hải Châu</item>
+        <item>Quận Cẩm Lệ</item>
+        <item>Quận Thanh Khê</item>
+        <item>Quận Liên Chiểu</item>
+        <item>Quận Ngũ Hành Sơn</item>
+        <item>Quận Sơn Trà</item>
+        <item>Huyện Hòa Vang</item>
+    </string-array>
+
+    <string-array name="tree">
+        <item>Cây lúa</item>
+        <item>Cây đậu</item>
+        <item>Cây mè</item>
+        <item>Cây ngô</item>
+        <item>Cây cà chua</item>
+        <item>Cây dưa leo</item>
+    </string-array>
+
+    <string-array name="soil">
+        <item>Đát cát</item>
+        <item>Đát sét</item>
+        <item>Đát thịt</item>
+    </string-array>
 </resources>
