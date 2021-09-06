@@ -30,26 +30,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WREF"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Main.More.AllHavestHelperActivity"/>
-        <activity android:name=".Main.More.HarvesthelperActivity"/>
-        <activity android:name=".Main.Prediction.DiseaseDetail" />
-        <activity android:name=".Main.More.CropYieldActivity" />
-        <activity android:name=".Main.MapActivity" />
-        <activity android:name=".Main.DetailWeatherFragment" />
-        <activity android:name=".Main.More.ItemThemeAgriActivity" />
-        <activity android:name=".Main.More.ProductAgriActivity" />
-        <activity android:name=".Main.More.ThemeAgriActivity" />
-        <activity android:name=".Main.More.SearchActivity" />
-        <activity android:name=".SplashActivity">
+        <activity android:name=".MainScreen.Havest.AllHavestHelperActivity"/>
+        <activity android:name=".MainScreen.Havest.HarvesthelperActivity"/>
+        <activity android:name="thang.com.wref.CameraPredictionScreen.Prediction.DiseaseDetail" />
+        <activity android:name=".MainScreen.Havest.CropYieldActivity" />
+        <activity android:name=".MainScreen.Map.MapActivity" />
+        <activity android:name=".MainScreen.Weather.DetailWeatherFragment" />
+        <activity android:name=".MainScreen.Havest.ItemThemeAgriActivity" />
+        <activity android:name=".MainScreen.Havest.ProductAgriActivity" />
+        <activity android:name=".MainScreen.Havest.ThemeAgriActivity" />
+        <activity android:name=".MainScreen.SearchActivity" />
+        <activity android:name=".SplashScreen.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login.RegisterActivity" />
-        <activity android:name=".Login.LoginActivity" />
-        <activity android:name=".Main.PostNewsActivity" />
+        <activity android:name=".LoginScreen.RegisterActivity" />
+        <activity android:name=".LoginScreen.LoginActivity" />
+        <activity android:name=".StoriesScreen.PostNewsActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -61,7 +61,7 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainScreen.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

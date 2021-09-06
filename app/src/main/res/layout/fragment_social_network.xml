@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Main.SocialNetworkFragment"
+    tools:context=".StoriesScreen.SocialNetworkFragment"
     android:background="#C9EBEB">
     <com.sothree.slidinguppanel.SlidingUpPanelLayout
         android:id="@+id/SlidingUpPanelLayout"
@@ -94,7 +94,7 @@
                                 android:layout_height="200dp"
                                 android:padding="10dp"
                                 android:background="@drawable/shadow_linearlayout">
-                                <thang.com.wref.Animation.HorizontalOverScrollView
+                                <thang.com.wref.Components.Animation.HorizontalOverScrollView
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:fillViewport="true"
@@ -154,7 +154,7 @@
                                                 android:layout_height="match_parent" />
                                         </RelativeLayout>
                                     </LinearLayout>
-                                </thang.com.wref.Animation.HorizontalOverScrollView>
+                                </thang.com.wref.Components.Animation.HorizontalOverScrollView>
                             </LinearLayout>
                         </RelativeLayout>
                         <!--                -->

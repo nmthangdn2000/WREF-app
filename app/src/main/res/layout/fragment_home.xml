@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Main.HomeFragment">
+    tools:context=".MainScreen.HomeFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -147,12 +147,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
                     <View
                         android:id="@+id/gradientMap"
-                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/gradient_view_googlemap"/>
+                        android:background="@drawable/gradient_view_googlemap"
+                        android:foreground="?android:attr/selectableItemBackground" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
