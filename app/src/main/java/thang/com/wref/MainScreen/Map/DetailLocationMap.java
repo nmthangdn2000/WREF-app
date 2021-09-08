@@ -136,6 +136,7 @@ public class DetailLocationMap extends Fragment {
         rcvInfTouchLocation.setLayoutManager(linearLayoutManager);
 
     }
+    // get weather data with location from api
     private void getData(){
         lottieLoading.setVisibility(View.VISIBLE);
         dataChart.setVisibility(View.INVISIBLE);
@@ -168,10 +169,11 @@ public class DetailLocationMap extends Fragment {
                     imgWeather.setImageResource(iconWeather.IconWeather(weatherLocationModel.getWeather().getCurrent()
                             .getWeather()[0].getMain()));
                     addDataChar();
-                    Log.d(TAG, "cai lozz: "+weatherLocationModel);
+                    Log.d(TAG, "weather: "+weatherLocationModel);
                     setDataDetailWeather.setDataDetailWeather(weatherLocationModel);
                 }
                 call.cancel();
+                // hidden icon loading
                 lottieLoadingData.pauseAnimation();
                 lottieLoadingData.setVisibility(View.GONE);
                 rltData.setVisibility(View.VISIBLE);
@@ -183,12 +185,14 @@ public class DetailLocationMap extends Fragment {
                 Log.d(TAG, "onFailure: "+t.getMessage());
             }
         });
+        // set data to recyclerview
         detailLocationMapAdapter = new DetailLocationMapAdapter(context, arrImg);
         rcvInfTouchLocation.setAdapter(detailLocationMapAdapter);
     }
     public WeatherLocationModel getWeather(){
         return weatherLocationModel;
     }
+    // set data to chart
     public void addDataChar(){
         tack.clear();
         entries.clear();

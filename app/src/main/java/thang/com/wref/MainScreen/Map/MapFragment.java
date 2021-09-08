@@ -490,7 +490,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, View.On
                         rltDataCharBottm.setVisibility(View.INVISIBLE);
                         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
-                        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("cái lozz");
+                        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("aaa");
                     }
                 }
             }

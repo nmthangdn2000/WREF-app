@@ -140,6 +140,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 break;
         }
     }
+    // set event onclick in item stories
     private void onClickStories(){
         mListener = new StoriesAdapter.onCLickStories() {
             @Override
@@ -208,6 +209,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
         });
 
     }
+    // move to PostNewsActivity
     private void clickPostNews(){
         Intent intent = new Intent(getContext().getApplicationContext(), PostNewsActivity.class);
         startActivityForResult(intent, REQUEST_CODE_EXAMPLE);
@@ -231,6 +233,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     private void addStoriesAdapter(){
         storiesArr.clear();
         storiesRetrofit = retrofit.create(StoriesRetrofit.class);
+        // get data stories from api
         Call<List<StoriesModels>> listCall = storiesRetrofit.getStories(sharedPreferencesManagement.getTOKEN());
         listCall.enqueue(new Callback<List<StoriesModels>>() {
             @Override
@@ -240,6 +243,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                     return;
                 }else{
                     List<StoriesModels> storiesModels = response.body();
+                    // Select stories of logged in user to the top array
                     for(StoriesModels story : storiesModels){
                         if(story.getUsers().getId().equals(sharedPreferencesManagement.getID())) { // lấy story userLogin để đầu mảng
                             storiesArr.add(story);
@@ -262,12 +266,14 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 Log.d(TAG, "onFailure: "+t.getMessage());
             }
         });
+        // set array stories to recyclerview
         storiesAdapter = new StoriesAdapter(storiesArr, getContext().getApplicationContext(), mListener);
         rcvStories.setAdapter(storiesAdapter);
     }
     private void addNewsAdapter(){
         newsArr.clear();
         newsRetrofit = retrofit.create(NewsRetrofit.class);
+        // get new Posts from api
         Call<List<NewsModels>> listCall = newsRetrofit.getNews(sharedPreferencesManagement.getTOKEN());
         listCall.enqueue(new Callback<List<NewsModels>>() {
             @Override
@@ -292,6 +298,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 call.cancel();
             }
         });
+        // set array Posts to recyclerview
         newsAdapter = new NewsAdapter(newsArr, getContext().getApplicationContext(), mListenerNews);
         rcvNews.setAdapter(newsAdapter);
     }
@@ -309,6 +316,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
     }
     private void getStories(int position){
         fragmentStories.clear();
+        // get stories from api
         storiesRetrofit = retrofit.create(StoriesRetrofit.class);
         Call<List<StoriesModels>> listCall = storiesRetrofit.getStories(sharedPreferencesManagement.getTOKEN());
         listCall.enqueue(new Callback<List<StoriesModels>>() {
@@ -319,6 +327,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                     return;
                 }else{
                     List<StoriesModels> storiesModels = response.body();
+                    // add stories to fragmentStories
                     for(StoriesModels story : storiesModels){
                         if(story.getUsers().getId().equals(sharedPreferencesManagement.getID())){
                             ArrayList<StoriesModels> stories = new ArrayList<>();
@@ -345,10 +354,12 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 Log.d(TAG, "onFailure: "+t.getMessage());
             }
         });
+        // set array fragmentStories to StoriesViewpaerAdapter
         storiesViewpaerAdapter = new StoriesViewpaerAdapter(getFragmentManager(), getLifecycle(), fragmentStories);
         viewPager2story.setAdapter(storiesViewpaerAdapter);
         viewPager2story.setCurrentItem(position,false);
     }
+    // listen SlidingUpPanel open or close
     private void clospaneSlidingUpPanel(){
         slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
@@ -361,6 +372,7 @@ public class SocialNetworkFragment extends Fragment implements View.OnClickListe
                 if(newState == SlidingUpPanelLayout.PanelState.COLLAPSED){
                     Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.bottom_up);
                     animation.setDuration(500);
+                    // open SlidingUpPane then hidden meowBottomNavigation
                     meowBottomNavigation.setVisibility(View.VISIBLE);
                     meowBottomNavigation.startAnimation(animation);
                     slidingUpPanelLayout.setOverlayed(true);

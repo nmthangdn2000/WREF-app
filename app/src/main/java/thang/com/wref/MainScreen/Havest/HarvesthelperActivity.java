@@ -117,7 +117,10 @@ public class HarvesthelperActivity extends AppCompatActivity {
 
     private void getData(){
         cropsModelsArr = new ArrayList<>();
+        // get data from api
         harvesthelperRetrofit = retrofit.create(HarvesthelperRetrofit.class);
+        // sharedPreferencesManagement.getTOKEN() : get token user authentication
+        // idPlant : required params  for api
         Call<HarvesthelperModel> call = harvesthelperRetrofit.getByID(sharedPreferencesManagement.getTOKEN(), idPlant);
         call.enqueue(new Callback<HarvesthelperModel>() {
             @Override
@@ -127,6 +130,7 @@ public class HarvesthelperActivity extends AppCompatActivity {
                     return;
                 }else{
                     HarvesthelperModel harvesthelperModel = response.body();
+                    // set data to view after get data success
                     cropsModelsArr.add(new CropsModel("Loại cây trồng", harvesthelperModel.getName()));
                     cropsModelsArr.add(new CropsModel("Sơ lược về cây trồng", harvesthelperModel.getDescription()));
                     cropsModelsArr.add(new CropsModel("Mặt trời", harvesthelperModel.getOptimalSun()));
@@ -138,10 +142,11 @@ public class HarvesthelperActivity extends AppCompatActivity {
                     cropsModelsArr.add(new CropsModel("Khoảng cách", harvesthelperModel.getSpacing()));
                     cropsModelsArr.add(new CropsModel("Tưới nước", harvesthelperModel.getWatering()));
                     cropsModelsArr.add(new CropsModel("Thu hoạch", harvesthelperModel.getHarvesting()));
-
+                    // set image
                     Glide.with(HarvesthelperActivity.this).load(
                             "https://res-5.cloudinary.com/do6bw42am/image/upload/c_scale,f_auto,h_300/v1/"+harvesthelperModel.getImageUrl()
                     ).into(imgTitle);
+                    // hidden loading icon
                     loadPage.setVisibility(View.GONE);
                     lottieLoadingData.clearAnimation();
                     cdlMain.setVisibility(View.VISIBLE);
@@ -156,6 +161,7 @@ public class HarvesthelperActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
+        // set data to recyclerview
         harvesthelperAdapter = new HarvesthelperAdapter(cropsModelsArr, this);
         rcvHaverst.setAdapter(harvesthelperAdapter);
     }

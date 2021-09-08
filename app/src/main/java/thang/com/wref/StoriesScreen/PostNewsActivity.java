@@ -146,6 +146,7 @@ public class PostNewsActivity extends AppCompatActivity implements View.OnClickL
         flexboxLayoutManager.setAlignItems(AlignItems.STRETCH);
         rcvImg.setLayoutManager(flexboxLayoutManager);
     }
+    // get path image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -163,15 +164,17 @@ public class PostNewsActivity extends AppCompatActivity implements View.OnClickL
         if(btnLocation.getTag() == null)
             Toast.makeText(this, "Bạn chưa chọn địa điểm", Toast.LENGTH_SHORT).show();
         else {
+            // prepare necessary data
             RequestBody text = RequestBody.create(edit_document.getText().toString(), MultipartBody.FORM);
             RequestBody location = RequestBody.create(btnLocation.getTag().toString(), MultipartBody.FORM);
-
+            // UAttach multiple photos
             List<MultipartBody.Part> parts = new ArrayList<>();
             for (int i = 0; i < pathArr.size(); i++) {
                 File file = new File(pathArr.get(i));
                 RequestBody body = RequestBody.create(file, MediaType.parse("multipart/form-data"));
                 parts.add(MultipartBody.Part.createFormData("image", pathArr.get(i), body));
             }
+            // sent data to api
             newsRetrofit = retrofit.create(NewsRetrofit.class);
             Call<ErrModel> errModelCall = newsRetrofit.postPossts(token, location, text, parts);
             errModelCall.enqueue(new Callback<ErrModel>() {
@@ -199,11 +202,14 @@ public class PostNewsActivity extends AppCompatActivity implements View.OnClickL
             });
         }
     }
+
+    // show image selected to view
     private void showImg(){
         imgFromGallyeAdapter = new ImgFromGallyeAdapter(mSelected, PostNewsActivity.this);
         rcvImg.setAdapter(imgFromGallyeAdapter);
         rcvImg.setVisibility(View.VISIBLE);
     }
+    // get image from photo library
     private void getImage(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -217,7 +223,7 @@ public class PostNewsActivity extends AppCompatActivity implements View.OnClickL
             pickImgFromGalley();
         }
     }
-
+    // open all image in photo library
     private void pickImgFromGalley() {
         Matisse.from(PostNewsActivity.this)
                 .choose(MimeType.ofAll())
@@ -274,6 +280,7 @@ public class PostNewsActivity extends AppCompatActivity implements View.OnClickL
             }
         }
     }
+    // below code is used to get absolute path of the image
     public static String getPathFromURI(final Context context, final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;

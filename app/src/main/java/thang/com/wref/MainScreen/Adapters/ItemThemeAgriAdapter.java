@@ -39,7 +39,7 @@ public class ItemThemeAgriAdapter extends RecyclerView.Adapter<ItemThemeAgriAdap
         View view = layoutInflater.inflate(R.layout.item_in_theme_agri, parent,false);
         return new ItemThemeAgriAdapter.ViewHodler(view);
     }
-
+    // set data to view (image, title, time)
     @Override
     public void onBindViewHolder(@NonNull ItemThemeAgriAdapter.ViewHodler holder, int position) {
         Glide.with(context).load(BASE_URL+"uploads/"+inforAgriModels.get(position).getImage()).centerCrop().fitCenter().into(holder.imgAgri);
@@ -63,7 +63,7 @@ public class ItemThemeAgriAdapter extends RecyclerView.Adapter<ItemThemeAgriAdap
             imgAgri = (RoundedImageView) itemView.findViewById(R.id.imgAgri);
             txtTitleAgri = (TextView) itemView.findViewById(R.id.txtTitleAgri);
             txtTime = (TextView) itemView.findViewById(R.id.txtTime);
-
+            // bouncing animation
             translationY = new SpringAnimation(itemView, SpringAnimation.TRANSLATION_Y).setSpring(
                     new SpringForce().setFinalPosition(0f)
                             .setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY)

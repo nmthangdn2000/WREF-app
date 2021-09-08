@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         mapping();
         setBottomNavigation();
     }
+
     private void mapping(){
         bottomNavigation = findViewById(R.id.BottomNavigation);
         viewPager2 = findViewById(R.id.ViewPager2);
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setBottomNavigation(){
+        // set icon to bottmnavigation
         bottomNavigation.add(new MeowBottomNavigation.Model(1, R.drawable.ic_baseline_map_24));
         bottomNavigation.add(new MeowBottomNavigation.Model(2, R.drawable.ic_newspaper_folded));
 //        bottomNavigation.add(new MeowBottomNavigation.Model(3, R.drawable.ic_baseline_cloud_queue_24));

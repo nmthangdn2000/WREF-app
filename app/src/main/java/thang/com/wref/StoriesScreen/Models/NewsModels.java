@@ -17,8 +17,8 @@ public class NewsModels {
     private String content;
     @SerializedName("media")
     private String[] media;
-    @SerializedName("Like")
-    private UserLikeModel[] Like;
+//    @SerializedName("Like")
+//    private UserLikeModel[] Like;
     @SerializedName("Comment")
     private int Comment;
     @SerializedName("create_at")
@@ -26,13 +26,12 @@ public class NewsModels {
     @SerializedName("update_at")
     private long update_at;
 
-    public NewsModels(String id, UsersModel idUser, LocationModel idLocation, String content, String[] media, UserLikeModel[] like, int comment, long create_at, long update_at) {
+    public NewsModels(String id, UsersModel idUser, LocationModel idLocation, String content, String[] media, int comment, long create_at, long update_at) {
         this.id = id;
         this.idUser = idUser;
         this.idLocation = idLocation;
         this.content = content;
         this.media = media;
-        Like = like;
         Comment = comment;
         this.create_at = create_at;
         this.update_at = update_at;
@@ -46,7 +45,6 @@ public class NewsModels {
                 ", idLocation=" + idLocation +
                 ", content='" + content + '\'' +
                 ", media=" + Arrays.toString(media) +
-                ", Like=" + Arrays.toString(Like) +
                 ", Comment=" + Comment +
                 ", create_at=" + create_at +
                 ", update_at=" + update_at +
@@ -91,14 +89,6 @@ public class NewsModels {
 
     public void setMedia(String[] media) {
         this.media = media;
-    }
-
-    public UserLikeModel[] getLike() {
-        return Like;
-    }
-
-    public void setLike(UserLikeModel[] like) {
-        Like = like;
     }
 
     public int getComment() {

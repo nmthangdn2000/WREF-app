@@ -101,6 +101,7 @@ public class LocationFragment extends Fragment {
     }
     private void getData(){
         locationRetrofit = retrofit.create(LocationRetrofit.class);
+        // get all location from api
         Call<List<LocationModel>> listCall = locationRetrofit.getAllLocation(sharedPreferencesManagement.getTOKEN());
         listCall.enqueue(new Callback<List<LocationModel>>() {
             @Override
@@ -124,6 +125,7 @@ public class LocationFragment extends Fragment {
                 Log.d(TAG, "onFailure: "+t.getMessage());
             }
         });
+        // set data to recyclerview
         locationAdapter = new LocationAdapter(arrlocationModels, getContext(), mListenenr);
         rcvLocation.setAdapter(locationAdapter);
     }

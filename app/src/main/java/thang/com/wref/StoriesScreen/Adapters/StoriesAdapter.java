@@ -47,6 +47,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         sharedPreferencesManagement = new SharedPreferencesManagement(context);
+        // check id user login for stories
         if(arrayList.get(position).getUsers().getId().equals(sharedPreferencesManagement.getID())){
             holder.txtUserName.setText("Tin của bạn");
         }else{
@@ -75,7 +76,7 @@ public class StoriesAdapter extends RecyclerView.Adapter<StoriesAdapter.ViewHold
             imgUserStories = (CircleImageView) itemView.findViewById(R.id.imgUserStories);
             txtUserName = (TextView) itemView.findViewById(R.id.txtUserName);
             imgStories = (RoundedImageView) itemView.findViewById(R.id.imgStories);
-
+            // bouncing animation
             translationX = new SpringAnimation(itemView, SpringAnimation.TRANSLATION_X).setSpring(
                     new SpringForce().setFinalPosition(0f)
                             .setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY)

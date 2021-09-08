@@ -17,6 +17,7 @@ public class SharedPreferencesManagement {
         sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
+    // save data của user sau khi login
     public void saveData(UsersModel usersModel){
         editor.putString(ID, usersModel.getId());
         editor.putString(USER_NAME, usersModel.getUsername());
@@ -25,6 +26,7 @@ public class SharedPreferencesManagement {
         editor.putString(TOKEN, "Bearer "+usersModel.getToken());
         editor.apply();
     }
+    // set location application current
     public void setLocation(float lati, float longti, String address){
         String[] strings = address.split(", ");
         String val = strings[1]+" - "+strings[2]+" - "+strings[3];

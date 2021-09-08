@@ -17,7 +17,7 @@ public class RecyclerViewAnimation {
     private static final float FLING_TRANSLATION_MAGNITUDE = 0.5f;
     private NestedScrollView nestedScrollView;
 
-
+    // bouncing animtion in recyclerview
     public void setAnimationRecyclerviewVertical(RecyclerView rcvItemThemeAgri, String adaper){
         rcvItemThemeAgri.setEdgeEffectFactory(new RecyclerView.EdgeEffectFactory(){
             @NonNull

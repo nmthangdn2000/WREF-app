@@ -14,11 +14,13 @@ public class IconWeather {
             return R.drawable.ic_sun_small;
         else return 0;
     }
+    // conver Temp to °C
     public String Temp(float max, float min){
         float c_max = max - 273;
         float c_min = min - 273;
         return (int) c_max + "/"+ (int) c_min + "°C";
     }
+    // change data from english to vietnamese
     public String typeWeather(String des){
         if(des.equals("moderate rain"))
             return "Mưa vừa";
@@ -28,6 +30,7 @@ public class IconWeather {
             return "Mưa nhỏ";
         else return "";
     }
+    // change data number to string
     public String wind_Deg(int deg){
         if(deg <= 75 )
             return "Đông bắc";

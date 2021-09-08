@@ -78,6 +78,9 @@ public class SplashActivity extends AppCompatActivity {
         logoName.startAnimation(animationUp);
     }
     private void getData(){
+        // call api user authentication
+        // if true move to Home Activity
+        // else false move to Login Activity
         userRetrofit = retrofit.create(UserRetrofit.class);
         Call<UsersModel> usersModelCall = userRetrofit.checkLogin(sharedPreferencesManagement.getTOKEN());
         usersModelCall.enqueue(new Callback<UsersModel>() {
@@ -111,7 +114,7 @@ public class SplashActivity extends AppCompatActivity {
     private void activitiLogin(){
         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-
+        // Animation
         Pair[] pairs = new Pair[2];
         pairs[0] = new Pair<View, String>(logoImg, "logo_img");
         pairs[1] = new Pair<View, String>(logoName, "logo_text");

@@ -254,7 +254,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         });
     }
-
+    // google map
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
@@ -263,7 +263,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setupGoogleMap();
         getLocationPermission();
     }
-
+    // type map (Temperature, Clouds, Precipitation)
     private void changeTypeMap(String mapName) {
         TileProvider tileProvider = new UrlTileProvider(256, 256) {
             @Override
@@ -348,6 +348,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             }
         }
     }
+    // ask for permission
     private void getLocationPermission() {
         if (ContextCompat.checkSelfPermission(MapActivity.this.getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -378,7 +379,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         e.printStackTrace();
                     }
                     String addressLine = addressesList.get(0).getAddressLine(0);
-
+                    // set current location to sharedPreferencesManagement
                     sharedPreferencesManagement.setLocation(lati, longti, addressLine);
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
@@ -432,6 +433,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
                 Log.d(TAG, "onPanelStateChanged: "+ newState);
                 if(newState == SlidingUpPanelLayout.PanelState.COLLAPSED){
+                    // when close SlidingUpPanelLayout
                     rltDataCharBottm.setVisibility(View.INVISIBLE);
                     iconsearch.setTag("location");
 //                    iconsearch.setImageResource(R.drawable.ic_baseline_location_on_24);
@@ -439,6 +441,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     getSupportActionBar().setDisplayShowHomeEnabled(false);
                     getSupportActionBar().setTitle("");
                 }else if(newState == SlidingUpPanelLayout.PanelState.EXPANDED){
+                    // when open full SlidingUpPanelLayout
                     if(rltDataCharBottm.getVisibility() != View.VISIBLE){
                         rltDataCharBottm.setVisibility(View.VISIBLE);
                         setSupportActionBar(toolbar);
@@ -447,11 +450,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         getSupportActionBar().setTitle(addressLocationInfor);
                     }
                 }else if(newState == SlidingUpPanelLayout.PanelState.ANCHORED){
+                    // when open 1/3 SlidingUpPanelLayout
                     if(rltDataCharBottm.getVisibility() == View.VISIBLE) {
                         rltDataCharBottm.setVisibility(View.INVISIBLE);
                         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                         getSupportActionBar().setDisplayShowHomeEnabled(false);
-                        getSupportActionBar().setTitle("cái lozz");
+                        getSupportActionBar().setTitle("aaa");
                     }
                 }
             }

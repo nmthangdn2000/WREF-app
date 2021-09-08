@@ -76,6 +76,7 @@ public class ThemeAgriActivity extends AppCompatActivity implements View.OnClick
 
         recyclerViewAnimation.setAnimationRecyclerviewVertical(rcvInforAgri, "agriAdapter");
     }
+    // set onclick in a item on recyclerview
     private void eventOnClick() {
         mListenner = new AgriAdapter.onClickItemAgri() {
             @Override
@@ -94,6 +95,7 @@ public class ThemeAgriActivity extends AppCompatActivity implements View.OnClick
     }
     private void getData(){
         agriModelsArr= new ArrayList<>();
+        //get data from api
         inforAgriRetrofit = retrofit.create(InforAgriRetrofit.class);
         Call<List<ThemeAgriModel>> listCall = inforAgriRetrofit.getThemeAgri(token);
         listCall.enqueue(new Callback<List<ThemeAgriModel>>() {
@@ -118,6 +120,7 @@ public class ThemeAgriActivity extends AppCompatActivity implements View.OnClick
                 call.cancel();
             }
         });
+        // set data to recylerview
         agriAdapter = new AgriAdapter(agriModelsArr, this, mListenner);
         rcvInforAgri.setAdapter(agriAdapter);
     }

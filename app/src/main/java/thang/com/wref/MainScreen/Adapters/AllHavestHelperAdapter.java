@@ -21,6 +21,7 @@ import thang.com.wref.MainScreen.Models.HarvesthelperModel;
 import thang.com.wref.R;
 
 public class AllHavestHelperAdapter extends RecyclerView.Adapter<AllHavestHelperAdapter.ViewHodler>{
+    private final static String TAG = "AllHavestHelperAdapter";
     private ArrayList<HarvesthelperModel> arrayList;
     private Context context;
 
@@ -49,7 +50,7 @@ public class AllHavestHelperAdapter extends RecyclerView.Adapter<AllHavestHelper
 
     @Override
     public int getItemCount() {
-        Log.d("aaa", "getItemCount: " + arrayList.size());
+        Log.d(TAG, "getItemCount: " + arrayList.size());
         return arrayList.size();
     }
 
@@ -64,7 +65,7 @@ public class AllHavestHelperAdapter extends RecyclerView.Adapter<AllHavestHelper
             imgAgri = (RoundedImageView) itemView.findViewById(R.id.imgAgri);
             txtTitleAgri = (TextView) itemView.findViewById(R.id.txtTitleAgri);
             txtDesPlant = (TextView) itemView.findViewById(R.id.txtDesPlant);
-
+            // bouncing animtion
             translationY = new SpringAnimation(itemView, SpringAnimation.TRANSLATION_Y).setSpring(
                     new SpringForce().setFinalPosition(0f)
                             .setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY)

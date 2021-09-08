@@ -39,7 +39,7 @@ public class DetailLocationMapAdapter extends RecyclerView.Adapter<DetailLocatio
 
     @Override
     public void onBindViewHolder(@NonNull DetailLocationMapAdapter.ViewHodler holder, int position) {
-        Log.d(TAG, "onBindViewHolder: "+imgURl.get(position));
+        Log.d(TAG, "onBindViewHolder: " + imgURl.get(position));
         Glide.with(context).load(BASE_URL+"uploads/"+imgURl.get(position)).centerCrop().fitCenter().into(holder.img);
     }
     public int getImage(String imageName) {

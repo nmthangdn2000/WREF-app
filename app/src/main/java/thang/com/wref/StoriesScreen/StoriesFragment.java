@@ -59,6 +59,7 @@ public class StoriesFragment extends Fragment implements StoriesProgressView.Sto
     long pressTime = 0L;
     long limit = 500L;
     private View.OnTouchListener onTouchListener = new View.OnTouchListener() {
+        // touch handling in fragment stories
         @Override
         public boolean onTouch(View v, MotionEvent event) {
             switch (event.getAction()) {
@@ -134,6 +135,7 @@ public class StoriesFragment extends Fragment implements StoriesProgressView.Sto
         stories.setStoryDuration(4000L); // <- set a story duration
         stories.setStoriesListener(this);
     }
+
     private void setUpTouch(){
         btnClose = (LinearLayout) view.findViewById(R.id.btnClose);
         reverse = (View) view.findViewById(R.id.reverse);
@@ -174,6 +176,7 @@ public class StoriesFragment extends Fragment implements StoriesProgressView.Sto
                 .into(new CustomTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        // set background according to the main color of the image
                         imageStories.setImageBitmap(resource);
                         palette = Palette.from(resource).generate();
                         Palette.Swatch swatch = palette.getMutedSwatch();
@@ -196,6 +199,7 @@ public class StoriesFragment extends Fragment implements StoriesProgressView.Sto
     public void onNext() {
         if(counter < arrayList.get(0).getMedia().length){
             ++counter;
+            // set background according to the main color of the image
             Glide.with(getContext()).asBitmap().load(BASE_URL+"uploads/"+arrayList.get(0).getMedia()[counter])
                     .into(new CustomTarget<Bitmap>() {
                         @Override
@@ -224,6 +228,7 @@ public class StoriesFragment extends Fragment implements StoriesProgressView.Sto
     public void onPrev() {
         if(counter>0){
             --counter;
+            // set background according to the main color of the image
             Glide.with(getContext()).asBitmap().load(BASE_URL+"uploads/"+arrayList.get(0).getMedia()[counter])
                     .into(new CustomTarget<Bitmap>() {
                         @Override

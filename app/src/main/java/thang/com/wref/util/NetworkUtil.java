@@ -10,6 +10,7 @@ import thang.com.wref.BuildConfig;
 import static thang.com.wref.util.Constants.BASE_URL;
 
 public class NetworkUtil {
+    // config Retrofit library
     private Retrofit retrofit;
     public Retrofit getRetrofit(){
         OkHttpClient.Builder okhttpBuilder = new OkHttpClient.Builder();

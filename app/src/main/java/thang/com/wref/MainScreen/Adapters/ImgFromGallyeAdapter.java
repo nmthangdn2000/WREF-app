@@ -18,6 +18,7 @@ import java.util.List;
 import thang.com.wref.R;
 
 public class ImgFromGallyeAdapter extends RecyclerView.Adapter<ImgFromGallyeAdapter.ViewHodler>{
+    private static final String TAG = "ImgFromGallyeAdapter";
     private List<Uri> arrPath;
     private Context context;
 
@@ -36,7 +37,8 @@ public class ImgFromGallyeAdapter extends RecyclerView.Adapter<ImgFromGallyeAdap
 
     @Override
     public void onBindViewHolder(@NonNull ImgFromGallyeAdapter.ViewHodler holder, int position) {
-        Log.d("cccccc", "onBindViewHolder: "+arrPath.get(position));
+        Log.d(TAG, "onBindViewHolder: " + arrPath.get(position));
+        // set image to view
         Glide.with(context).load(arrPath.get(position))
                 .centerCrop().fitCenter().into(holder.imgGalley);
     }

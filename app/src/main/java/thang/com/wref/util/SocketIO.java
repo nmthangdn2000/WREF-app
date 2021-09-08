@@ -8,7 +8,7 @@ import io.socket.client.Socket;
 import static thang.com.wref.util.Constants.BASE_URL;
 
 public class SocketIO {
-
+    // connect socket io server
     public static Socket socket;
 
     public void ConnectSocket(){

@@ -194,6 +194,7 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
 
 
     private void setDataIn5Day(){
+        // set rainfall data for the next 5 days
         animationSunrise(iconWeather.IconWeather(detailWeatherModel.getCurrent().getWeather()[0].getMain()));
 
         txtWeatherCurrent.setText(timeUtil.dayStringFormat(detailWeatherModel.getCurrent().getDt())+"-"+iconWeather.typeWeather(detailWeatherModel.getCurrent().getWeather()[0].getDescription()));
@@ -214,6 +215,8 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
         imhWeather3.setImageResource(iconWeather.IconWeather(dailyWeathers.get(2).getWeather()[0].getMain()));
     }
     private void getData(){
+        // get data from api
+        // require params : token, longitude, latitude
         Call<DetailWeatherModel> detailWeatherModelCall = weatherRetrofit.getWeather(sharedPreferencesManagement.getTOKEN(), sharedPreferencesManagement.getLAT(), sharedPreferencesManagement.getLONG());
         detailWeatherModelCall.enqueue(new Callback<DetailWeatherModel>() {
             @Override
@@ -240,6 +243,7 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
         });
 
     }
+    // get 24h rainfall data to
     private void getData24h(){
         Call<DetailWeatherModel> detailWeatherModelCall = weatherRetrofit.getWeather24h(sharedPreferencesManagement.getTOKEN(), sharedPreferencesManagement.getLAT(), sharedPreferencesManagement.getLONG());
         detailWeatherModelCall.enqueue(new Callback<DetailWeatherModel>() {
@@ -259,12 +263,14 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
                         cal.setTime(new Date(detailWeatherModel.getHourly()[i].getDt()));
                         oneHourBack = cal.get(Calendar.HOUR_OF_DAY);
                         Log.d(TAG, "onResponse: "+oneHourBack);
+                        // convert to °C
                         entries.add(new Entry(i+1, detailWeatherModel.getHourly()[i].getTemp()-273, "°C"));
+                        // format hour
                         if(oneHourBack > 9 )
                             sDay.add(oneHourBack+":00");
                         else sDay.add("0"+oneHourBack+":00");
                     }
-                    setupChar();
+                    setupChart();
                     lottieLoadingData.pauseAnimation();
                     splashWeather.setVisibility(View.GONE);
                     layoutRltWeather.setVisibility(View.VISIBLE);
@@ -289,7 +295,8 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
         txtDesWeather.setText(val);
         txtNhietdo.setText((int) c+"°C");
     }
-    private void setupChar(){
+    private void setupChart(){
+        // create a rainfall chart
         Legend legend = chart.getLegend();
         legend.setEnabled(false);
 
@@ -336,7 +343,7 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
         chart.setVisibleXRangeMaximum(5);
         chart.setData(lineData);
     }
-
+    // sunrise animation
     private void animationSunrise(int img){
 //        if(img == 1)
 //            imgSunWeather.setImageResource(R.drawable.ic_rain_sun_small);
@@ -358,6 +365,7 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
             // Create animator without using curved path
         }
     }
+    // sunset animation
     private void animationSundown(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             path2 = new Path();
@@ -374,7 +382,7 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
 
         }
     }
-    // bắt đầu animation
+    // start animation
     private void startAnimationWeather(Path path, int fromColor, int toColor){
         ObjectAnimator animator = ObjectAnimator.ofFloat(imgSunWeather, View.X, View.Y, path);
         animator.setDuration(2000);
@@ -398,6 +406,7 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
         animatorSet.playTogether(animator, valueAnimator);
         animatorSet.start();
     }
+
     private void changeBackgroundImg(int background){
         Animation fadeOut = AnimationUtils.loadAnimation(DetailWeatherFragment.this, R.anim.fade_out);
         bacgroundImgWeather.startAnimation(fadeOut);
@@ -420,7 +429,7 @@ public class DetailWeatherFragment extends AppCompatActivity implements View.OnC
             }
         });
     }
-    // chuyển đỗi dp sang px
+    // conver dp to px
     private int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }

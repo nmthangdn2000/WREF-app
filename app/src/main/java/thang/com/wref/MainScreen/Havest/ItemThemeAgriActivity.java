@@ -87,7 +87,11 @@ public class ItemThemeAgriActivity extends AppCompatActivity implements View.OnC
     }
     private void getData() {
         inforAgriModelsArr = new ArrayList<>();
+        // get data from api
+
         inforAgriRetrofit = retrofit.create(InforAgriRetrofit.class);
+        // token: get token user authentication
+        // themeAgriId: required params  for api
         Call<List<InforAgriModel>> listCall = inforAgriRetrofit.getInforAgri(token, themeAgriId);
         listCall.enqueue(new Callback<List<InforAgriModel>>() {
             @Override
@@ -111,6 +115,7 @@ public class ItemThemeAgriActivity extends AppCompatActivity implements View.OnC
                 Log.d(TAG, "onFailure: "+ t.getMessage());
             }
         });
+        // set data to recyclerview
         itemThemeAgriAdapter = new ItemThemeAgriAdapter(inforAgriModelsArr, this);
         rcvItemThemeAgri.setAdapter(itemThemeAgriAdapter);
     }

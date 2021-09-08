@@ -82,6 +82,8 @@ public class AllHavestHelperActivity extends AppCompatActivity {
     private void getData(){
         harvesthelperModelsArr = new ArrayList<>();
         harvesthelperRetrofit = retrofit.create(HarvesthelperRetrofit.class);
+        // get data from api
+        // sharedPreferencesManagement.getTOKEN() : get token user authentication
         Call<List<HarvesthelperModel>> listCall = harvesthelperRetrofit.getAll(sharedPreferencesManagement.getTOKEN());
         listCall.enqueue(new Callback<List<HarvesthelperModel>>() {
             @Override
@@ -105,6 +107,7 @@ public class AllHavestHelperActivity extends AppCompatActivity {
                 call.cancel();
             }
         });
+        // set data to recyclerview
         adapter = new AllHavestHelperAdapter(harvesthelperModelsArr, this);
         rcvAllHavestHelper.setAdapter(adapter);
     }

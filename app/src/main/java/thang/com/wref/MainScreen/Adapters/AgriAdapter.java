@@ -20,6 +20,7 @@ import thang.com.wref.MainScreen.Models.AgriModel;
 import thang.com.wref.R;
 
 public class AgriAdapter extends RecyclerView.Adapter<AgriAdapter.ViewHodler>{
+    private static final String TAG = "AgriAdapter";
     private ArrayList<AgriModel> agriModels;
     private Context context;
     private onClickItemAgri mListenner;
@@ -42,7 +43,7 @@ public class AgriAdapter extends RecyclerView.Adapter<AgriAdapter.ViewHodler>{
     public void onBindViewHolder(@NonNull AgriAdapter.ViewHodler holder, int position) {
 //        Glide.with(context).load(agriModels.get(position).getImage()).fitCenter().centerCrop().into(holder.imgAgri);
         holder.txtTitleAgri.setText(agriModels.get(position).getTitle());
-        Log.d("aaaaa", "onBindViewHolder: "+agriModels.get(position).getTitle());
+        Log.d(TAG, "onBindViewHolder: "+agriModels.get(position).getTitle());
     }
 
     @Override
@@ -61,7 +62,7 @@ public class AgriAdapter extends RecyclerView.Adapter<AgriAdapter.ViewHodler>{
             imgAgri = (ImageView) itemView.findViewById(R.id.imgAgri);
             txtTitleAgri = (TextView) itemView.findViewById(R.id.txtTitleAgri);
             lnlItemAgri = (LinearLayout) itemView.findViewById(R.id.lnlItemAgri);
-
+            // set bouncing animtion
             translationY = new SpringAnimation(itemView, SpringAnimation.TRANSLATION_Y).setSpring(
                     new SpringForce().setFinalPosition(0f)
                             .setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY)

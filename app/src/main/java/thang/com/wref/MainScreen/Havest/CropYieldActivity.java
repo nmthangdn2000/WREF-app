@@ -140,6 +140,7 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
                 break;
         }
     }
+    // set data cultivation process to view
     private void addDataProcess() {
         rcvProcess.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -192,7 +193,7 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
         ppAdapter = new PPAdapter(ppModelsArr, this);
         rcvProductivityPrediction.setAdapter(ppAdapter);
     }
-
+    // set data cho biểu đồ
     private void addBarChart(){
         myBarChart.setDrawBarShadow(false);
         myBarChart.setDrawValueAboveBar(true);
@@ -264,6 +265,7 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void setUpDropdown() {
+        // gán dữ liệu cho các dropdown ( vị trí, loại cây, loại đất ) để tiến hành dự đoán năng suất
         String[] district = getResources().getStringArray(R.array.district);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter(getApplicationContext(), R.layout.dropdown_item_district, district);
         dropdownDistrict.setAdapter(arrayAdapter);
@@ -278,6 +280,7 @@ public class CropYieldActivity extends AppCompatActivity implements View.OnClick
     }
 
     private void showDialog() {
+        // hiển thị kết quả sau khi dự đoán
         String district, tree, soil, andArea;
         district = dropdownDistrict.getText().toString();
         tree = dropdownTree.getText().toString();

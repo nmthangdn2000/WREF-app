@@ -35,7 +35,7 @@ public class PPAdapter extends RecyclerView.Adapter<PPAdapter.ViewHolder> {
         View view = layoutInflater.inflate(R.layout.item_productivity_prediction, parent,false);
         return new PPAdapter.ViewHolder(view);
     }
-
+    // set data to view
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GradientDrawable gradientDrawable = (GradientDrawable) holder.lnlPP.getBackground();

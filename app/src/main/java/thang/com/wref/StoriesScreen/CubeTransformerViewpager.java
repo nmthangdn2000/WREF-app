@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.viewpager2.widget.ViewPager2;
 
 public class CubeTransformerViewpager implements ViewPager2.PageTransformer {
+
+    // animation stories like storeis in instagram
     @Override
     public void transformPage(@NonNull View page, float position) {
         if(position <= 0) page.setPivotX(page.getWidth()); //

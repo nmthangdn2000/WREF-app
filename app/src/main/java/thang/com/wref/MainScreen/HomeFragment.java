@@ -97,7 +97,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
         super.onActivityCreated(savedInstanceState);
         openGooogleMap();
     }
-
+    // google map
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
@@ -182,6 +182,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback, View.O
         Intent intent = new Intent(getContext(), DetailWeatherFragment.class);
         getActivity().startActivity(intent);
     }
+    // ask for permission
     private void getLocationPermission() {
         if (ContextCompat.checkSelfPermission(getContext().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {

@@ -33,7 +33,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         View view = layoutInflater.inflate(R.layout.item_location, parent,false);
         return new LocationAdapter.ViewHodler(view);
     }
-
+    // set data to view
     @Override
     public void onBindViewHolder(@NonNull LocationAdapter.ViewHodler holder, int position) {
         holder.txtNameLocation.setText(arrLocation.get(position).getName());
