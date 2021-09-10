@@ -1,5 +1,6 @@
 const Comment = require('../models/comment.model');
 const { ERROR } = require('../common/constants');
+const fs = require('fs');
 
 class CommentService {
   async getComment(id) {

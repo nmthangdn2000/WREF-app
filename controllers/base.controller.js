@@ -1,7 +1,7 @@
 const { ERROR, RESPONSE } = require('../common/constants');
 
 class BaseController {
-  responseSuccess(res, message) {
+  responseSuccess(res, message = RESPONSE.SUCCESS) {
     return res.status(200).json({
       success: true,
       message,
@@ -17,11 +17,17 @@ class BaseController {
   }
 
   responseError(res, errorCode = ERROR.InternalServerError, data = {}) {
-    const message = getErrorMessage(code);
+    let code = Number(errorCode);
+    let message = '';
+    if (Number.isInteger(code)) message = getErrorMessage(code);
+    else {
+      message = errorCode;
+      code = ERROR.Default;
+    }
     return res.status(200).json({
       success: false,
       message,
-      errorCode,
+      errorCode: code,
       data,
     });
   }
@@ -31,6 +37,7 @@ module.exports = new BaseController();
 
 function getErrorMessage(code) {
   const message = getKeyByValue(ERROR, code);
+  console.log(message, typeof code);
   return message ? message.replace(/([A-Z])/g, ' $1').trim() : `${code}`;
 }
 
