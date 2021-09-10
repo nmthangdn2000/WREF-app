@@ -1,22 +1,33 @@
-const io = require("socket.io")();
-const Posts = require("../models/posts.model");
+const io = require('socket.io')();
+const Posts = require('../models/posts.model');
 
 const people = {};
 
-io.on("connection", (socket) => {
-  console.log("a user connected");
+io.on('connection', (socket) => {
+  console.log('a user connected');
 
-  socket.on("like", async (idPosts, idUser, type) => {
+  socket.on('like', async (idPosts, idUser, type) => {
     console.log(idPosts);
     console.log(idUser);
     console.log(type);
     await likePosts(idPosts, idUser, type, socket);
     // update notification
   });
-  socket.on("comment", (idPosts, idUser, content) => {});
+  socket.on('comment', (idPosts) => {
+    io.to(idPosts).emit('update', true);
+  });
 
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
+  socket.on('join room', (idPosts) => {
+    console.log('có thằng vào');
+    socket.join(idPosts);
+  });
+  socket.on('leave room', (idPosts) => {
+    socket.leave(idPosts);
+    console.log('có thằng ra');
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
   });
 });
 
@@ -32,9 +43,9 @@ async function likePosts(idPosts, idUser, type, socket) {
         },
       },
     });
-    console.log("Like", like.Like.length + 1);
-    if (like) socket.emit("like", like.Like.length + 1);
-    else socket.emit("like", null);
+    console.log('Like', like.Like.length + 1);
+    if (like) io.emit('like', like.Like.length + 1);
+    else socket.emit('like', null);
   } else {
     const disLike = await Posts.findByIdAndUpdate(idPosts, {
       $pull: {
@@ -43,9 +54,9 @@ async function likePosts(idPosts, idUser, type, socket) {
         },
       },
     });
-    console.log("disLike", disLike.Like.length - 1);
-    if (disLike) socket.emit("like", disLike.Like.length - 1);
-    else socket.emit("like", null);
+    console.log('disLike', disLike.Like.length - 1);
+    if (disLike) io.emit('like', disLike.Like.length - 1);
+    else socket.emit('like', null);
     //   hủy like bài viết
   }
 }

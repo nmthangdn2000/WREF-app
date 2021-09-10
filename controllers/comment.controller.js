@@ -1,155 +1,68 @@
-const Comment = require('../models/comment.model')
+const commentService = require('../service/comment.service');
+const { responseError, responseSuccess, responseSuccessWithData } = require('./base.controller');
+const { RESPONSE } = require('../common/constants');
+class CommentController {
+  async getComment(req, res) {
+    try {
+      const data = await commentService.getComment(req.params.id);
+      return responseSuccessWithData(res, data);
+    } catch (error) {
+      responseError(res, error.message);
+    }
+  }
 
-// get all Comment
-const getComment = async (req, res) => {
-    console.log(req.params.id)
-    await Comment.find({ idPosts: req.params.id })
-        .populate('idUser', 'userName avata')
-        .then((data) => {
-            res.send(data)
-        })
-        .catch((err) => {
-            console.log('', err)
-            res.json({
-                success: false,
-                msg: 'Comment update failed',
-            })
-        })
+  async createComment(req, res) {
+    try {
+      const idUser = req.user._id;
+      const idPosts = req.params.id;
+      const content = req.body.content;
+      const media = req.file ? req.file.filename : null;
+      const data = await commentService.createComment(idUser, idPosts, content, media);
+      return responseSuccessWithData(res, data);
+    } catch (error) {
+      responseError(res, error.message);
+    }
+  }
+
+  async updateComment(req, res) {
+    try {
+      await commentService.updateComment(req.params.id, req.body.content);
+      return responseSuccess(res, RESPONSE.UPDATECOMMENTSUCCESS);
+    } catch (error) {
+      responseError(res, error.message);
+    }
+  }
+
+  async createRefComment(req, res) {
+    try {
+      const idUser = req.user._id;
+      const idPosts = req.params.id;
+      const content = req.body.content;
+      const media = req.file ? req.file.filename : null;
+      const data = await commentService.createRefCommentComment(idUser, idPosts, content, media);
+      return responseSuccessWithData(res, data);
+    } catch (error) {
+      responseError(res, error.message);
+    }
+  }
+
+  async getRefComment(req, res) {
+    try {
+      const data = await commentService.getRefComment(req.params.id);
+      return responseSuccessWithData(res, data);
+    } catch (error) {
+      responseError(res, error.message);
+    }
+  }
+
+  async deleteComment(req, res) {
+    try {
+      const data = await commentService.deleteComment(req.params.id);
+      return responseSuccess(res, RESPONSE.DELETECOMMENTSUCCESS);
+    } catch (error) {
+      responseError(res, error.message);
+    }
+  }
 }
-// add new comment
-const newComment = async (req, res) => {
-    const newCmt = await new Comment({
-        idUser: req.user._id,
-        idPosts: req.params.id,
-        content: req.body.content,
-        media: req.file.filename,
-        Like: [],
-        create_at: new Date(),
-        update_at: new Date(),
-    })
-    await newCmt
-        .save()
-        .then((data) => {
-            res.json({
-                success: true,
-                msg: 'Comment update success',
-            })
-        })
-        .catch((err) => {
-            console.log('', err)
-            res.json({
-                success: false,
-                msg: 'Comment update failed',
-            })
-        })
-}
-// edit comment
-const editComment = async (req, res) => {
-    await Comment.findByIdAndUpdate(req.params.id, {
-        $set: {
-            content: req.body.content,
-            update_at: new Date(),
-        },
-    })
-        .then((data) => {
-            res.json({
-                success: true,
-                msg: 'Comment update success',
-            })
-        })
-        .catch((err) => {
-            console.log('', err)
-            res.json({
-                success: false,
-                msg: 'Comment update failed',
-            })
-        })
-}
-// ref comment
-const refComment = async (req, res) => {
-    const newCmt = await new Comment({
-        idUser: req.user._id,
-        idPosts: req.params.idposts,
-        idComment: req.params.idcmt,
-        content: req.body.content,
-        // media: req.file.filename,
-        Like: [],
-        create_at: new Date(),
-        update_at: new Date(),
-    })
-    await newCmt
-        .save()
-        .then((data) => {
-            res.json({
-                success: true,
-                msg: 'new RefComment success',
-            })
-        })
-        .catch((err) => {
-            console.log('', err)
-            res.json({
-                success: false,
-                msg: 'new RefComment failed',
-            })
-        })
-}
-// get RefComent
-const getRefComment = async (req, res) => {
-    await Comment.findOne({ idComment: req.params.id })
-        .then((data) => {
-            res.send(data)
-        })
-        .catch((err) => {
-            console.log('', err)
-            res.json({
-                success: false,
-                msg: 'get RefComment failed',
-            })
-        })
-}
-// delete a Comment
-const deleteComment = async (req, res) => {
-    // delete file
-    await Comment.findOne({ _id: req.params.id })
-        .then((data) => {
-            console.log(typeof data.media)
-            if (data.media.length > 0)
-                data.media.forEach((element) => {
-                    const path = './public/uploads/' + element
-                    try {
-                        fs.unlinkSync(path)
-                    } catch (error) {
-                        console.log(' ' + error)
-                    }
-                })
-        })
-        .catch((err) => console.log(' ' + err))
-    await Comment.deleteOne({ _id: req.params.id })
-        .then((data) => {
-            res.json({
-                success: true,
-                msg: 'Comment delete success',
-            })
-        })
-        .catch((err) => {
-            console.log('', err)
-            res.json({
-                success: false,
-                msg: 'Comment delete failed',
-            })
-        })
-}
-module.exports = {
-    // get all Comment
-    getComment,
-    // new Comment in a Posts
-    newComment,
-    //edit Comment
-    editComment,
-    // ref Comment
-    refComment,
-    // get RefComment
-    getRefComment,
-    // delete a Comment
-    deleteComment,
-}
+
+module.exports = new CommentController();

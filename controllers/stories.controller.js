@@ -1,17 +1,17 @@
-const Stories = require("../models/stories.model");
-const fs = require("fs");
+const Stories = require('../models/stories.model');
+const fs = require('fs');
 
 const getStories = async (req, res) => {
   await Stories.find()
-    .populate("idUser", "userName avata")
+    .populate('idUser', 'userName avata')
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
-      console.log("", err);
+      console.log('', err);
       res.json({
         success: false,
-        msg: "get Stories failed",
+        msg: 'get Stories failed',
       });
     });
 };
@@ -30,13 +30,13 @@ const postStories = async (req, res) => {
       .then((data) => {
         res.json({
           success: true,
-          msg: "Stories new success",
+          msg: 'Stories new success',
         });
       })
       .catch((err) =>
         res.json({
           success: false,
-          msg: "Stories new failed",
+          msg: 'Stories new failed',
         })
       );
     return;
@@ -52,13 +52,13 @@ const postStories = async (req, res) => {
       .then((data) => {
         res.json({
           success: true,
-          msg: "Stories new success",
+          msg: 'Stories new success',
         });
       })
       .catch((err) =>
         res.json({
           success: false,
-          msg: "Stories new failed",
+          msg: 'Stories new failed',
         })
       );
     return;
